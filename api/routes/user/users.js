@@ -24,25 +24,34 @@ router.post('/', [
     #swagger.description = '회원 가입을 합니다.<br>회원 가입을 완료한 후 회원 정보를 반환합니다.'
   */
   /* 
-    #swagger.parameters['body'] = {
-      description: '가입할 회원 정보',
-      in: 'body',
+    #swagger.requestBody = {
+      description: "회원 정보",
       required: true,
-      schema: {
-        $ref: '#/definitions/UserInfo'
-      }      
+      content: {
+        "application/json": {
+          schema: { $ref: '#/components/schemas/CreateUserReq' },
+          examples: {
+            "기본 정보만 전달": { $ref: "#/components/examples/CreateUserReq" },
+            "extra 속성 추가": { $ref: "#/components/examples/CreateUserReq1" }
+          }       
+        }
+      }
     },
     #swagger.responses[200] = {
       description: '성공',
-      schema: { $ref: '#/definitions/ItemResponse' }
+      schema: { $ref: '#/components/schemas/CreateUserRes' }
+    },
+     #swagger.responses[409] = {
+      description: '이메일 중복',
+      schema: { $ref: '#/components/schemas/Error409' }
     },
     #swagger.responses[422] = {
       description: '파라미터 검증 실패',
-      schema: { $ref: '#/definitions/Error422' }
+      schema: { $ref: '#/components/schemas/Error422' }
     },
     #swagger.responses[500] = {
       description: '서버 에러',
-      schema: { $ref: '#/definitions/Error500' }
+      schema: { $ref: '#/components/schemas/Error500' }
     }
   */
 
@@ -63,13 +72,23 @@ router.get('/email', async function(req, res, next) {
   */
   /* 
     #swagger.parameters['email'] = {
-      description: '가입할 회원 정보',
-      in: 'body',
+      description: '이메일',
+      in: 'query',
       required: true,
-      schema: {
-        $ref: '#/definitions/UserInfo'
-      }      
-    }
+      examples: {
+
+        someExample1: { $ref: "#/components/examples/EmailDuplicate" },
+      }
+    },
+    
+    #swagger.responses[200] = {
+      description: '중복된 경우',
+      schema: { $ref: '#/components/schemas/EmailDuplicate' }
+    },
+    #swagger.responses[200] = {
+      description: '중복되지 않을 경우',
+      schema: { $ref: '#/components/schemas/EmailNotDuplicate' }
+    },
   */
 
   try{
