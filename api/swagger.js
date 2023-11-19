@@ -8,7 +8,7 @@ const doc = {
   },
   servers: [
     {
-      url: 'http://localhost/api',
+      url: 'https://localhost/api',
       description: ''
     }
   ],
@@ -45,98 +45,121 @@ const doc = {
     },
     schemas: {
       Error422: {
-        ok: 0, 
-        error: {
-          message: '이메일 형식에 맞지 않습니다.'
-        }
+        "ok": 0,
+        "message": "잘못된 입력값이 있습니다.",
+        "errors": [
+          {
+            "type": "field",
+            "value": "swaggermarket.com",
+            "msg": "이메일 형식에 맞지 않습니다.",
+            "path": "email",
+            "location": "body"
+          }
+        ]
+      },
+      Error409: {
+        "ok": 0,
+        "message": "이미 등록되어 있는 이메일입니다."
       },
       Error404: {
-        ok: 0, 
-        error: {
-          message: '/api/products/123 리소스를 찾을 수 없습니다.'
-        }
+        "ok": 0,
+        "message": "/api/user 리소스를 찾을 수 없습니다."
       },
       Error500: {
-        ok: 0, 
-        error: {
-          message: '서버 오류'
-        }
+        "ok": 0,
+        "message": "요청하신 작업 처리에 실패했습니다. 잠시 후 다시 이용해 주시기 바랍니다."
       },
-      UserInfo: {
-        _id: 1,
-        email: 'admin@market.com',
+      CreateUserReq: {
+        email: 'swagger@market.com',
         password: '12345678',
-        name: '무지',
+        name: '스웨거',
         phone: '01011112222',
         address: '서울시 강남구 역삼동 123',
-        type: 'admin',
-        createdAt: '2023-11-20 11:23:45',
-        updatedAt: '2023-11-20 11:23:45',
-        extra: {}
+        type: 'user'
       },
-      UserInfoRequest: {
-        email: 'uzoolove@gmail.com',
-        password: '12345678',
-        name: '김철수',
-        address: '서울시 강남구 테헤란로 443 애플트리타워',
-  
-        extras: {
-          birthday: '20011225',
-  
+      CreateUserRes: {
+        "ok": 1,
+        "item": {
+          "email": "swagger@market.com",
+          "name": "스웨거",
+          "phone": "01011112222",
+          "address": "서울시 강남구 역삼동 123",
+          "type": "user",
+          "_id": 5,
+          "createdAt": "2023.11.20 08:13:40",
+          "updatedAt": "2023.11.20 08:13:40"
         }
       },
-      ItemUpdateRequest: {
-        title: 'JS 프로젝트 완성',
-        content: '화요일까지 완료해야 함.',
-        done: true
+
+      EmailDuplicate: {
+        "ok": 1,
+        "duplicate": true
       },
-      ItemResponse: {
-        ok: 1,
-        item: {
-          _id: 5,
-          title: 'JS 프로젝트 완성',
-          content: '화요일까지 완료해야 함.',
-          createdAt: '2023.10.30 11:34:31',
-          updatedAt: '2023.10.30 11:34:31'
-        }      
-      },
-      ListResponse: {
-        ok: 1,
-        items: [
-          {
-            _id: 3,
-            title: "React 공부",
-            done: false,
-            createdAt: "2023.10.25 10:12:45",
-            updatedAt: "2023.10.25 18:34:17"
-          }
-        ],
-        pagination: {
-          page: 2,
-          limit: 2,
-          total: 5,
-          totalPages: 3
-        }
-      },
-      ListWithoutPaginationResponse: {
-        ok: 1,
-        items: [
-          {
-            _id: 3,
-            title: "React 공부",
-            done: false,
-            createdAt: "2023.10.25 10:12:45",
-            updatedAt: "2023.10.25 18:34:17"
-          }
-        ],
-        pagination: {}
+      EmailNotDuplicate: {
+        "ok": 1,
+        "duplicate": false
       },
     },
     examples: {
-      createUser: {
-        name: '김철수',
-        age: 30
-      }
+      CreateUserReq: {
+        email: 'swagger@market.com',
+        password: '12345678',
+        name: '스웨거',
+        phone: '01011112222',
+        address: '서울시 강남구 역삼동 123',
+        type: 'user'
+      },
+      CreateUserReq1: {
+        email: 'swagger@market.com',
+        password: '12345678',
+        name: '스웨거',
+        phone: '01011112222',
+        address: '서울시 강남구 역삼동 123',
+        type: 'user',
+        extra: {
+          gender: 'extra에는 프로젝트에서 필요한 아무 속성이나',
+          age: '필요한 값을',
+          address: ['넣으면', '됩니다.'],
+          profileImage: '/uploads/swagger.jpg',
+          obj: {
+            hello: '객체로',
+            hi: '넣어도 됩니다.'
+          },
+          addressBook: [{
+            name: '집',
+            address: '서울시'
+          }, {
+            name: '회사',
+            address: '인천시'
+          }]
+        }
+      },
+      CreateUserRes: {
+        "ok": 1,
+        "item": {
+          "email": "swagger@market.com",
+          "name": "스웨거",
+          "phone": "01011112222",
+          "address": "서울시 강남구 역삼동 123",
+          "type": "user",
+          "extra": {
+            "gender": "아무 속성이나",
+            "age": "필요한 값을",
+            "address": [
+              "넣으면",
+              "됩니다."
+            ],
+            "profile": "/uploads/swagger.jpg",
+            "obj": {
+              "hello": "객체로",
+              "hi": "넣어도 됩니다."
+            }
+          },
+          "_id": 5,
+          "createdAt": "2023.11.20 08:13:40",
+          "updatedAt": "2023.11.20 08:13:40"
+        }
+      },
     }
   },
 

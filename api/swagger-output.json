@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost/api",
+      "url": "https://localhost/api",
       "description": ""
     }
   ],
@@ -41,29 +41,33 @@
         ],
         "summary": "회원 가입",
         "description": "회원 가입을 합니다.<br>회원 가입을 완료한 후 회원 정보를 반환합니다.",
-        "parameters": [
-          {
-            "name": "body",
-            "description": "가입할 회원 정보",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/UserInfo"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "성공",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemResponse"
+                  "$ref": "#/components/schemas/CreateUserRes"
                 }
               },
               "application/xml": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemResponse"
+                  "$ref": "#/components/schemas/CreateUserRes"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "이메일 중복",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error409"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error409"
                 }
               }
             }
@@ -98,6 +102,25 @@
               }
             }
           }
+        },
+        "requestBody": {
+          "description": "회원 정보",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserReq"
+              },
+              "examples": {
+                "기본 정보만 전달": {
+                  "$ref": "#/components/examples/CreateUserReq"
+                },
+                "extra 속성 추가": {
+                  "$ref": "#/components/examples/CreateUserReq1"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -111,24 +134,37 @@
         "parameters": [
           {
             "name": "email",
+            "description": "이메일",
             "in": "query",
+            "required": true,
+            "examples": {
+              "someExample1": {
+                "$ref": "#/components/examples/EmailDuplicate"
+              }
+            },
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "email",
-            "description": "가입할 회원 정보",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/UserInfo"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "중복되지 않을 경우",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailDuplicate"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailDuplicate"
+                }
+              }
+            },
+            "schema": {
+              "$ref": "#/components/schemas/EmailNotDuplicate"
+            }
           }
         }
       }
@@ -505,18 +541,57 @@
             "type": "number",
             "example": 0
           },
-          "error": {
-            "type": "object",
-            "properties": {
-              "message": {
-                "type": "string",
-                "example": "이메일 형식에 맞지 않습니다."
+          "message": {
+            "type": "string",
+            "example": "잘못된 입력값이 있습니다."
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "field"
+                },
+                "value": {
+                  "type": "string",
+                  "example": "swaggermarket.com"
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "이메일 형식에 맞지 않습니다."
+                },
+                "path": {
+                  "type": "string",
+                  "example": "email"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "body"
+                }
               }
             }
           }
         },
         "xml": {
           "name": "Error422"
+        }
+      },
+      "Error409": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "number",
+            "example": 0
+          },
+          "message": {
+            "type": "string",
+            "example": "이미 등록되어 있는 이메일입니다."
+          }
+        },
+        "xml": {
+          "name": "Error409"
         }
       },
       "Error404": {
@@ -526,14 +601,9 @@
             "type": "number",
             "example": 0
           },
-          "error": {
-            "type": "object",
-            "properties": {
-              "message": {
-                "type": "string",
-                "example": "/api/products/123 리소스를 찾을 수 없습니다."
-              }
-            }
+          "message": {
+            "type": "string",
+            "example": "/api/user 리소스를 찾을 수 없습니다."
           }
         },
         "xml": {
@@ -547,30 +617,21 @@
             "type": "number",
             "example": 0
           },
-          "error": {
-            "type": "object",
-            "properties": {
-              "message": {
-                "type": "string",
-                "example": "서버 오류"
-              }
-            }
+          "message": {
+            "type": "string",
+            "example": "요청하신 작업 처리에 실패했습니다. 잠시 후 다시 이용해 주시기 바랍니다."
           }
         },
         "xml": {
           "name": "Error500"
         }
       },
-      "UserInfo": {
+      "CreateUserReq": {
         "type": "object",
         "properties": {
-          "_id": {
-            "type": "number",
-            "example": 1
-          },
           "email": {
             "type": "string",
-            "example": "admin@market.com"
+            "example": "swagger@market.com"
           },
           "password": {
             "type": "string",
@@ -578,7 +639,7 @@
           },
           "name": {
             "type": "string",
-            "example": "무지"
+            "example": "스웨거"
           },
           "phone": {
             "type": "string",
@@ -590,79 +651,14 @@
           },
           "type": {
             "type": "string",
-            "example": "admin"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-11-20 11:23:45"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-11-20 11:23:45"
-          },
-          "extra": {
-            "type": "object",
-            "properties": {}
+            "example": "user"
           }
         },
         "xml": {
-          "name": "UserInfo"
+          "name": "CreateUserReq"
         }
       },
-      "UserInfoRequest": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "example": "uzoolove@gmail.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "12345678"
-          },
-          "name": {
-            "type": "string",
-            "example": "김철수"
-          },
-          "address": {
-            "type": "string",
-            "example": "서울시 강남구 테헤란로 443 애플트리타워"
-          },
-          "extras": {
-            "type": "object",
-            "properties": {
-              "birthday": {
-                "type": "string",
-                "example": "20011225"
-              }
-            }
-          }
-        },
-        "xml": {
-          "name": "UserInfoRequest"
-        }
-      },
-      "ItemUpdateRequest": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "example": "JS 프로젝트 완성"
-          },
-          "content": {
-            "type": "string",
-            "example": "화요일까지 완료해야 함."
-          },
-          "done": {
-            "type": "boolean",
-            "example": true
-          }
-        },
-        "xml": {
-          "name": "ItemUpdateRequest"
-        }
-      },
-      "ItemResponse": {
+      "CreateUserRes": {
         "type": "object",
         "properties": {
           "ok": {
@@ -672,144 +668,148 @@
           "item": {
             "type": "object",
             "properties": {
+              "email": {
+                "type": "string",
+                "example": "swagger@market.com"
+              },
+              "name": {
+                "type": "string",
+                "example": "스웨거"
+              },
+              "phone": {
+                "type": "string",
+                "example": "01011112222"
+              },
+              "address": {
+                "type": "string",
+                "example": "서울시 강남구 역삼동 123"
+              },
+              "type": {
+                "type": "string",
+                "example": "user"
+              },
               "_id": {
                 "type": "number",
                 "example": 5
               },
-              "title": {
-                "type": "string",
-                "example": "JS 프로젝트 완성"
-              },
-              "content": {
-                "type": "string",
-                "example": "화요일까지 완료해야 함."
-              },
               "createdAt": {
                 "type": "string",
-                "example": "2023.10.30 11:34:31"
+                "example": "2023.11.20 08:13:40"
               },
               "updatedAt": {
                 "type": "string",
-                "example": "2023.10.30 11:34:31"
+                "example": "2023.11.20 08:13:40"
               }
             }
           }
         },
         "xml": {
-          "name": "ItemResponse"
+          "name": "CreateUserRes"
         }
       },
-      "ListResponse": {
+      "EmailDuplicate": {
         "type": "object",
         "properties": {
           "ok": {
             "type": "number",
             "example": 1
           },
-          "items": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "type": "number",
-                  "example": 3
-                },
-                "title": {
-                  "type": "string",
-                  "example": "React 공부"
-                },
-                "done": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "createdAt": {
-                  "type": "string",
-                  "example": "2023.10.25 10:12:45"
-                },
-                "updatedAt": {
-                  "type": "string",
-                  "example": "2023.10.25 18:34:17"
-                }
-              }
-            }
-          },
-          "pagination": {
-            "type": "object",
-            "properties": {
-              "page": {
-                "type": "number",
-                "example": 2
-              },
-              "limit": {
-                "type": "number",
-                "example": 2
-              },
-              "total": {
-                "type": "number",
-                "example": 5
-              },
-              "totalPages": {
-                "type": "number",
-                "example": 3
-              }
-            }
+          "duplicate": {
+            "type": "boolean",
+            "example": true
           }
         },
         "xml": {
-          "name": "ListResponse"
+          "name": "EmailDuplicate"
         }
       },
-      "ListWithoutPaginationResponse": {
+      "EmailNotDuplicate": {
         "type": "object",
         "properties": {
           "ok": {
             "type": "number",
             "example": 1
           },
-          "items": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "type": "number",
-                  "example": 3
-                },
-                "title": {
-                  "type": "string",
-                  "example": "React 공부"
-                },
-                "done": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "createdAt": {
-                  "type": "string",
-                  "example": "2023.10.25 10:12:45"
-                },
-                "updatedAt": {
-                  "type": "string",
-                  "example": "2023.10.25 18:34:17"
-                }
-              }
-            }
-          },
-          "pagination": {
-            "type": "object",
-            "properties": {}
+          "duplicate": {
+            "type": "boolean",
+            "example": false
           }
         },
         "xml": {
-          "name": "ListWithoutPaginationResponse"
+          "name": "EmailNotDuplicate"
         }
       }
     },
     "examples": {
-      "createUser": {
+      "CreateUserReq": {
         "value": {
-          "name": "김철수",
-          "age": 30
+          "email": "swagger@market.com",
+          "password": "12345678",
+          "name": "스웨거",
+          "phone": "01011112222",
+          "address": "서울시 강남구 역삼동 123",
+          "type": "user"
+        }
+      },
+      "CreateUserReq1": {
+        "value": {
+          "email": "swagger@market.com",
+          "password": "12345678",
+          "name": "스웨거",
+          "phone": "01011112222",
+          "address": "서울시 강남구 역삼동 123",
+          "type": "user",
+          "extra": {
+            "gender": "extra에는 프로젝트에서 필요한 아무 속성이나",
+            "age": "필요한 값을",
+            "address": [
+              "넣으면",
+              "됩니다."
+            ],
+            "profileImage": "/uploads/swagger.jpg",
+            "obj": {
+              "hello": "객체로",
+              "hi": "넣어도 됩니다."
+            },
+            "addressBook": [
+              {
+                "name": "집",
+                "address": "서울시"
+              },
+              {
+                "name": "회사",
+                "address": "인천시"
+              }
+            ]
+          }
+        }
+      },
+      "CreateUserRes": {
+        "value": {
+          "ok": 1,
+          "item": {
+            "email": "swagger@market.com",
+            "name": "스웨거",
+            "phone": "01011112222",
+            "address": "서울시 강남구 역삼동 123",
+            "type": "user",
+            "extra": {
+              "gender": "아무 속성이나",
+              "age": "필요한 값을",
+              "address": [
+                "넣으면",
+                "됩니다."
+              ],
+              "profile": "/uploads/swagger.jpg",
+              "obj": {
+                "hello": "객체로",
+                "hi": "넣어도 됩니다."
+              }
+            },
+            "_id": 5,
+            "createdAt": "2023.11.20 08:13:40",
+            "updatedAt": "2023.11.20 08:13:40"
+          }
         }
       }
     }
