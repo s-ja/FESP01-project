@@ -43,3 +43,9 @@ npm start
 
 * api 서버 사용방법: https://localhost/apidocs
   - 브라우저에서 "연결이 비공개로 설정되어 있지 않습니다." 메세지가 나올 경우 "고급" 버튼을 누른 후 localhost(안전하지 않음) 클릭
+
+## DB 초기화
+* 기본으로 제공되는 샘플 데이터로 DB 초기화
+```
+npm run initdb
+```
