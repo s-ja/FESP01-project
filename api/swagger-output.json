@@ -1,0 +1,817 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "오픈마켓 API",
+    "description": "오픈마켓 API Server입니다."
+  },
+  "servers": [
+    {
+      "url": "http://localhost/api",
+      "description": ""
+    }
+  ],
+  "tags": [
+    {
+      "name": "회원",
+      "description": "회원 관리 기능"
+    },
+    {
+      "name": "상품",
+      "description": "상품 관리 기능"
+    },
+    {
+      "name": "주문",
+      "description": "주문 관리 기능"
+    },
+    {
+      "name": "후기",
+      "description": "후기 관리 기능"
+    },
+    {
+      "name": "파일",
+      "description": "파일 관리 기능"
+    }
+  ],
+  "paths": {
+    "/users/": {
+      "post": {
+        "tags": [
+          "회원"
+        ],
+        "summary": "회원 가입",
+        "description": "회원 가입을 합니다.<br>회원 가입을 완료한 후 회원 정보를 반환합니다.",
+        "parameters": [
+          {
+            "name": "body",
+            "description": "가입할 회원 정보",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UserInfo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemResponse"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "파라미터 검증 실패",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error422"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 에러",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/email": {
+      "get": {
+        "tags": [
+          "회원"
+        ],
+        "summary": "이메일 중복 체크",
+        "description": "이메일 중복을 체크 합니다.",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "description": "가입할 회원 정보",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UserInfo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "회원"
+        ],
+        "summary": "로그인",
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "description": "가입할 회원 정보",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UserInfo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/refresh": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/{_id}/*": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/{_id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/products/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "minPrice",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maxPrice",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "minDelivery",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maxDelivery",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "seller_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "extra",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "seller_id": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{_id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/carts/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/orders/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "extra",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/replies/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/codes/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/files/": {
+      "post": {
+        "tags": [
+          "파일"
+        ],
+        "summary": "파일 업로드",
+        "description": "파일을 업로드 합니다.<br>회원 가입시 프로필 이미지를 첨부하거나 상품의 이미지를 미리 업로드 한 후 응답 받은 파일 경로를 사용하면 업로드한 파일에 접근이 가능합니다.<br>파일 업로드 완료 후 파일명과 경로를 반환합니다.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "attach": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "in": "header",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Error422": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "number",
+            "example": 0
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "이메일 형식에 맞지 않습니다."
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "Error422"
+        }
+      },
+      "Error404": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "number",
+            "example": 0
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "/api/products/123 리소스를 찾을 수 없습니다."
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "Error404"
+        }
+      },
+      "Error500": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "number",
+            "example": 0
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "서버 오류"
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "Error500"
+        }
+      },
+      "UserInfo": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "number",
+            "example": 1
+          },
+          "email": {
+            "type": "string",
+            "example": "admin@market.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345678"
+          },
+          "name": {
+            "type": "string",
+            "example": "무지"
+          },
+          "phone": {
+            "type": "string",
+            "example": "01011112222"
+          },
+          "address": {
+            "type": "string",
+            "example": "서울시 강남구 역삼동 123"
+          },
+          "type": {
+            "type": "string",
+            "example": "admin"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-11-20 11:23:45"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-11-20 11:23:45"
+          },
+          "extra": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "xml": {
+          "name": "UserInfo"
+        }
+      },
+      "UserInfoRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "uzoolove@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345678"
+          },
+          "name": {
+            "type": "string",
+            "example": "김철수"
+          },
+          "address": {
+            "type": "string",
+            "example": "서울시 강남구 테헤란로 443 애플트리타워"
+          },
+          "extras": {
+            "type": "object",
+            "properties": {
+              "birthday": {
+                "type": "string",
+                "example": "20011225"
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "UserInfoRequest"
+        }
+      },
+      "ItemUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "JS 프로젝트 완성"
+          },
+          "content": {
+            "type": "string",
+            "example": "화요일까지 완료해야 함."
+          },
+          "done": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "xml": {
+          "name": "ItemUpdateRequest"
+        }
+      },
+      "ItemResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "number",
+            "example": 1
+          },
+          "item": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "number",
+                "example": 5
+              },
+              "title": {
+                "type": "string",
+                "example": "JS 프로젝트 완성"
+              },
+              "content": {
+                "type": "string",
+                "example": "화요일까지 완료해야 함."
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2023.10.30 11:34:31"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2023.10.30 11:34:31"
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "ItemResponse"
+        }
+      },
+      "ListResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "number",
+            "example": 1
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "number",
+                  "example": 3
+                },
+                "title": {
+                  "type": "string",
+                  "example": "React 공부"
+                },
+                "done": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2023.10.25 10:12:45"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2023.10.25 18:34:17"
+                }
+              }
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "number",
+                "example": 2
+              },
+              "limit": {
+                "type": "number",
+                "example": 2
+              },
+              "total": {
+                "type": "number",
+                "example": 5
+              },
+              "totalPages": {
+                "type": "number",
+                "example": 3
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "ListResponse"
+        }
+      },
+      "ListWithoutPaginationResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "number",
+            "example": 1
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "number",
+                  "example": 3
+                },
+                "title": {
+                  "type": "string",
+                  "example": "React 공부"
+                },
+                "done": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2023.10.25 10:12:45"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2023.10.25 18:34:17"
+                }
+              }
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "xml": {
+          "name": "ListWithoutPaginationResponse"
+        }
+      }
+    },
+    "examples": {
+      "createUser": {
+        "value": {
+          "name": "김철수",
+          "age": 30
+        }
+      }
+    }
+  }
+}
