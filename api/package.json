@@ -8,7 +8,7 @@
     "#models/*": "./models/*",
     "#routes/*": "./routes/*",
     "#services/*": "./services/*",
-    "#utils/*": "./utils/*"    
+    "#utils/*": "./utils/*"
   },
   "scripts": {
     "prestart": "node ./swagger.js",
@@ -18,6 +18,7 @@
     "dbinit": "node -r dotenv/config ./samples/dbinit.js"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
@@ -25,6 +26,7 @@
     "dotenv": "^16.3.1",
     "express": "~4.16.1",
     "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "mongodb": "^6.2.0",
