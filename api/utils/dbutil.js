@@ -5,8 +5,13 @@ import { MongoClient } from 'mongodb';
 var db;
 
 // Connection URL
-const url = `mongodb://${DBConfig.host}:${DBConfig.port}`;
-// const url = `mongodb://${DBConfig.user}:${DBConfig.password}@${DBConfig.host}:${DBConfig.port}/${DBConfig.database}`;
+var url;
+if(process.env.NODE_ENV === 'production'){
+  url = `mongodb://${DBConfig.user}:${DBConfig.password}@${DBConfig.host}:${DBConfig.port}/${DBConfig.database}`;
+}else{
+  url = `mongodb://${DBConfig.host}:${DBConfig.port}`;
+}
+
 const client = new MongoClient(url);
 
 try{

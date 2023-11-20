@@ -12,10 +12,10 @@
   },
   "scripts": {
     "prestart": "node ./swagger.js",
-    "start": "cross-env NODE_ENV=development node -r dotenv/config ./bin/www-https.js",
+    "start": "cross-env NODE_ENV=local node -r dotenv/config ./bin/www-https.js",
     "dev": "cross-env NODE_ENV=development node -r dotenv/config ./bin/www.js",
     "local": "cross-env NODE_ENV=local node -r dotenv/config ./bin/www.js",
-    "dbinit": "node -r dotenv/config ./samples/dbinit.js"
+    "dbinit": "cross-env NODE_ENV=local node -r dotenv/config ./samples/dbinit.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
