@@ -6,6 +6,7 @@ var db;
 
 // Connection URL
 const url = `mongodb://${DBConfig.host}:${DBConfig.port}`;
+// const url = `mongodb://${DBConfig.user}:${DBConfig.password}@${DBConfig.host}:${DBConfig.port}`;
 const client = new MongoClient(url);
 
 try{
