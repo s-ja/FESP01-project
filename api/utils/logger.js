@@ -1,5 +1,4 @@
 import tracer from 'tracer';
-import path from 'node:path';
 if(process.env.NODE_ENV == 'production'){
   var logger = tracer.dailyfile({
     root: 'logs',
