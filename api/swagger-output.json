@@ -290,14 +290,14 @@
             }
           },
           {
-            "name": "minDelivery",
+            "name": "minShippingFees",
             "in": "query",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "maxDelivery",
+            "name": "maxShippingFees",
             "in": "query",
             "schema": {
               "type": "string"
