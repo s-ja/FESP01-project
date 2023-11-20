@@ -23,8 +23,11 @@
 * https://www.mongodb.com/try/download/community 접속 후 다운로드
   - Version: 7.0.3
   - Platform: 본인 OS에 맞는 플랫폼 선택
-  - Package: msi(Windows) 또는 tgz(MacOS)
+  - Package: msi(Windows)
   - 기본 설정으로 설치
+  - Mac 사용자는 다음을 참고해서 설치
+    + Homebrew를 이용한 설치: https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x
+    + Tarball을 이용한 설치: https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x-tarball
 
 ## Github 레퍼지토리 복사
 * View > Source Control > Clone Repository 선택
