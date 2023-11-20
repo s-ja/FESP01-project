@@ -47,7 +47,7 @@ npm start
 ## DB 초기화
 * 기본으로 제공되는 샘플 데이터로 DB 초기화
 ```
-npm run initdb
+npm run dbinit
 ```
 
 ## API 서버 테스트
