@@ -18,21 +18,21 @@ router.get('/', [
     // 검색 옵션
     let search = {
       price: {},
-      delivery: {}
+      shippingFees: {}
     };
 
     const minPrice = Number(req.query.minPrice) || 0;
     const maxPrice = Number(req.query.maxPrice) || 99999999999;
-    const minDelivery = Number(req.query.minDelivery) || 0;    
-    const maxDelivery = Number(req.query.maxDelivery) || 99999999999;    
+    const minShippingFees = Number(req.query.minShippingFees) || 0;    
+    const maxShippingFees = Number(req.query.maxShippingFees) || 99999999999;    
     const seller = Number(req.query.seller_id);
     const keyword = req.query.keyword;
     const extra = req.query.extra;
 
     search.price['$gte'] = minPrice;
     search.price['$lte'] = maxPrice;
-    search.delivery['$gte'] = minDelivery;
-    search.delivery['$lte'] = maxDelivery;
+    search.shippingFees['$gte'] = minShippingFees;
+    search.shippingFees['$lte'] = maxShippingFees;
 
     if(seller){
       search['seller_id'] = seller;
