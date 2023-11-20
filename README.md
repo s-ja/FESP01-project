@@ -20,7 +20,7 @@
   - 본인의 OS에 맞는 버전 다운로드 후 기본 설정으로 설치
 
 ### MongoDB 설치
-* https://www.postman.com/downloads 접속 후 다운로드
+* https://www.mongodb.com/try/download/community 접속 후 다운로드
   - Version: 7.0.3
   - Platform: 본인 OS에 맞는 플랫폼 선택
   - Package: msi(Windows) 또는 tgz(MacOS)
