@@ -440,7 +440,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/products?minPrice=10000&maxPrice=60000&keyword=퍼즐&seller_id=3&minDelivery=0&maxDelivery=3000",
+									"raw": "{{url}}/products?minPrice=10000&maxPrice=60000&keyword=퍼즐&seller_id=3&minShippingFees=0&maxShippingFees=3000",
 									"host": [
 										"{{url}}"
 									],
@@ -465,11 +465,11 @@
 											"value": "3"
 										},
 										{
-											"key": "minDelivery",
+											"key": "minShippingFees",
 											"value": "0"
 										},
 										{
-											"key": "maxDelivery",
+											"key": "maxShippingFees",
 											"value": "3000"
 										}
 									]
