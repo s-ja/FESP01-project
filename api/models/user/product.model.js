@@ -36,7 +36,9 @@ const product = {
   async findById(_id){
     logger.trace(arguments);
     const item = await db.product.findOne({ _id, active: true, show: true });
-    item.replies = await replyModel.findByProductId(_id);
+    if(item){
+      item.replies = await replyModel.findByProductId(_id);
+    }
     logger.debug(item);
     return item;
   },
