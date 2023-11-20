@@ -41,11 +41,81 @@ npm i
 npm start
 ```
 
-* api 서버 사용방법: https://localhost/apidocs
-  - 브라우저에서 "연결이 비공개로 설정되어 있지 않습니다." 메세지가 나올 경우 "고급" 버튼을 누른 후 localhost(안전하지 않음) 클릭
-
 ## DB 초기화
 * 기본으로 제공되는 샘플 데이터로 DB 초기화
 ```
 npm run initdb
 ```
+
+## API 서버 테스트
+### Postman 설치
+* https://www.postman.com/downloads 접속 후 다운로드
+- 본인의 OS에 맞는 버전 다운로드 후 기본 설정으로 설치
+
+### Postman 사용
+#### Workspace 생성
+* Workspaces > Create Workspace
+  - Blank Workspace > Next
+  - Name: FESP > Create
+
+#### 환경 변수 추가
+* Environments > + 버튼(Create new environment)
+  - "New Environment" -> "API Server"로 수정
+  - Variable: url
+  - Type: default
+  - initial value: https://localhost/api
+  - Ctrl + S 눌러서 저장
+
+#### Collection 추가
+* Collections > + 버튼(Create new collection) > Blank collection
+  - "New Collection" -> "Sample"로 수정
+
+#### API Server 환경 변수 지정
+* 우측 상단의 "No Environment" 클릭 후 Api Server 선택
+
+#### Collection에 API 요청 추가(상품 상세 조회)
+* 컬렉션 목록에 있는 Sample 컬렉션위에 마우스 올린 후 ··· 클릭해서 Add request 선택
+  - "New Request" -> "상품 상세 조회"로 수정
+  - "Enter URL or paste text" 항목에 {{url}}/products/4 입력 후 Send
+  - 정상 응답 결과 확인
+
+#### Collection에 API 요청 추가(회원 정보 조회)
+* 컬렉션 목록에 있는 Sample 컬렉션위에 마우스 올린 후 ··· 클릭해서 Add request 선택
+  - "New Request" -> "회원 정보 조회"로 수정
+  - "Enter URL or paste text" 항목에 {{url}}/users/4 입력 후 Send
+  - 401 응답 결과 확인("authorization 헤더가 없습니다.")
+
+#### Collection에 API 요청 추가(로그인)
+* 컬렉션 목록에 있는 Sample 컬렉션위에 마우스 올린 후 ··· 클릭해서 Add request 선택
+  - "New Request" -> "로그인"로 수정
+  - "GET" -> "POST"로 수정
+  - "Enter URL or paste text" 항목에 {{url}}/users/login 입력
+  - Body > raw > "Text" -> "JSON"으로 변경 후 아래처럼 입력 후 Send
+  ```
+  {
+    "email": "u1@market.com",
+    "password": "11111111"
+  }
+  ```
+  - 정상 응답 결과 확인
+
+##### 로그인 응답 결과로 받은 토큰을 환경 변수에 세팅
+* Collections > 로그인 > Tests
+  - 다음처럼 입력 후 Send
+  ```
+  if (pm.response.code === 200) {
+    const jsonData = pm.response.json();
+    const accessToken = jsonData.item.token.accessToken;
+    const refreshToken = jsonData.item.token.refreshToken;
+    pm.environment.set("accessToken", accessToken);
+    pm.environment.set("refreshToken", refreshToken);
+  }
+  ```
+* Environments > API Server 환경 변수에 accessToken과 refreshToken 추가 되었는지 확인
+
+##### 요청 헤더에 토큰 인증 정보 추가
+* Collections > 회원 정보 조회 > Authorization(또는 Auth) 선택
+  - Type: Bearer Token
+  - Token: {{accessToken}}
+  - Send
+  - 정상 응답 결과 확인
