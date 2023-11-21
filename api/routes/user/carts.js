@@ -8,7 +8,7 @@ import model from '#models/user/product.model.js';
 const router = express.Router();
 
 // 장바구니에 담기
-router.post('/', async function(req, res, next) {  
+router.post('/', async function(req, res, next) {
   try{
     
   }catch(err){

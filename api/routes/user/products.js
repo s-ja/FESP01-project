@@ -7,11 +7,77 @@ import model from '#models/user/product.model.js';
 
 const router = express.Router();
 
-// 상품 검색
+// 상품 목록 조회
 router.get('/', [
     query('extra').optional().isJSON().withMessage('extra 값은 JSON 형식의 문자열이어야 합니다.'),
     query('sort').optional().isJSON().withMessage('sort 값은 JSON 형식의 문자열이어야 합니다.')
   ], validator.checkResult, async function(req, res, next) {
+
+  /*
+    #swagger.auto = false
+
+    #swagger.tags = ['상품']
+    #swagger.summary  = '상품 목록 조회 - 1차'
+    #swagger.description = '상품 목록을 조회한다.'
+
+    #swagger.parameters['minPrice'] = {
+      description: "최저 가격",
+      in: 'query',
+      type: 'number',
+      default: 0
+    }
+    #swagger.parameters['maxPrice'] = {
+      description: "최고 가격",
+      in: 'query',
+      type: 'number',
+      default: 99999999999
+    }
+    #swagger.parameters['minShippingFees'] = {
+      description: "최저 배송비",
+      in: 'query',
+      type: 'number',
+      default: 0
+    }
+    #swagger.parameters['maxShippingFees'] = {
+      description: "최고 배송비",
+      in: 'query',
+      type: 'number',
+      default: 99999999999
+    }
+    #swagger.parameters['keyword'] = {
+      description: "상품명 검색어",
+      in: 'query',
+      type: 'string'
+    }
+    #swagger.parameters['seller_id'] = {
+      description: "판매자 id",
+      in: 'query',
+      type: 'number'
+    }
+    #swagger.parameters['extra'] = {
+      description: "extra 데이터 예시: {\&quot;extra.isNew\&quot;: true}",
+      in: 'query',
+      type: 'string'
+    }
+
+    #swagger.responses[200] = {
+      description: '성공',
+      content: {
+        "application/json": {
+          schema: { $ref: "#/components/schemas/productListRes" }
+        }
+      }
+    }
+    #swagger.responses[500] = {
+      description: '서버 에러',
+      content: {
+        "application/json": {
+          schema: { $ref: '#/components/schemas/error500' }
+        }
+      }
+    }
+  */
+
   try{
     logger.trace(req.query);
 
@@ -69,6 +135,37 @@ router.get('/', [
 
 // 상품 상세 조회
 router.get('/:_id', async function(req, res, next) {
+
+  /*
+    #swagger.tags = ['상품']
+    #swagger.summary  = '상품 상세 조회 - 1차'
+    #swagger.description = '상품 상세 정보를 조회한다.'
+    
+    #swagger.parameters['_id'] = {
+      description: "상품 id",
+      in: 'path',
+      type: 'number',
+      example: 4
+    }
+
+    #swagger.responses[200] = {
+      description: '성공',
+      content: {
+        "application/json": {
+          schema: { $ref: "#/components/schemas/productInfoRes" }
+        }
+      }
+    }
+    #swagger.responses[500] = {
+      description: '서버 에러',
+      content: {
+        "application/json": {
+          schema: { $ref: '#/components/schemas/error500' }
+        }
+      }
+    }
+  */
+
   try{
     const result = await model.findById(Number(req.params._id));
     if(result){

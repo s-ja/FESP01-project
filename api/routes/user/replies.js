@@ -7,8 +7,21 @@ import model from '#models/user/reply.model.js';
 
 const router = express.Router();
 
-// 후기 등록
-router.post('/', async function(req, res, next) {  
+// 구매 후기 등록
+router.post('/', async function(req, res, next) {
+
+  /*
+    #swagger.tags = ['구매 후기']
+    #swagger.summary  = '구매 후기 등록 - 1차'
+    #swagger.description = '구매 후기를 등록한다.'
+    
+    #swagger.security = [{
+      "Access Token": []
+    }]
+    
+  */
+
+
   try{
     try{
       const item = await model.create({ ...req.body, user_id: req.user._id });
