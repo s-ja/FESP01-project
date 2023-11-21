@@ -25,8 +25,13 @@ const authService = {
   },
 
   // JWT 토큰 검증
-  async verify(token, type='access') {
-    try{
+  verifyToken(token, type='access') {
+    logger.trace(arguments);
+    if(!token){
+      throw createError(401, 'authorization 헤더가 없습니다.');
+    }
+
+    try{      
       const payload = jwt.verify(
         token,
         JWTConfig[type].secretKey,
@@ -52,7 +57,7 @@ const authService = {
   // AccessToken 재발행
   async refresh(refreshToken) {
     // 토큰 검증
-    await this.verify(refreshToken, 'refresh');
+    this.verifyToken(refreshToken, 'refresh');
     const user = await userModel.findBy({ refreshToken });
     if(user){
       const token = await this.sign({ _id: user._id, type: user.type });
