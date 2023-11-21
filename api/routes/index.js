@@ -5,6 +5,6 @@ import express from 'express';
 const router = express.Router({mergeParams: true});
 
 router.use('/', userRouter);
-router.use('/seller', sellerRouter);
+router.use('/', sellerRouter);
 
 export default router;

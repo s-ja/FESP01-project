@@ -12,10 +12,12 @@ const router = express.Router({mergeParams: true});
 
 router.use('/users', userRouter);
 router.use('/products', productRouter);
-router.use('/carts', cartRouter);
 router.use('/orders', jwtAuth.auth('user'), orderRouter);
 router.use('/replies', jwtAuth.auth('user'), replyRouter);
-router.use('/codes', codeRouter);
 router.use('/files', jwtAuth.auth('user'), fileRouter);
+
+// router.use('/carts', jwtAuth.auth('user'), cartRouter);
+// router.use('/codes', codeRouter);
+
 
 export default router;
