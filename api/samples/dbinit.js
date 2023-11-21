@@ -76,7 +76,7 @@ async function registUser(){
       updatedAt: getTime(-100, -60*60*3),
       extra: {
         birthday: '03-23',
-        address: [
+        addressBook: [
           {
             id: 1,
             name: '집',
@@ -102,7 +102,7 @@ async function registUser(){
       updatedAt: getTime(-30, -60*60*3),
       extra: {
         birthday: '11-23',
-        address: [
+        addressBook: [
           {
             id: 1,
             name: '회사',
@@ -128,7 +128,7 @@ async function registUser(){
       updatedAt: getTime(-30, -60*20),
       extra: {
         birthday: '11-24',
-        address: [
+        addressBook: [
           {
             id: 1,
             name: '회사',

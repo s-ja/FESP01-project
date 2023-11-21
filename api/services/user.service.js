@@ -13,7 +13,7 @@ const userService = {
 
     let user = await userModel.findBy({ email: userInfo.email });
     if(user){
-      throw createError(409, '이미 등록되어 있는 이메일입니다.');
+      throw createError(409, '이미 등록된 이메일입니다.');
     }else{
       const salt = await bcrypt.genSalt();
       userInfo.password = await bcrypt.hash(userInfo.password, salt);
