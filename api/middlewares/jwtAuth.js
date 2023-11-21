@@ -10,7 +10,7 @@ const jwtAuth = {
       try {
         const token = req.headers.authorization && req.headers.authorization.split('Bearer ')[1];
         if (token) {
-          const payload = await authService.verify(token);
+          const payload = authService.verifyToken(token);
           logger.log('payload', payload);
           if(payload.type === 'admin' || (payload.type === 'seller' && userType === 'user') || (payload.type === userType)){
             req.user = {
