@@ -4,11 +4,7 @@
   "private": true,
   "type": "module",
   "imports": {
-    "#middlewares/*": "./middlewares/*",
-    "#models/*": "./models/*",
-    "#routes/*": "./routes/*",
-    "#services/*": "./services/*",
-    "#utils/*": "./utils/*"
+    "#*": "./*"
   },
   "nodemonConfig": {
     "ignore": ["swagger-output.json"],
