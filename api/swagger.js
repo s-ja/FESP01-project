@@ -2,7 +2,7 @@ import swaggerAutogen from 'swagger-autogen';
 
 const doc = {
   info: {
-    version: '1.1.0',
+    version: '1.1.1',
     title: '오픈마켓 API',
     description: '오픈마켓 API Server입니다.'
   },
