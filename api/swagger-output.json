@@ -2119,166 +2119,186 @@
           "type"
         ]
       }
-    }
-  },
-  "examples": {
-    "createUser": {
-      "email": "swagger@market.com",
-      "password": "12345678",
-      "name": "스웨거",
-      "type": "user",
-      "phone": "01011112222",
-      "address": "서울시 강남구 역삼동 123"
     },
-    "createUserWithExtra": {
-      "email": "swagger@market.com",
-      "password": "12345678",
-      "name": "스웨거",
-      "type": "user",
-      "phone": "01011112222",
-      "address": "서울시 강남구 역삼동 123",
-      "extra": {
-        "gender": "extra에는 프로젝트에서 필요한 아무 속성이나",
-        "age": "필요한 값을",
-        "address": [
-          "넣으면",
-          "됩니다."
-        ],
-        "profileImage": "/uploads/swagger.jpg",
-        "obj": {
-          "hello": "객체로",
-          "hi": "넣어도 됩니다."
-        },
-        "addressBook": [
-          {
-            "name": "집",
-            "address": "서울시"
-          },
-          {
-            "name": "회사",
-            "address": "인천시"
-          }
-        ]
-      }
-    },
-    "createUserRes": {
-      "ok": 1,
-      "item": {
-        "email": "swagger@market.com",
-        "name": "스웨거",
-        "type": "user",
-        "phone": "01011112222",
-        "address": "서울시 강남구 역삼동 123",
-        "_id": 5,
-        "createdAt": "2023.11.21 14:31:15",
-        "updatedAt": "2023.11.21 14:31:15"
-      }
-    },
-    "createUserResWithExtra": {
-      "ok": 1,
-      "item": {
-        "email": "swagger@market.com",
-        "name": "스웨거",
-        "type": "user",
-        "phone": "01011112222",
-        "address": "서울시 강남구 역삼동 123",
-        "extra": {
-          "gender": "extra에는 프로젝트에서 필요한 아무 속성이나",
-          "age": "필요한 값을",
-          "address": [
-            "넣으면",
-            "됩니다."
-          ],
-          "profileImage": "/uploads/swagger.jpg",
-          "obj": {
-            "hello": "객체로",
-            "hi": "넣어도 됩니다."
-          },
-          "addressBook": [
-            {
-              "name": "집",
-              "address": "서울시"
-            },
-            {
-              "name": "회사",
-              "address": "인천시"
-            }
-          ]
-        },
-        "_id": 5,
-        "createdAt": "2023.11.21 14:33:41",
-        "updatedAt": "2023.11.21 14:33:41"
-      }
-    },
-    "userInfoResOneAttr": {
-      "ok": 1,
-      "item": {
-        "name": "스웨거"
-      }
-    },
-    "userInfoResWithExtra": {
-      "ok": 1,
-      "item": {
-        "extra": {
-          "addressBook": [
-            {
-              "name": "집",
-              "address": "서울시"
-            },
-            {
-              "name": "회사",
-              "address": "인천시"
-            }
-          ]
+    "examples": {
+      "createUser": {
+        "value": {
+          "email": "swagger@market.com",
+          "password": "12345678",
+          "name": "스웨거",
+          "type": "user",
+          "phone": "01011112222",
+          "address": "서울시 강남구 역삼동 123"
         }
-      }
-    },
-    "updateUserOneAttr": {
-      "phone": "01099998888",
-      "name": "스웨거2"
-    },
-    "updateUserResOneAttr": {
-      "ok": 1,
-      "updated": {
-        "name": "스웨거2",
-        "phone": "01099998888",
-        "updatedAt": "2023.11.21 20:16:53"
-      }
-    },
-    "updateUserWithExtra": {
-      "extra": {
-        "address": [
-          {
-            "id": 1,
-            "name": "회사",
-            "value": "서울시 강남구 삼성동 111"
-          },
-          {
-            "id": 2,
-            "name": "학교",
-            "value": "서울시 강남구 역삼동 222"
-          }
-        ]
-      }
-    },
-    "updateUserResWithExtra": {
-      "ok": 1,
-      "updated": {
-        "extra": {
-          "address": [
-            {
-              "id": 1,
-              "name": "회사",
-              "value": "서울시 강남구 삼성동 111"
+      },
+      "createUserWithExtra": {
+        "value": {
+          "email": "swagger@market.com",
+          "password": "12345678",
+          "name": "스웨거",
+          "type": "user",
+          "phone": "01011112222",
+          "address": "서울시 강남구 역삼동 123",
+          "extra": {
+            "gender": "extra에는 프로젝트에서 필요한 아무 속성이나",
+            "age": "필요한 값을",
+            "address": [
+              "넣으면",
+              "됩니다."
+            ],
+            "profileImage": "/uploads/swagger.jpg",
+            "obj": {
+              "hello": "객체로",
+              "hi": "넣어도 됩니다."
             },
-            {
-              "id": 2,
-              "name": "학교",
-              "value": "서울시 강남구 역삼동 222"
+            "addressBook": [
+              {
+                "name": "집",
+                "address": "서울시"
+              },
+              {
+                "name": "회사",
+                "address": "인천시"
+              }
+            ]
+          }
+        }
+      },
+      "createUserRes": {
+        "value": {
+          "ok": 1,
+          "item": {
+            "email": "swagger@market.com",
+            "name": "스웨거",
+            "type": "user",
+            "phone": "01011112222",
+            "address": "서울시 강남구 역삼동 123",
+            "_id": 5,
+            "createdAt": "2023.11.21 14:31:15",
+            "updatedAt": "2023.11.21 14:31:15"
+          }
+        }
+      },
+      "createUserResWithExtra": {
+        "value": {
+          "ok": 1,
+          "item": {
+            "email": "swagger@market.com",
+            "name": "스웨거",
+            "type": "user",
+            "phone": "01011112222",
+            "address": "서울시 강남구 역삼동 123",
+            "extra": {
+              "gender": "extra에는 프로젝트에서 필요한 아무 속성이나",
+              "age": "필요한 값을",
+              "address": [
+                "넣으면",
+                "됩니다."
+              ],
+              "profileImage": "/uploads/swagger.jpg",
+              "obj": {
+                "hello": "객체로",
+                "hi": "넣어도 됩니다."
+              },
+              "addressBook": [
+                {
+                  "name": "집",
+                  "address": "서울시"
+                },
+                {
+                  "name": "회사",
+                  "address": "인천시"
+                }
+              ]
+            },
+            "_id": 5,
+            "createdAt": "2023.11.21 14:33:41",
+            "updatedAt": "2023.11.21 14:33:41"
+          }
+        }
+      },
+      "userInfoResOneAttr": {
+        "value": {
+          "ok": 1,
+          "item": {
+            "name": "스웨거"
+          }
+        }
+      },
+      "userInfoResWithExtra": {
+        "value": {
+          "ok": 1,
+          "item": {
+            "extra": {
+              "addressBook": [
+                {
+                  "name": "집",
+                  "address": "서울시"
+                },
+                {
+                  "name": "회사",
+                  "address": "인천시"
+                }
+              ]
             }
-          ]
-        },
-        "updatedAt": "2023.11.21 20:13:33"
+          }
+        }
+      },
+      "updateUserOneAttr": {
+        "value": {
+          "phone": "01099998888",
+          "name": "스웨거2"
+        }
+      },
+      "updateUserResOneAttr": {
+        "value": {
+          "ok": 1,
+          "updated": {
+            "name": "스웨거2",
+            "phone": "01099998888",
+            "updatedAt": "2023.11.21 20:16:53"
+          }
+        }
+      },
+      "updateUserWithExtra": {
+        "value": {
+          "extra": {
+            "address": [
+              {
+                "id": 1,
+                "name": "회사",
+                "value": "서울시 강남구 삼성동 111"
+              },
+              {
+                "id": 2,
+                "name": "학교",
+                "value": "서울시 강남구 역삼동 222"
+              }
+            ]
+          }
+        }
+      },
+      "updateUserResWithExtra": {
+        "value": {
+          "ok": 1,
+          "updated": {
+            "extra": {
+              "address": [
+                {
+                  "id": 1,
+                  "name": "회사",
+                  "value": "서울시 강남구 삼성동 111"
+                },
+                {
+                  "id": 2,
+                  "name": "학교",
+                  "value": "서울시 강남구 역삼동 222"
+                }
+              ]
+            },
+            "updatedAt": "2023.11.21 20:13:33"
+          }
+        }
       }
     }
   }
