@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
+import createError from 'http-errors';
+
 import logger from '#utils/logger.js';
 import db, { nextSeq } from '#utils/dbutil.js';
 import productModel from '#models/user/product.model.js';
@@ -13,26 +15,30 @@ const buying = {
     orderInfo.createdAt = moment().format('YYYY.MM.DD HH:mm:ss');
 
     const sellerBaseShippingFees = {};
+    const products = [];
 
-    orderInfo.products = await Promise.all(
-      orderInfo.products.map(async ({ _id, count }) => {
-        const product = await productModel.findById(_id);
+    for(let {_id, count} of orderInfo.products){
+      const product = await productModel.findById(_id);
+      if(product){
         const beforeShippingFees = sellerBaseShippingFees[product.seller_id];
         if(beforeShippingFees === undefined){
           sellerBaseShippingFees[product.seller_id] = product.shippingFees;
         }else{
           sellerBaseShippingFees[product.seller_id] = Math.max(beforeShippingFees, product.shippingFees);
         }
-        return {
+        products.push({
           _id,
           count,
           name: product.name,
           image: product.mainImages[0],
           price: product.price * count
-        };
-      })
-    );    
+        });
+      }else{
+        throw createError(422, `상품번호 ${_id}인 상품이 존재하지 않습니다.`);
+      }
+    }
 
+    orderInfo.products = products;
     orderInfo.cost = {
       products: _.sumBy(orderInfo.products, 'price'),
       shippingFees: _.sum(Object.values(sellerBaseShippingFees))
