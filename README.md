@@ -51,7 +51,11 @@ npm run dbinit
 ```
 
 ## API 서버 테스트
-### Postman 설치
+### 자체 제공 API 문서
+* https://localhost/apidocs
+  - 브라우저에서 "연결이 비공개로 설정되어 있지 않습니다." 메세지가 나올 경우 "고급" 버튼을 누른 후 "localhost(안전하지 않음)" 클릭
+
+### Postman
 * https://www.postman.com/downloads 접속 후 다운로드
 - 본인의 OS에 맞는 버전 다운로드 후 기본 설정으로 설치
 
@@ -122,3 +126,9 @@ npm run dbinit
   - Token: {{accessToken}}
   - Send
   - 정상 응답 결과 확인
+
+#### 나머지 API
+* FESP 워크스페이스 > Import > https://raw.githubusercontent.com/uzoolove/FESP01-project/main/api/samples/OpenMarket.postman_collection.json
+  - OpenMarket 컬렉션이 생성되고 테스트용 API가 import됨
+
+
