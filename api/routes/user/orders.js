@@ -11,7 +11,7 @@ const router = express.Router();
 router.post('/', [
   body('products').isArray().withMessage('상품 목록은 배열로 전달해야 합니다.'),
   body('products.*._id').isInt().withMessage('상품 id는 정수만 입력 가능합니다.'),
-  body('products.*.count').isInt().withMessage('상품 수량은 정수만 입력 가능합니다.'),
+  body('products.*.quantity').isInt().withMessage('상품 수량은 정수만 입력 가능합니다.'),
 ], validator.checkResult, async function(req, res, next) {
 
   /*

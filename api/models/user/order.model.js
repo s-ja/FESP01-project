@@ -17,7 +17,7 @@ const buying = {
     const sellerBaseShippingFees = {};
     const products = [];
 
-    for(let {_id, count} of orderInfo.products){
+    for(let {_id, quantity} of orderInfo.products){
       const product = await productModel.findById(_id);
       if(product){
         const beforeShippingFees = sellerBaseShippingFees[product.seller_id];
@@ -28,10 +28,10 @@ const buying = {
         }
         products.push({
           _id,
-          count,
+          quantity,
           name: product.name,
           image: product.mainImages[0],
-          price: product.price * count
+          price: product.price * quantity
         });
       }else{
         throw createError(422, `상품번호 ${_id}인 상품이 존재하지 않습니다.`);
