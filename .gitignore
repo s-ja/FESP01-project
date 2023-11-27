@@ -2,6 +2,9 @@
 ins
 .history
 
+# docs
+docs
+
 # upload files
 public/uploads/*
 !public/uploads/sample*
