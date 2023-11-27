@@ -28,10 +28,10 @@ const authService = {
   verifyToken(token, type='access') {
     logger.trace(arguments);
     if(!token){
-      throw createError(401, 'authorization 헤더가 없습니다.');
+      throw createError(401, 'authorization 헤더가 없습니다.', { errorName: 'EmptyAuthorization' });
     }
 
-    try{      
+    try{
       const payload = jwt.verify(
         token,
         JWTConfig[type].secretKey,
@@ -40,10 +40,11 @@ const authService = {
       return payload;
     }catch(err){
       // 인증 실패
-      logger.log(err);      
+      logger.log(err);
+      err.errorName = err.name;
       // 유효시간이 초과된 경우
       if (err.name === 'TokenExpiredError') {
-        err.message = '토큰이 만료되었습니다.';      
+        err.message = '토큰이 만료되었습니다.';
       } else if (err.name === 'JsonWebTokenError') {
         // 토큰의 비밀키가 일치하지 않는 경우
         err.message = '유효하지 않은 토큰입니다.';
