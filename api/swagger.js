@@ -365,15 +365,15 @@ const doc = {
         "products": [
           {
             "_id": 2,
-            "count": 1
+            "quantity": 1
           },
           {
             "_id": 3,
-            "count": 2
+            "quantity": 2
           },
           {
             "_id": 4,
-            "count": 2
+            "quantity": 2
           }
         ],
         "address": {
@@ -388,21 +388,21 @@ const doc = {
           "products": [
             {
               "_id": 2,
-              "count": 1,
+              "quantity": 1,
               "name": "헬로카봇 스톰다이버",
               "image": "/uploads/sample-diver.jpg",
               "price": 17260
             },
             {
               "_id": 3,
-              "count": 2,
+              "quantity": 2,
               "name": "레고 클래식 라지 조립 박스 10698",
               "image": "/uploads/sample-classic.jpg",
               "price": 97740
             },
             {
               "_id": 4,
-              "count": 2,
+              "quantity": 2,
               "name": "레고 테크닉 42151 부가티 볼리드",
               "image": "/uploads/sample-bugatti.png",
               "price": 90000
