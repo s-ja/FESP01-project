@@ -59,7 +59,7 @@ app.use(function(err, req, res, next){
 
   res.status(status);
   let result = { ok: 0, message };
-  if(status === 422){
+  if(status === 401 || status === 422){
     result = { ...result, ...err };  
   }
   res.json(result);
