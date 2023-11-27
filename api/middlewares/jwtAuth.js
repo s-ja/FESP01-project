@@ -22,7 +22,7 @@ const jwtAuth = {
             next(createError(403, '리소스에 접근할 권한이 없습니다.'));
           }          
         } else {
-          next(createError(401, 'authorization 헤더가 없습니다.'));
+          next(createError(401, 'authorization 헤더가 없습니다.', { errorName: 'EmptyAuthorization' }));
         }
       } catch (err) {
         next(err);
