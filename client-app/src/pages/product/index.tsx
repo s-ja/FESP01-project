@@ -1,10 +1,16 @@
 import { Outlet, useLocation } from "react-router-dom";
 import queryString from 'query-string';
+import { codeState, type CategoryCodeType, type CodeListType } from "../../recoil/code/atoms";
+import { useRecoilValue } from "recoil";
+import _ from 'lodash';
 
 const Product = function(){
+  const codeList = useRecoilValue(codeState) as CodeListType;
   const location = useLocation();
   const menu = queryString.parse(location.search).menu;
-  let title = '상품 메뉴';
+  const category = queryString.parse(location.search).category || queryString.parse(location.search).subCategory;
+
+  let title = '상품';
   switch(menu){
     case 'new':
       title = '신상품';
@@ -15,6 +21,13 @@ const Product = function(){
     case 'best':
       title = '베스트';
       break;
+  }
+
+  if(category){
+    const categoryCode = _.find(codeList.productCategory.codes, { code: category }) as CategoryCodeType;
+    if(categoryCode){
+      title = categoryCode.value;
+    }
   }
 
   return (

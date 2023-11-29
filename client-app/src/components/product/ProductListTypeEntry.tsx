@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 
-export interface ProductItem {
+export interface ProductItemType {
   _id: number;
   price: number;
   shippingFees: number;
   show?: boolean;
   active?: boolean;
   name: string;
+  quantity: number;
+  buyQuantity: number;
   mainImages: string[];
   content: string;
   createdAt?: string;
@@ -15,7 +17,7 @@ export interface ProductItem {
 }
 
 type Props = {
-  product: ProductItem
+  product: ProductItemType
 };
 
 const ProductEntry = function({ product }: Props){

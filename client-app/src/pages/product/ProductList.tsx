@@ -1,31 +1,43 @@
 import { useLocation } from "react-router";
-import ProductEntry, { ProductItem } from "../../components/product/ProductListTypeEntry";
+import ProductEntry, { ProductItemType } from "../../components/product/ProductListTypeEntry";
 import queryString from "query-string";
 import { useEffect } from "react";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import useCustomAxios from '../../hooks/useCustomAxios';
+import Category from "../../components/product/Category";
 
-interface ProductRes {
-  ok: 0 | 1,
-  item: [
-    ProductItem
-  ]
+interface ProductResType {
+  ok: 0 | 1;
+  item?: [
+    ProductItemType
+  ];
+  message?: string;
 }
 
 const ProductList = function(){
   const location = useLocation();
   const menu = queryString.parse(location.search).menu;
-  let menuSearch = {};
+  const category = queryString.parse(location.search).category;
+  const subCategory = queryString.parse(location.search).subCategory;
+  let filter = {};
   switch(menu){
     case 'new':
-      menuSearch = {"extra.isNew": true};
+      filter = {"extra.isNew": true};
       break;
     case 'kidult':
-      menuSearch = {"extra.category.0": "PC03"};
+      filter = {"extra.category.0": "PC03"};
       break;
     case 'best':
-      menuSearch = {"extra.isBest": true};
+      filter = {"extra.isBest": true};
       break;
+  }
+
+  if(category){
+    filter = {"extra.category.0": category};
+  }
+
+  if(subCategory){
+    filter = {"extra.category.1": subCategory};
   }
 
   const axios = useCustomAxios();
@@ -35,26 +47,34 @@ const ProductList = function(){
     return ()=>console.log('ProductList 언마운트');
   });
 
-  const {isLoading, data, error} = useSuspenseQuery({
-    queryKey: ['products', menuSearch], // 쿼리키를 파라미터마다 지정(검색어, 페이지 등)
-    queryFn: () => axios.get<ProductRes>(`/products?delay=1000`, {params: {extra: JSON.stringify(menuSearch)}}),
+  const {isLoading, data, error} = useQuery({
+    queryKey: ['products', filter], // 쿼리키를 파라미터마다 지정(검색어, 페이지 등)
+    queryFn: () => axios.get<ProductResType>(`/products?delay=1000`, {params: {extra: JSON.stringify(filter)}}),
     select: data => data.data.item,
     staleTime: 1000*2,
     refetchOnWindowFocus: false,
+    retry: false
   });
   console.log({isLoading, data, error});
 
-  const itemList = data.map(product => {
+  const itemList = data?.map(product => {
     return <ProductEntry key={product._id} product={product} />;
   });
   
   return (
     <div>
-      { error && error.message }
-    <ul>
-      { itemList }
-    </ul>
-    </div>    
+      <div>
+        <Category />
+      </div>
+      <h3>상품 목록</h3>
+      <div>
+        { error && error.message }
+        <ul>
+          { itemList }
+        </ul>
+      </div>   
+    </div>
+     
   );
 };
 

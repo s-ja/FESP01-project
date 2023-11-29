@@ -14,7 +14,9 @@ interface LoginRes {
       phone: string,
       address: string,
       type: 'user' | 'seller' | 'admin',
-      extra: object;
+      extra: {
+        level: string;
+      };
       token: {
         accessToken: string;
         refreshToken: string;
@@ -52,10 +54,20 @@ const Login = function(){
     mutationFn: (loginInfo: LoginInfo) => {
       return axios.post('/users/login', loginInfo);
     },
+    retry: false,
     onSuccess: (data: LoginRes) => {
       console.log(data);
-      if(data){
-        setUser(data.data?.item);
+      if(data?.data?.item){
+        const userInfo = data.data.item;
+        localStorage.accessToken = userInfo.token.accessToken;
+        localStorage.refreshToken = userInfo.token.refreshToken;
+        
+        setUser({
+          _id: userInfo._id,
+          name: userInfo.name,
+          type: userInfo.type,
+          level: userInfo.extra.level,
+        });
         alert('로그인 되었습니다.');
         // navigate(`/orders/${data.item._id}`);
       }
