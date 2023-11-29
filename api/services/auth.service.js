@@ -41,7 +41,6 @@ const authService = {
     }catch(err){
       // 인증 실패
       logger.log(err);
-      err.errorName = err.name;
       // 유효시간이 초과된 경우
       if (err.name === 'TokenExpiredError') {
         err.message = '토큰이 만료되었습니다.';
@@ -51,7 +50,7 @@ const authService = {
       } else {
         err.message = '토큰 인증에 실패했습니다.';
       }
-      throw createError(401, err.message);
+      throw createError(401, err.message, { errorName: err.name });
     }
   },
 
