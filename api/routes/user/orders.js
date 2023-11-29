@@ -15,6 +15,8 @@ router.post('/', [
 ], validator.checkResult, async function(req, res, next) {
 
   /*
+    #swagger.auto = false
+
     #swagger.tags = ['구매']
     #swagger.summary  = '상품 구매 - 1차'
     #swagger.description = '상품을 구매한다.'
@@ -68,6 +70,7 @@ router.post('/', [
   */
 
   try{
+    req.body.state = 'OS020'; // 결제 완료 상태로 주문
     const item = await model.create({ ...req.body, user_id: req.user._id });
     res.json({ok: 1, item});
   }catch(err){
@@ -113,7 +116,7 @@ try{
   }
 
   // 정렬 옵션
-  let sortBy = {};
+  let sortBy = { createdAt: -1 };
   const sort = req.query.sort;
 
   if(sort){
