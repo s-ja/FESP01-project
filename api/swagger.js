@@ -101,6 +101,24 @@ const doc = {
           },
         },
         required: ['email', 'password', 'name', 'type']
+      },
+      createCode: {
+        type: 'object',
+        properties: {
+          _id: {
+            type: 'string',
+            description: '코드 아이디'
+          },
+          title: {
+            type: 'string',
+            description: '코드명'
+          },
+          codes: {
+            type: 'object',
+            description: '코드값 배열'
+          }
+        },
+        required: ['_id', 'title', 'codes']
       }
     },
     schemas: {
@@ -118,7 +136,8 @@ const doc = {
       },
       error401: {
         "ok": 0,
-        "message": "{인증 실패 사유}"
+        "message": "{인증 실패 사유}",
+        "errorName": "EmptyAuthorization | TokenExpiredError | JsonWebTokenError"
       },
       error403: {
         "ok": 0,
@@ -130,7 +149,7 @@ const doc = {
       },
       error409: {
         "ok": 0,
-        "message": "이미 등록된 이메일입니다."
+        "message": "이미 등록된 리소스입니다."
       },
       error422: {
         "ok": 0,
@@ -364,14 +383,6 @@ const doc = {
       orderCreate: {
         "products": [
           {
-            "_id": 2,
-            "quantity": 1
-          },
-          {
-            "_id": 3,
-            "quantity": 2
-          },
-          {
             "_id": 4,
             "quantity": 2
           }
@@ -386,20 +397,6 @@ const doc = {
         "ok": 1,
         "item": {
           "products": [
-            {
-              "_id": 2,
-              "quantity": 1,
-              "name": "헬로카봇 스톰다이버",
-              "image": "/uploads/sample-diver.jpg",
-              "price": 17260
-            },
-            {
-              "_id": 3,
-              "quantity": 2,
-              "name": "레고 클래식 라지 조립 박스 10698",
-              "image": "/uploads/sample-classic.jpg",
-              "price": 97740
-            },
             {
               "_id": 4,
               "quantity": 2,
@@ -426,6 +423,164 @@ const doc = {
     },
 
     examples: {
+      createUserLevelCode: {
+        "_id": "userLevel",
+        "title": "회원 등급",
+        "codes": [
+          {
+            "sort": 1,
+            "code": "UL01",
+            "value": "일반"
+          }, {
+            "sort": 2,
+            "code": "UL02",
+            "value": "프리미엄"
+          }, {
+            "sort": 3,
+            "code": "UL03",
+            "value": "VIP"
+          }
+        ]
+      },
+      updateeUserLevelCode: {
+        "title": "회원 등급",
+        "codes": [
+          {
+            "sort": 1,
+            "code": "UL01",
+            "value": "일반"
+          }, {
+            "sort": 2,
+            "code": "UL02",
+            "value": "프리미엄"
+          }, {
+            "sort": 3,
+            "code": "UL03",
+            "value": "VIP"
+          }
+        ]
+      },
+      createCategoryCode: {
+        "_id": "productCategory",
+        "title": "상품 카테고리",
+        "codes": [
+          {
+            "sort": 1,
+            "code": "PC0102",
+            "value": "보드게임",
+            "parent": "PC01",
+            "depth": 2
+          },
+          {
+            "sort": 1,
+            "code": "PC02",
+            "value": "스포츠",
+            "depth": 1
+          },
+          {
+            "sort": 1,
+            "code": "PC0201",
+            "value": "축구",
+            "parent": "PC02",
+            "depth": 2
+          },
+          {
+            "sort": 1,
+            "code": "PC0301",
+            "value": "원격 조종",
+            "parent": "PC03",
+            "depth": 2
+          },
+          {
+            "sort": 2,
+            "code": "PC01",
+            "value": "어린이",
+            "depth": 1
+          },
+          {
+            "sort": 2,
+            "code": "PC0103",
+            "value": "레고",
+            "parent": "PC01",
+            "depth": 2
+          },
+          {
+            "sort": 2,
+            "code": "PC0203",
+            "value": "농구",
+            "parent": "PC02",
+            "depth": 2
+          },
+          {
+            "sort": 2,
+            "code": "PC0302",
+            "value": "퍼즐",
+            "parent": "PC03",
+            "depth": 2
+          },
+          {
+            "sort": 3,
+            "code": "PC0101",
+            "value": "퍼즐",
+            "parent": "PC01",
+            "depth": 2
+          },
+          {
+            "sort": 3,
+            "code": "PC0202",
+            "value": "야구",
+            "parent": "PC02",
+            "depth": 2
+          },
+          {
+            "sort": 3,
+            "code": "PC03",
+            "value": "어른",
+            "parent": "PC03",
+            "depth": 1
+          },
+          {
+            "sort": 3,
+            "code": "PC0303",
+            "value": "레고",
+            "parent": "PC03",
+            "depth": 2
+          },
+          {
+            "sort": 4,
+            "code": "PC0104",
+            "value": "로봇",
+            "parent": "PC01",
+            "depth": 2
+          }
+        ]
+      },
+
+      createCodeRes: {
+        "ok": 1,
+        "item": {
+          "_id": "userLevel",
+          "title": "회원 등급",
+          "codes": [
+            {
+              "sort": 1,
+              "code": "UL01",
+              "value": "일반"
+            },
+            {
+              "sort": 2,
+              "code": "UL02",
+              "value": "프리미엄"
+            },
+            {
+              "sort": 3,
+              "code": "UL03",
+              "value": "VIP"
+            }
+          ]
+        }
+      },
+
       createUser: {
         email: 'swagger@market.com',
         password: '12345678',
@@ -596,7 +751,7 @@ const doc = {
 
 
 const outputFile = './swagger-output.json';
-const routes = ['./routes/user/index.js', './routes/seller/index.js'];
+const routes = ['./routes/user/index.js', './routes/seller/index.js', './routes/admin/index.js'];
 
 
 const options = {

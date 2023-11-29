@@ -659,9 +659,6 @@
         "summary": "상품 구매 - 1차",
         "description": "상품을 구매한다.",
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "201": {
             "description": "성공",
             "content": {
@@ -788,6 +785,50 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/codes/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/codes/{_id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parent",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -1076,6 +1117,197 @@
           }
         ]
       }
+    },
+    "/admin/codes/": {
+      "post": {
+        "tags": [
+          "코드"
+        ],
+        "summary": "코드 등록 - 2차",
+        "description": "코드를 등록합니다.<br>코드 등록을 완료한 후 코드 정보를 반환합니다.",
+        "responses": {
+          "201": {
+            "description": "성공",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "회원 등급 코드": {
+                    "$ref": "#/components/examples/createCodeRes"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error401"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "이미 등록된 리소스",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error409"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "입력값 검증 오류",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error422"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 에러",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error500"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Access Token": []
+          }
+        ],
+        "requestBody": {
+          "description": "코드 정보",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/createCode"
+              },
+              "examples": {
+                "회원 등급 코드": {
+                  "$ref": "#/components/examples/createUserLevelCode"
+                },
+                "카테고리 코드": {
+                  "$ref": "#/components/examples/createCategoryCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/codes/{_id}": {
+      "put": {
+        "tags": [
+          "코드"
+        ],
+        "summary": "코드 수정 - 2차",
+        "description": "코드를 수정한다.",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "회원 id",
+            "example": "userLevel"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "기본 속성": {
+                    "$ref": "#/components/examples/updateeUserLevelCode"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error401"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "코드가 존재하지 않거나 접근 권한 없음",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 에러",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error500"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Access Token": []
+          }
+        ],
+        "requestBody": {
+          "description": "수정할 코드 정보",
+          "required": true,
+          "content": {
+            "application/json": {
+              "examples": {
+                "기본 속성": {
+                  "$ref": "#/components/examples/createUserLevelCode"
+                },
+                "extra 속성": {
+                  "$ref": "#/components/examples/updateUserWithExtra"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1139,6 +1371,10 @@
           "message": {
             "type": "string",
             "example": "{인증 실패 사유}"
+          },
+          "errorName": {
+            "type": "string",
+            "example": "EmptyAuthorization | TokenExpiredError | JsonWebTokenError"
           }
         }
       },
@@ -1177,7 +1413,7 @@
           },
           "message": {
             "type": "string",
-            "example": "이미 등록된 이메일입니다."
+            "example": "이미 등록된 리소스입니다."
           }
         }
       },
@@ -2118,9 +2354,199 @@
           "name",
           "type"
         ]
+      },
+      "createCode": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "코드 아이디"
+          },
+          "title": {
+            "type": "string",
+            "description": "코드명"
+          },
+          "codes": {
+            "type": "object",
+            "description": "코드값 배열"
+          }
+        },
+        "required": [
+          "_id",
+          "title",
+          "codes"
+        ]
       }
     },
     "examples": {
+      "createUserLevelCode": {
+        "value": {
+          "_id": "userLevel",
+          "title": "회원 등급",
+          "codes": [
+            {
+              "sort": 1,
+              "code": "UL01",
+              "value": "일반"
+            },
+            {
+              "sort": 2,
+              "code": "UL02",
+              "value": "프리미엄"
+            },
+            {
+              "sort": 3,
+              "code": "UL03",
+              "value": "VIP"
+            }
+          ]
+        }
+      },
+      "updateeUserLevelCode": {
+        "value": {
+          "title": "회원 등급",
+          "codes": [
+            {
+              "sort": 1,
+              "code": "UL01",
+              "value": "일반"
+            },
+            {
+              "sort": 2,
+              "code": "UL02",
+              "value": "프리미엄"
+            },
+            {
+              "sort": 3,
+              "code": "UL03",
+              "value": "VIP"
+            }
+          ]
+        }
+      },
+      "createCategoryCode": {
+        "value": {
+          "_id": "productCategory",
+          "title": "상품 카테고리",
+          "codes": [
+            {
+              "sort": 1,
+              "code": "PC0102",
+              "value": "보드게임",
+              "parent": "PC01",
+              "depth": 2
+            },
+            {
+              "sort": 1,
+              "code": "PC02",
+              "value": "스포츠",
+              "depth": 1
+            },
+            {
+              "sort": 1,
+              "code": "PC0201",
+              "value": "축구",
+              "parent": "PC02",
+              "depth": 2
+            },
+            {
+              "sort": 1,
+              "code": "PC0301",
+              "value": "원격 조종",
+              "parent": "PC03",
+              "depth": 2
+            },
+            {
+              "sort": 2,
+              "code": "PC01",
+              "value": "어린이",
+              "depth": 1
+            },
+            {
+              "sort": 2,
+              "code": "PC0103",
+              "value": "레고",
+              "parent": "PC01",
+              "depth": 2
+            },
+            {
+              "sort": 2,
+              "code": "PC0203",
+              "value": "농구",
+              "parent": "PC02",
+              "depth": 2
+            },
+            {
+              "sort": 2,
+              "code": "PC0302",
+              "value": "퍼즐",
+              "parent": "PC03",
+              "depth": 2
+            },
+            {
+              "sort": 3,
+              "code": "PC0101",
+              "value": "퍼즐",
+              "parent": "PC01",
+              "depth": 2
+            },
+            {
+              "sort": 3,
+              "code": "PC0202",
+              "value": "야구",
+              "parent": "PC02",
+              "depth": 2
+            },
+            {
+              "sort": 3,
+              "code": "PC03",
+              "value": "어른",
+              "parent": "PC03",
+              "depth": 1
+            },
+            {
+              "sort": 3,
+              "code": "PC0303",
+              "value": "레고",
+              "parent": "PC03",
+              "depth": 2
+            },
+            {
+              "sort": 4,
+              "code": "PC0104",
+              "value": "로봇",
+              "parent": "PC01",
+              "depth": 2
+            }
+          ]
+        }
+      },
+      "createCodeRes": {
+        "value": {
+          "ok": 1,
+          "item": {
+            "_id": "userLevel",
+            "title": "회원 등급",
+            "codes": [
+              {
+                "sort": 1,
+                "code": "UL01",
+                "value": "일반"
+              },
+              {
+                "sort": 2,
+                "code": "UL02",
+                "value": "프리미엄"
+              },
+              {
+                "sort": 3,
+                "code": "UL03",
+                "value": "VIP"
+              }
+            ]
+          }
+        }
+      },
       "createUser": {
         "value": {
           "email": "swagger@market.com",
