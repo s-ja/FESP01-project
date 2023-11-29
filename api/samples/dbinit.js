@@ -86,6 +86,7 @@ async function registUser(){
       updatedAt: getTime(-100, -60*60*3),
       extra: {
         birthday: '03-23',
+        level: 'UL03',
         addressBook: [
           {
             id: 1,
@@ -112,6 +113,7 @@ async function registUser(){
       updatedAt: getTime(-30, -60*60*3),
       extra: {
         birthday: '11-23',
+        level: 'UL01',
         addressBook: [
           {
             id: 1,
@@ -138,6 +140,7 @@ async function registUser(){
       updatedAt: getTime(-30, -60*20),
       extra: {
         birthday: '11-24',
+        level: 'UL02',
         addressBook: [
           {
             id: 1,
@@ -164,6 +167,7 @@ async function registUser(){
       updatedAt: getTime(-10, -60*60*12),
       extra: {
         birthday: '11-30',
+        level: 'UL01',
         address: [
           {
             id: 1,
@@ -194,6 +198,8 @@ async function registProduct(){
       show: true,
       active: true,
       name: '캥거루 스턴트 독 로봇완구',
+      quantity: 320,
+      buyQuantity: 310,
       mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-dog.jpg`],
       content: `
         <div class="product-detail">
@@ -205,8 +211,6 @@ async function registProduct(){
         isNew: true,
         isBest: true,
         category: ['PC03', 'PC0301'],
-        quantity: 320,
-        buyQuantity: 20,
         sort: 5,
       }
 		},
@@ -218,6 +222,8 @@ async function registProduct(){
       show: true,
       active: true,
       name: '헬로카봇 스톰다이버',
+      quantity: 200,
+      buyQuantity: 198,
       mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-diver.jpg`],
       content: `
         <div class="product-detail">
@@ -229,8 +235,6 @@ async function registProduct(){
         isNew: false,
         isBest: true,
         category: ['PC01', 'PC0103'],
-        quantity: 200,
-        buyQuantity: 40,
         sort: 4,
       }
 		},
@@ -242,6 +246,8 @@ async function registProduct(){
       show: true,
       active: true,
       name: '레고 클래식 라지 조립 박스 10698',
+      quantity: 100,
+      buyQuantity: 99,
       mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-classic.jpg`],
       content: `
         <div class="product-detail">
@@ -253,8 +259,6 @@ async function registProduct(){
         isNew: true,
         isBest: true,
         category: ['PC01', 'PC0103'],
-        quantity: 100,
-        buyQuantity: 30,
         sort: 3,
       }
 		},
@@ -266,6 +270,8 @@ async function registProduct(){
       show: true,
       active: true,
       name: '레고 테크닉 42151 부가티 볼리드',
+      quantity: 100,
+      buyQuantity: 89,
       mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-bugatti.png`],
       content: `
         <div class="product-detail">
@@ -277,8 +283,6 @@ async function registProduct(){
         isNew: false,
         isBest: true,
         category: ['PC03', 'PC0303'],
-        quantity: 100,
-        buyQuantity: 30,
         sort: 1,
       }
 		},
@@ -290,6 +294,8 @@ async function registProduct(){
       show: true,
       active: true,
       name: '레고 마인크래프트 21246 깊고 어두운 전장',
+      quantity: 100,
+      buyQuantity: 98,
       mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-minecraft.png`],
       content: `
         <div class="product-detail">
@@ -301,9 +307,7 @@ async function registProduct(){
         isNew: true,
         isBest: false,
         today: true,
-        category: ['PC01', 'PC0303'],
-        quantity: 100,
-        buyQuantity: 30,
+        category: ['PC03', 'PC0303'],
         sort: 2,
       }
 		},
@@ -315,6 +319,8 @@ async function registProduct(){
       show: false,
       active: true,
       name: '레고 마블 76247 헐크버스터: 와칸다의 전투',
+      quantity: 100,
+      buyQuantity: 99,
       mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-hulk.png`],
       content: `
         <div class="product-detail">
@@ -326,8 +332,6 @@ async function registProduct(){
         isNew: false,
         isBest: false,
         category: ['PC03', 'PC0303'],
-        quantity: 100,
-        buyQuantity: 30,
         sort: 1,
       }
 		},
@@ -339,6 +343,8 @@ async function registProduct(){
       show: true,
       active: true,
       name: '할리갈리 보드게임',
+      quantity: 100,
+      buyQuantity: 98,
       mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-halligalli.jpg`],
       content: `
         <div class="product-detail">
@@ -350,8 +356,6 @@ async function registProduct(){
         isNew: false,
         isBest: true,
         category: ['PC01', 'PC0102'],
-        quantity: 100,
-        buyQuantity: 30,
         sort: 3,
       }
 		},
@@ -363,6 +367,8 @@ async function registProduct(){
       show: true,
       active: true,
       name: '루미큐브 클래식',
+      quantity: 100,
+      buyQuantity: 97,
       mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-rummikub.png`],
       content: `
         <div class="product-detail">
@@ -374,8 +380,6 @@ async function registProduct(){
         isNew: true,
         isBest: true,
         category: ['PC01', 'PC0102'],
-        quantity: 100,
-        buyQuantity: 30,
         sort: 8,
       }
 		},
@@ -387,6 +391,8 @@ async function registProduct(){
       show: true,
       active: true,
       name: '짱구는 못말려 숲속 산책 직소퍼즐',
+      quantity: 100,
+      buyQuantity: 96,
       mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-jjangu.jpg`],
       content: `
         <div class="product-detail">
@@ -399,8 +405,6 @@ async function registProduct(){
         isBest: false,
         today: true,
         category: ['PC03', 'PC0302'],
-        quantity: 100,
-        buyQuantity: 30,
         sort: 2,
       }
 		},
@@ -412,6 +416,8 @@ async function registProduct(){
       show: true,
       active: true,
       name: '라푼젤 그녀의 꿈 직소퍼즐 KD-1000-001 + 그림 엽서(랜덤) + 품질보증서',
+      quantity: 100,
+      buyQuantity: 95,
       mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-rapunzel.jpg`],
       content: `
         <div class="product-detail">
@@ -423,8 +429,6 @@ async function registProduct(){
         isNew: false,
         isBest: true,
         category: ['PC01', 'PC0101'],
-        quantity: 100,
-        buyQuantity: 30,
         sort: 4,
       }
 		},
@@ -436,6 +440,8 @@ async function registProduct(){
       show: true,
       active: true,
       name: 'KC인증 스키비디 토일렛 피규어 블럭 8종 중국 호환 레고 블록 장난감 어린이 선물',
+      quantity: 100,
+      buyQuantity: 94,
       mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi01.jpg`, `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi02.jpg`],
       content: `
         <div align="center"><p>*크리스마스 배송 안내</p></div>
@@ -453,8 +459,6 @@ async function registProduct(){
         isBest: false,
         today: true,
         category: ['PC01', 'PC0103'], // 어린이 > 레고
-        quantity: 100,
-        buyQuantity: 30,
         sort: 6,
       }
 		},
@@ -466,6 +470,8 @@ async function registProduct(){
       show: true,
       active: true,
       name: '스키비디 토일렛 봉제 인형 (25cm-30cm) 시리즈 크리스마스 선물',
+      quantity: 999,
+      buyQuantity: 800,
       mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi11.jpg`],
       content: `
         <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi12.jpg"></div>
@@ -481,8 +487,6 @@ async function registProduct(){
         isNew: true,
         isBest: true,
         category: ['PC01', 'PC0103'], // 어린이 > 레고
-        quantity: 999,
-        buyQuantity: 230,
         sort: 7,
       },
 		},
@@ -494,6 +498,8 @@ async function registProduct(){
       show: true,
       active: true,
       name: 'KC인증 스키비디 토일렛 피규어 블럭 4종 중국 호환 레고 블록 장난감 어린이 선물',
+      quantity: 99,
+      buyQuantity: 94,
       mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi21.jpg`],
       content: `
         <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi22.jpg"></div>
@@ -507,8 +513,6 @@ async function registProduct(){
         isNew: true,
         isBest: false,
         category: ['PC01', 'PC0103'], // 어린이 > 레고
-        quantity: 99,
-        buyQuantity: 21,
         sort: 6,
       },      
 		},
@@ -520,6 +524,8 @@ async function registProduct(){
       show: true,
       active: true,
       name: '푸쉬팝게임기 팝잇 푸시팝 게임기 두더지게임 핑거 뽁뽁이 애니멀 1+1',
+      quantity: 300,
+      buyQuantity: 298,
       mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop01.jpg`, `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop02.jpg`, `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop03.jpg`],
       content: `
         <div align="center"><p>푸쉬팝게임기 팝잇 푸시팝 게임기 두더지게임 핑거 뽁뽁이 애니멀을 구매하시는 모든 분께 사은품(무작위)으로 하나 더 드립니다.</p></div>
@@ -534,8 +540,6 @@ async function registProduct(){
         isNew: false,
         isBest: true,
         category: ['PC01', 'PC0102'], // 어린이 > 보드게임
-        quantity: 300,
-        buyQuantity: 120,
         sort: 5,
       },
 		},
@@ -590,6 +594,7 @@ async function registOrder(){
 		{
 			_id: await nextSeq('order'),
       user_id: 4,
+      state: 'OS010',
       products: [
         {
           _id: 2,
@@ -609,11 +614,13 @@ async function registOrder(){
         name: '회사',
         value: '서울시 강남구 신사동 234',
       },
-			createdAt: getTime(-6, -60*60*3)
+			createdAt: getTime(-6, -60*60*3),
+      updatedAt: getTime(-6, -60*60*3)
 		},
     {
 			_id: await nextSeq('order'),
       user_id: 2,
+      state: 'OS040',
       products: [
         {
           _id: 3,
@@ -640,11 +647,13 @@ async function registOrder(){
         name: '집',
         value: '서울시 강남구 역삼동 123',
       },
-			createdAt: getTime(-4, -60*60*22)
+			createdAt: getTime(-4, -60*60*22),
+      updatedAt: getTime(-2, -60*60*12)
 		},
     {
 			_id: await nextSeq('order'),
       user_id: 4,
+      state: 'OS310',
       products: [
         {
           _id: 4,
@@ -664,7 +673,8 @@ async function registOrder(){
         name: '학교',
         value: '서울시 강남구 역삼동 234',
       },
-			createdAt: getTime(-3, -60*60*18)
+			createdAt: getTime(-3, -60*60*18),
+      updatedAt: getTime(-1, -60*60*1)
 		},
 	];
 
@@ -714,110 +724,153 @@ async function registCode(){
           sort: 2,
           code: 'PC01',
           value: '어린이',
-          extra: {
-            depth: 1
-          }
+          depth: 1
         },
         {
           sort: 3,
           code: 'PC0101',
           value: '퍼즐',
-          extra: {
-            depth: 2
-          }
+          parent: 'PC01',
+          depth: 2
         },
         {
           sort: 1,
           code: 'PC0102',
           value: '보드게임',
-          extra: {
-            depth: 2
-          }
+          parent: 'PC01',
+          depth: 2
         },
         {
           sort: 2,
           code: 'PC0103',
           value: '레고',
-          extra: {
-            depth: 2
-          }
+          parent: 'PC01',
+          depth: 2
         },
         {
           sort: 4,
           code: 'PC0104',
           value: '로봇',
-          extra: {
-            depth: 2
-          }
+          parent: 'PC01',
+          depth: 2
         },
 
         {
           sort: 1,
           code: 'PC02',
           value: '스포츠',
-          extra: {
-            depth: 1
-          }
+          depth: 1
         },
         {
           sort: 1,
           code: 'PC0201',
           value: '축구',
-          extra: {
-            depth: 2
-          }
+          parent: 'PC02',
+          depth: 2
         },
         {
           sort: 3,
           code: 'PC0202',
           value: '야구',
-          extra: {
-            depth: 2
-          }
+          parent: 'PC02',
+          depth: 2
         },
         {
           sort: 2,
           code: 'PC0203',
           value: '농구',
-          extra: {
-            depth: 2
-          }
+          parent: 'PC02',
+          depth: 2
         },
 
         {
           sort: 3,
           code: 'PC03',
           value: '어른',
-          extra: {
-            depth: 1
-          }
+          parent: 'PC03',
+          depth: 1
         },        
         {
           sort: 1,
           code: 'PC0301',
           value: '원격 조종',
-          extra: {
-            depth: 2
-          }
+          parent: 'PC03',
+          depth: 2
         },
         {
           sort: 2,
           code: 'PC0302',
           value: '퍼즐',
-          extra: {
-            depth: 2
-          }
+          parent: 'PC03',
+          depth: 2
         },
         {
           sort: 3,
           code: 'PC0303',
           value: '레고',
-          extra: {
-            depth: 2
-          }
+          parent: 'PC03',
+          depth: 2
         },
       ]
-		}
+		}, {
+    _id: 'orderState',
+      title: '주문 상태',
+      codes: [
+        {
+          sort: 1,
+          code: 'OS010',
+          value: '주문 완료'
+        }, {
+          sort: 2,
+          code: 'OS020',
+          value: '결제 완료'
+        }, {
+          sort: 3,
+          code: 'OS030',
+          value: '배송 준비중'
+        }, {
+          sort: 4,
+          code: 'OS040',
+          value: '배송 완료'
+        }, {
+          sort: 5,
+          code: 'OS110',
+          value: '반품 요청'
+        }, {
+          sort: 6,
+          code: 'OS120',
+          value: '반품 처리중'
+        }, {
+          sort: 7,
+          code: 'OS130',
+          value: '반품 완료'
+        }, {
+          sort: 8,
+          code: 'OS210',
+          value: '교환 요청'
+        }, {
+          sort: 9,
+          code: 'OS220',
+          value: '교환 처리중'
+        }, {
+          sort: 10,
+          code: 'OS230',
+          value: '교환 완료'
+        }, {
+          sort: 11,
+          code: 'OS310',
+          value: '환불 요청'
+        }, {
+          sort: 12,
+          code: 'OS320',
+          value: '환불 처리중'
+        }, {
+          sort: 13,
+          code: 'OS330',
+          value: '환불 완료'
+        }
+      ]
+    }
 	];
 	await db.code.insertMany(data);	
 }
