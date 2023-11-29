@@ -12,7 +12,7 @@ const buying = {
   async create(orderInfo){
     logger.trace(arguments);
     orderInfo._id = await nextSeq('order');
-    orderInfo.createdAt = moment().format('YYYY.MM.DD HH:mm:ss');
+    orderInfo.updatedAt = orderInfo.createdAt = moment().format('YYYY.MM.DD HH:mm:ss');
 
     const sellerBaseShippingFees = {};
     const products = [];
@@ -20,19 +20,25 @@ const buying = {
     for(let {_id, quantity} of orderInfo.products){
       const product = await productModel.findById(_id);
       if(product){
-        const beforeShippingFees = sellerBaseShippingFees[product.seller_id];
-        if(beforeShippingFees === undefined){
-          sellerBaseShippingFees[product.seller_id] = product.shippingFees;
+        if(product.quantity-product.buyQuantity >= quantity){
+          // 상품의 구매된 수량 수정
+          db.product.updateOne({ _id }, { $set: { buyQuantity: product.buyQuantity+quantity } });
+          const beforeShippingFees = sellerBaseShippingFees[product.seller_id];
+          if(beforeShippingFees === undefined){
+            sellerBaseShippingFees[product.seller_id] = product.shippingFees;
+          }else{
+            sellerBaseShippingFees[product.seller_id] = Math.max(beforeShippingFees, product.shippingFees);
+          }
+          products.push({
+            _id,
+            quantity,
+            name: product.name,
+            image: product.mainImages[0],
+            price: product.price * quantity
+          });
         }else{
-          sellerBaseShippingFees[product.seller_id] = Math.max(beforeShippingFees, product.shippingFees);
+          throw createError(422, `[${product.name}] 상품의 구매 가능한 수량은 ${product.quantity-product.buyQuantity}개 입니다.`);
         }
-        products.push({
-          _id,
-          quantity,
-          name: product.name,
-          image: product.mainImages[0],
-          price: product.price * quantity
-        });
       }else{
         throw createError(422, `상품번호 ${_id}인 상품이 존재하지 않습니다.`);
       }
