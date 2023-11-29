@@ -22,10 +22,16 @@ const product = {
     logger.trace(arguments);
     const query = { active: true, ...search };
     if(sellerId){
+      // 판매자가 조회할 경우 자신의 상품만 조회
       query['seller_id'] = sellerId;
     }else{
+      // 일반 회원이 조회할 경우
       query['show'] = true;
+      query['$expr'] = {
+        '$gt': ['$quantity', '$buyQuantity']
+      };
     }
+    
     logger.debug(query);
     const list = await db.product.find(query).project({ content: 0 }).sort(sortBy).toArray();
     logger.debug(list.length, list);
