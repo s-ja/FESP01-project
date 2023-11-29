@@ -5,6 +5,9 @@ ins
 # docs
 docs
 
+# vscode settings
+.vscode
+
 # upload files
 public/uploads/*
 !public/uploads/sample*
