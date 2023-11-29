@@ -467,6 +467,9 @@ router.patch('/:_id', jwtAuth.auth('user'), async function(req, res, next) {
   */
   try{
     if(req.user.type === 'admin' || req.params._id == req.user._id){
+      if(req.user.type !== 'admin'){ // 관리자가 아니라면 타입은 수정 못함
+        delete req.body.type; 
+      }
       const result = await model.update(Number(req.params._id), req.body);
       res.json({ok: 1, updated: result});
     }else{
