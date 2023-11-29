@@ -58,7 +58,44 @@
 			"name": "파일",
 			"item": [
 				{
-					"name": "[1차] 파일 업로드",
+					"name": "[1차] 파일 업로드(한개)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "attach",
+									"type": "file",
+									"src": "/C:/FESP/sample-dog.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/files",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"files"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[1차] 파일 업로드(여러개) - 구현예정",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -337,7 +374,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"phone\": \"01099998888\",\r\n    \"name\": \"네오2\"\r\n}",
+									"raw": "{\r\n    \"phone\": \"01099998888\",\r\n    \"name\": \"네오2\",\r\n    \"type\": \"admin\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -440,7 +477,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/products?minPrice=10000&maxPrice=60000&minShippingFees=0&maxShippingFees=3000&keyword=퍼즐&seller_id=3",
+									"raw": "{{url}}/products?minPrice=10000&maxPrice=60000&minShippingFees=0&maxShippingFees=3000&keyword=헐크&seller_id=3",
 									"host": [
 										"{{url}}"
 									],
@@ -466,7 +503,7 @@
 										},
 										{
 											"key": "keyword",
-											"value": "퍼즐"
+											"value": "헐크"
 										},
 										{
 											"key": "seller_id",
@@ -595,6 +632,22 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "상품 문의 등록 - 구현예정",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "내 상품 문의 목록 조회 - 구현예정",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
 						}
 					]
 				},
@@ -703,10 +756,18 @@
 					]
 				},
 				{
-					"name": "[선택] 장바구니",
+					"name": "[선택] 장바구니 - 구현예정",
 					"item": [
 						{
-							"name": "장바구니에 담기",
+							"name": "장바구니에 상품 추가",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "장바구니 상품 목록 조회",
 							"request": {
 								"method": "GET",
 								"header": []
@@ -714,7 +775,44 @@
 							"response": []
 						},
 						{
-							"name": "장바구니 목록 조회",
+							"name": "장바구니 상품 삭제",
+							"request": {
+								"method": "DELETE",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "장바구니 비우기",
+							"request": {
+								"method": "DELETE",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "장바구니 상품 수량 수정",
+							"request": {
+								"method": "PATCH",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "북마크(찜하기) - 구현예정",
+					"item": [
+						{
+							"name": "상품 북마크",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "북마크 목록 조회",
 							"request": {
 								"method": "GET",
 								"header": []
@@ -722,7 +820,28 @@
 							"response": []
 						},
 						{
-							"name": "장바구니에서 삭제",
+							"name": "북마크 삭제",
+							"request": {
+								"method": "DELETE",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "후기 - 구현예정",
+					"item": [
+						{
+							"name": "내 후기 목록 조회",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "판매자 후기 목록 조회",
 							"request": {
 								"method": "GET",
 								"header": []
@@ -756,7 +875,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"price\": -100,\r\n    \"shippingFees\": 3000,\r\n    \"show\": true,\r\n    \"active\": true,\r\n    \"name\": \"ZOZOFO 테이블 게임 축구 보드 사커 게임기 보드게임 2인경기 완구 가족모임 미니 월드컵 스포츠 어린이 크리스마스 선물 생일 선물\",\r\n    \"mainImages\": [\"/uploads/sample-janngu.jpg\"],\r\n    \"content\": \"<div class=\\\"product-detail\\\"><p>ZOZOFO 테이블 게임 축구 보드 사커 게임기 보드게임 2인경기 완구 가족모임 미니 월드컵 스포츠 어린이 크리스마스 선물 생일 선물 상세 설명</p></div>\",\r\n\t\"createdAt\": \"2023.10.12 12:34:56\",\r\n    \"updatedAt\": \"2023.10.12 12:34:56\",\r\n    \"extra\": {\r\n        \"isNew\": true,\r\n        \"isBest\": true,\r\n        \"category\": [\"PC02\", \"PC0201\"],\r\n        \"quantity\": 600,\r\n        \"buyQuantity\": 190,\r\n        \"order\": 7\r\n    }\r\n}",
+									"raw": "{\r\n    \"price\": -100,\r\n    \"shippingFees\": 3000,\r\n    \"show\": true,\r\n    \"active\": true,\r\n    \"name\": \"ZOZOFO 테이블 게임 축구 보드 사커 게임기 보드게임 2인경기 완구 가족모임 미니 월드컵 스포츠 어린이 크리스마스 선물 생일 선물\",\r\n    \"mainImages\": [\"/uploads/sample-janngu.jpg\"],\r\n    \"content\": \"<div class=\\\"product-detail\\\"><p>ZOZOFO 테이블 게임 축구 보드 사커 게임기 보드게임 2인경기 완구 가족모임 미니 월드컵 스포츠 어린이 크리스마스 선물 생일 선물 상세 설명</p></div>\",\r\n\t\"createdAt\": \"2023.10.12 12:34:56\",\r\n    \"updatedAt\": \"2023.10.12 12:34:56\",\r\n    \"extra\": {\r\n        \"isNew\": true,\r\n        \"isBest\": true,\r\n        \"category\": [\"PC02\", \"PC0201\"],\r\n        \"quantity\": 600,\r\n        \"buyQuantity\": 190,\r\n        \"sort\": 7\r\n    }\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1085,6 +1204,14 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "상품 문의 답변 - 구현예정",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
 						}
 					]
 				},
@@ -1139,11 +1266,223 @@
 			]
 		},
 		{
+			"name": "[선택] 코드 관리",
+			"item": [
+				{
+					"name": "코드 목록 조회",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/codes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"codes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "코드 하나 조회",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/codes/productCategory",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"codes",
+								"productCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "코드 하나 조회(검색 조건 추가, 1단계 카테고리 조회)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/codes/productCategory?depth=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"codes",
+								"productCategory"
+							],
+							"query": [
+								{
+									"key": "depth",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "코드 하나 조회(검색 조건 추가, 부모 카테고리가 PC03인 2단계 카테고리 조회)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/codes/productCategory?depth=2&parent=PC03",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"codes",
+								"productCategory"
+							],
+							"query": [
+								{
+									"key": "depth",
+									"value": "2"
+								},
+								{
+									"key": "parent",
+									"value": "PC03"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "[선택] 관리자",
 			"item": [
 				{
 					"name": "회원 관리",
 					"item": []
+				},
+				{
+					"name": "코드 관리",
+					"item": [
+						{
+							"name": "코드 등록",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"userLevel\",\r\n    \"title\": \"회원 등급\",\r\n    \"codes\": [\r\n        {\r\n            \"sort\": 1,\r\n            \"code\": \"UL01\",\r\n            \"value\": \"일반\"\r\n        }, {\r\n            \"sort\": 2,\r\n            \"code\": \"UL02\",\r\n            \"value\": \"프리미엄\"\r\n        }, {\r\n            \"sort\": 3,\r\n            \"code\": \"UL03\",\r\n            \"value\": \"VIP\"\r\n        }\r\n    ]\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/admin/codes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"codes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "코드 수정",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"회원 등급\",\r\n    \"codes\": [\r\n        {\r\n            \"sort\": 1,\r\n            \"code\": \"UL01\",\r\n            \"value\": \"일반\"\r\n        }, {\r\n            \"sort\": 2,\r\n            \"code\": \"UL02\",\r\n            \"value\": \"프리미엄\"\r\n        }, {\r\n            \"sort\": 4,\r\n            \"code\": \"UL03\",\r\n            \"value\": \"VIP\"\r\n        }, {\r\n            \"sort\": 3,\r\n            \"code\": \"UL04\",\r\n            \"value\": \"VVIP\"\r\n        }\r\n    ]\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/admin/codes/userLevel",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"codes",
+										"userLevel"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "관리자 로그인",
@@ -1165,6 +1504,9 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
