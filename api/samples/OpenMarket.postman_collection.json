@@ -61,14 +61,7 @@
 					"name": "[1차] 파일 업로드(한개)",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{accessToken}}",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "POST",
 						"header": [],
@@ -1296,7 +1289,7 @@
 					"response": []
 				},
 				{
-					"name": "코드 하나 조회",
+					"name": "코드 한건 조회",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1324,7 +1317,7 @@
 					"response": []
 				},
 				{
-					"name": "코드 하나 조회(검색 조건 추가, 1단계 카테고리 조회)",
+					"name": "코드 한건 조회(검색 조건 추가, 1단계 카테고리 조회)",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1358,7 +1351,7 @@
 					"response": []
 				},
 				{
-					"name": "코드 하나 조회(검색 조건 추가, 부모 카테고리가 PC03인 2단계 카테고리 조회)",
+					"name": "코드 한건 조회(검색 조건 추가, 부모 카테고리가 PC03인 2단계 카테고리 조회)",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1446,6 +1439,44 @@
 						},
 						{
 							"name": "코드 수정",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"회원 등급\",\r\n    \"codes\": [\r\n        {\r\n            \"sort\": 1,\r\n            \"code\": \"UL01\",\r\n            \"value\": \"일반\"\r\n        }, {\r\n            \"sort\": 2,\r\n            \"code\": \"UL02\",\r\n            \"value\": \"프리미엄\"\r\n        }, {\r\n            \"sort\": 4,\r\n            \"code\": \"UL03\",\r\n            \"value\": \"VIP\"\r\n        }, {\r\n            \"sort\": 3,\r\n            \"code\": \"UL04\",\r\n            \"value\": \"VVIP\"\r\n        }\r\n    ]\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/admin/codes/userLevel",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"codes",
+										"userLevel"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "코드 삭제",
 							"request": {
 								"auth": {
 									"type": "bearer",
