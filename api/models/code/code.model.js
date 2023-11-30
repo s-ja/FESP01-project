@@ -50,6 +50,9 @@ const code = {
     logger.trace(arguments);
     let item = await db.code.findOne({ _id });
     if(item){
+      // 검색 속성이 문자열일 경우 숫자로 변환
+      // 숫자로 변환할 수 없는 문자열은 그대로 사용
+      search = Object.keys(search).reduce((acc, key) => ({ ...acc, [key]: isNaN(Number(search[key])) ? search[key] : Number(search[key]) }), {});
       item.codes = _.chain(item.codes).filter(search).sortBy(['sort']).value();
     }
     
@@ -69,7 +72,9 @@ const code = {
   // 코드 삭제
   async delete(_id){
     logger.trace(arguments);
-    
+    const result = await db.code.deleteOne({ _id });
+    logger.debug(result);
+    return result;
   },
 };
 

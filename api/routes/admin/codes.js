@@ -97,7 +97,7 @@ router.put('/:_id', async function(req, res, next) {
     }]
 
     #swagger.parameters['_id'] = {
-      description: "회원 id",
+      description: "코드 id",
       in: 'path',
       type: 'string',
       example: 'userLevel'
@@ -109,8 +109,7 @@ router.put('/:_id', async function(req, res, next) {
       content: {
         "application/json": {
           examples: {
-            "기본 속성": { $ref: "#/components/examples/createUserLevelCode" },
-            "extra 속성": { $ref: "#/components/examples/updateUserWithExtra" }
+            "회원 등급에 VVIP 추가": { $ref: "#/components/examples/updateUserLevelCode" }
           }
         }
       }
@@ -120,7 +119,7 @@ router.put('/:_id', async function(req, res, next) {
       content: {
         "application/json": {
           examples: {
-            "기본 속성": { $ref: "#/components/examples/updateeUserLevelCode" }
+            "회원 등급에 VVIP 추가": { $ref: "#/components/examples/updateUserLevelCodeRes" }
           }
         }
       }
@@ -134,7 +133,7 @@ router.put('/:_id', async function(req, res, next) {
       }
     },
     #swagger.responses[404] = {
-      description: '코드가 존재하지 않거나 접근 권한 없음',
+      description: '코드가 존재하지 않음',
       content: {
         "application/json": {
           schema: { $ref: "#/components/schemas/error404" }
@@ -163,9 +162,62 @@ router.put('/:_id', async function(req, res, next) {
 
 // 코드 삭제
 router.delete('/:_id', async function(req, res, next) {
+  /*
+    #swagger.tags = ['코드']
+    #swagger.summary  = '코드 삭제 - 1차'
+    #swagger.description = '코드를 삭제한다.'
+
+    #swagger.security = [{
+      "Access Token": []
+    }]
+
+    #swagger.parameters['_id'] = {
+      description: "코드 id",
+      in: 'path',
+      type: 'string',
+      example: 'userLevel'
+    }
+
+    #swagger.responses[200] = {
+      description: '성공',
+      content: {
+        "application/json": {
+          schema: { $ref: "#/components/schemas/simpleOK" }
+        }
+      }
+    }
+    #swagger.responses[401] = {
+      description: '인증 실패',
+      content: {
+        "application/json": {
+          schema: { $ref: "#/components/schemas/error401" }
+        }
+      }
+    }
+    #swagger.responses[404] = {
+      description: '삭제할 코드가 존재하지 않음',
+      content: {
+        "application/json": {
+          schema: { $ref: "#/components/schemas/error404" }
+        }
+      }
+    }
+    #swagger.responses[500] = {
+      description: '서버 에러',
+      content: {
+        "application/json": {
+          schema: { $ref: '#/components/schemas/error500' }
+        }
+      }
+    }
+  */
   try{
     const result = await model.delete(req.params._id);
-    res.json({ok: 1, deleted: result});
+    if(result.deletedCount){
+      res.json({ok: 1});
+    }else{
+      next();
+    }
   }catch(err){
     next(err);
   }
