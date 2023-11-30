@@ -1,29 +1,32 @@
-import { CategoryCodeType, CodeListType, codeState } from "../../recoil/code/atoms";
+import type { CategoryCodeType, CodeListType } from "../../recoil/code/atoms";
+import { codeState } from "../../recoil/code/atoms";
 import { useRecoilValue } from "recoil";
-import _ from 'lodash';
 import { Link } from "react-router-dom";
-import CategorySub from './CategorySub';
+
+// 중첩 구조의 카테고리 목록 생성
+function generateNestedList(category: CategoryCodeType[]) {
+  const nestedElements = category.map(item => (
+    <li key={ item.code }>
+      <Link to={`/products?category=${ item.code }`}>{ item.value }</Link>      
+      { item.sub && item.sub.length > 0 && generateNestedList(item.sub) }
+    </li>
+  ));
+  return <ul>{ nestedElements }</ul>;
+}
 
 const Category = function(){
   const codeList = useRecoilValue(codeState) as CodeListType;
-  const categoryList = _.chain(codeList.productCategory.codes).sortBy('sort').filter({depth: 1}).value().map((category: CategoryCodeType, i) => {
-    return (
-      <li key={i}>
-        <Link to={`/products?category=${category.code}`}>{category.value}</Link>
-        <ul>
-          <CategorySub parent={category.code} />
-        </ul>
-      </li>
-    );
-  });
+  const category = generateNestedList(codeList.productCategory.nestedCodes!);
+
   return (
     <div>
       <h3>상품 카테고리</h3>
-      <ul>
-        { categoryList }
-      </ul>
+      { category }      
     </div>
   );
 };
 
 export default Category;
+
+
+

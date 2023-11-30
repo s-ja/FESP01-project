@@ -5,6 +5,9 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useCustomAxios from '../../hooks/useCustomAxios';
 import Category from "../../components/product/Category";
+import _ from 'lodash';
+import { CategoryCodeType, CodeListType, codeState } from "../../recoil/code/atoms";
+import { useRecoilValue } from "recoil";
 
 interface ProductResType {
   ok: 0 | 1;
@@ -15,10 +18,11 @@ interface ProductResType {
 }
 
 const ProductList = function(){
+  const categoryList = useRecoilValue<CodeListType>(codeState).productCategory;
   const location = useLocation();
   const menu = queryString.parse(location.search).menu;
   const category = queryString.parse(location.search).category;
-  const subCategory = queryString.parse(location.search).subCategory;
+
   let filter = {};
   switch(menu){
     case 'new':
@@ -32,12 +36,11 @@ const ProductList = function(){
       break;
   }
 
-  if(category){
-    filter = {"extra.category.0": category};
-  }
-
-  if(subCategory){
-    filter = {"extra.category.1": subCategory};
+  if(typeof category === 'string'){
+    const depth = _.find<CategoryCodeType>(categoryList.codes, {code: category})?.depth;
+    if(depth){
+      filter = {[`extra.category.${depth-1}`]: category};
+    }
   }
 
   const axios = useCustomAxios();
@@ -69,6 +72,7 @@ const ProductList = function(){
       <h3>상품 목록</h3>
       <div>
         { error && error.message }
+        { isLoading && '로딩중...' }
         <ul>
           { itemList }
         </ul>

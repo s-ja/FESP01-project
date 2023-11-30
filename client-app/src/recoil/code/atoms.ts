@@ -14,23 +14,22 @@ export interface OrderCodeType {
 
 export interface CategoryCodeType extends OrderCodeType{
   depth: number;
-  parent?: string;
+  sub?: CategoryCodeType[];
+}
+
+export interface CodeType {
+  _id: string;
+  title: string;
+  codes: CategoryCodeType[];
+  depth?: number;
+  nestedCodes?: CategoryCodeType[];
 }
 
 export interface CodeListType {
-  productCategory: {
-    _id: string;
-    title: string;
-    codes: CategoryCodeType[];
-  };
-  orderState: {
-    _id: string;
-    title: string;
-    codes: OrderCodeType[];
-  };
+  [code: string]: CodeType;
 }
 
-export const codeState = atom<CodeListType | object>({
+export const codeState = atom<CodeListType>({
   key: 'codeState',
   default: {},
   effects: [persistAtom]
