@@ -318,7 +318,7 @@ router.delete('/:_id', async function(req, res, next) {
       description: '성공',
       content: {
         "application/json": {
-          schema: { $ref: "#/components/schemas/productDeleteRes" }
+          schema: { $ref: "#/components/schemas/simpleOK" }
         }
       }
     }
@@ -353,7 +353,7 @@ router.delete('/:_id', async function(req, res, next) {
     const product = await model.findAttrById(productId, 'seller_id');
     if(req.user.type === 'admin' || product?.seller_id == req.user._id){
       const result = await model.delete(productId);
-      res.json({ok: 1, deleted: result});
+      res.json({ ok: 1 });
     }else{
       next(); // 404
     }
