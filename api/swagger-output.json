@@ -638,6 +638,16 @@
               }
             }
           },
+          "404": {
+            "description": "리소스가 존재하지 않음",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error404"
+                }
+              }
+            }
+          },
           "500": {
             "description": "서버 에러",
             "content": {
@@ -791,17 +801,42 @@
     },
     "/codes/": {
       "get": {
-        "description": "",
+        "tags": [
+          "코드"
+        ],
+        "summary": "코드 목록 조회 - 선택",
+        "description": "코드 목록을 조회한다.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/codeListRes"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 에러",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error500"
+                }
+              }
+            }
           }
         }
       }
     },
     "/codes/{_id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "코드"
+        ],
+        "summary": "코드 한건 조회 - 2차",
+        "description": "코드 한건을 조회한다.",
         "parameters": [
           {
             "name": "_id",
@@ -809,26 +844,41 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "depth",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "parent",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "코드 id",
+            "example": "userLevel"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/codeDetailRes"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "리소스가 존재하지 않음",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 에러",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error500"
+                }
+              }
+            }
           }
         }
       }
@@ -1075,7 +1125,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/productDeleteRes"
+                  "$ref": "#/components/schemas/simpleOK"
                 }
               }
             }
@@ -1220,7 +1270,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "회원 id",
+            "description": "코드 id",
             "example": "userLevel"
           }
         ],
@@ -1230,8 +1280,8 @@
             "content": {
               "application/json": {
                 "examples": {
-                  "기본 속성": {
-                    "$ref": "#/components/examples/updateeUserLevelCode"
+                  "회원 등급에 VVIP 추가": {
+                    "$ref": "#/components/examples/updateUserLevelCodeRes"
                   }
                 }
               }
@@ -1248,7 +1298,7 @@
             }
           },
           "404": {
-            "description": "코드가 존재하지 않거나 접근 권한 없음",
+            "description": "코드가 존재하지 않음",
             "content": {
               "application/json": {
                 "schema": {
@@ -1279,11 +1329,8 @@
           "content": {
             "application/json": {
               "examples": {
-                "기본 속성": {
-                  "$ref": "#/components/examples/createUserLevelCode"
-                },
-                "extra 속성": {
-                  "$ref": "#/components/examples/updateUserWithExtra"
+                "회원 등급에 VVIP 추가": {
+                  "$ref": "#/components/examples/updateUserLevelCode"
                 }
               }
             }
@@ -1291,7 +1338,11 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "코드"
+        ],
+        "summary": "코드 삭제 - 1차",
+        "description": "코드를 삭제한다.",
         "parameters": [
           {
             "name": "_id",
@@ -1299,14 +1350,58 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "코드 id",
+            "example": "userLevel"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "성공",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/simpleOK"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error401"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "삭제할 코드가 존재하지 않음",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error404"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 에러",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error500"
+                }
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "Access Token": []
+          }
+        ]
       }
     }
   },
@@ -1400,7 +1495,7 @@
           },
           "message": {
             "type": "string",
-            "example": "{/api/users/hello} 리소스를 찾을 수 없습니다."
+            "example": "/api/xxx 리소스를 찾을 수 없습니다."
           }
         }
       },
@@ -2077,104 +2172,6 @@
           }
         }
       },
-      "productDeleteRes": {
-        "type": "object",
-        "properties": {
-          "ok": {
-            "type": "number",
-            "example": 1
-          },
-          "deleted": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "number",
-                "example": 6
-              },
-              "seller_id": {
-                "type": "number",
-                "example": 2
-              },
-              "price": {
-                "type": "number",
-                "example": 22000
-              },
-              "shippingFees": {
-                "type": "number",
-                "example": 3000
-              },
-              "show": {
-                "type": "boolean",
-                "example": true
-              },
-              "active": {
-                "type": "boolean",
-                "example": false
-              },
-              "name": {
-                "type": "string",
-                "example": "ZOZOFO 테이블 게임 축구 보드 사커 게임기 보드게임 2인경기 완구 가족모임 미니 월드컵 스포츠 어린이 크리스마스 선물 생일 선물"
-              },
-              "mainImages": {
-                "type": "array",
-                "example": [
-                  "/uploads/sample-jjangu.jpg"
-                ],
-                "items": {
-                  "type": "string"
-                }
-              },
-              "content": {
-                "type": "string",
-                "example": "<div class=\"product-detail\"><p>ZOZOFO 테이블 게임 축구 보드 사커 게임기 보드게임 2인경기 완구 가족모임 미니 월드컵 스포츠 어린이 크리스마스 선물 생일 선물 상세 설명</p></div>"
-              },
-              "createdAt": {
-                "type": "string",
-                "example": "2023.10.22 11:18:19"
-              },
-              "updatedAt": {
-                "type": "string",
-                "example": "2023.11.22 08:30:59"
-              },
-              "extra": {
-                "type": "object",
-                "properties": {
-                  "isNew": {
-                    "type": "boolean",
-                    "example": true
-                  },
-                  "isBest": {
-                    "type": "boolean",
-                    "example": false
-                  },
-                  "category": {
-                    "type": "array",
-                    "example": [
-                      "PC03",
-                      "PC0303"
-                    ],
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "quantity": {
-                    "type": "number",
-                    "example": 100
-                  },
-                  "buyQuantity": {
-                    "type": "number",
-                    "example": 30
-                  },
-                  "order": {
-                    "type": "number",
-                    "example": 1
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "orderCreate": {
         "type": "object",
         "properties": {
@@ -2293,6 +2290,254 @@
           }
         }
       },
+      "codeListRes": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "number",
+            "example": 1
+          },
+          "item": {
+            "type": "object",
+            "properties": {
+              "productCategory": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "productCategory"
+                  },
+                  "title": {
+                    "type": "string",
+                    "example": "상품 카테고리"
+                  },
+                  "codes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "sort": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "code": {
+                          "type": "string",
+                          "example": "PC02"
+                        },
+                        "value": {
+                          "type": "string",
+                          "example": "스포츠"
+                        },
+                        "depth": {
+                          "type": "number",
+                          "example": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "orderState": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "orderState"
+                  },
+                  "title": {
+                    "type": "string",
+                    "example": "주문 상태"
+                  },
+                  "codes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "sort": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "code": {
+                          "type": "string",
+                          "example": "OS010"
+                        },
+                        "value": {
+                          "type": "string",
+                          "example": "주문 완료"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "userLevel": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "userLevel"
+                  },
+                  "title": {
+                    "type": "string",
+                    "example": "회원 등급"
+                  },
+                  "codes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "sort": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "code": {
+                          "type": "string",
+                          "example": "UL01"
+                        },
+                        "value": {
+                          "type": "string",
+                          "example": "일반"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "codeDetailRes": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "number",
+            "example": 1
+          },
+          "item": {
+            "type": "object",
+            "properties": {
+              "productCategory": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "productCategory"
+                  },
+                  "title": {
+                    "type": "string",
+                    "example": "상품 카테고리"
+                  },
+                  "codes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "sort": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "code": {
+                          "type": "string",
+                          "example": "PC01"
+                        },
+                        "value": {
+                          "type": "string",
+                          "example": "어린이"
+                        },
+                        "depth": {
+                          "type": "number",
+                          "example": 1
+                        }
+                      }
+                    }
+                  },
+                  "nestedCodes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "sort": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "code": {
+                          "type": "string",
+                          "example": "PC01"
+                        },
+                        "value": {
+                          "type": "string",
+                          "example": "어린이"
+                        },
+                        "depth": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "sub": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "sort": {
+                                "type": "number",
+                                "example": 1
+                              },
+                              "code": {
+                                "type": "string",
+                                "example": "PC0102"
+                              },
+                              "value": {
+                                "type": "string",
+                                "example": "보드게임"
+                              },
+                              "parent": {
+                                "type": "string",
+                                "example": "PC01"
+                              },
+                              "depth": {
+                                "type": "number",
+                                "example": 2
+                              },
+                              "sub": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "sort": {
+                                      "type": "number",
+                                      "example": 1
+                                    },
+                                    "code": {
+                                      "type": "string",
+                                      "example": "PC010202"
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "example": "3~4인용"
+                                    },
+                                    "parent": {
+                                      "type": "string",
+                                      "example": "PC0102"
+                                    },
+                                    "depth": {
+                                      "type": "number",
+                                      "example": 3
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "login": {
         "type": "object",
         "properties": {
@@ -2402,7 +2647,7 @@
           ]
         }
       },
-      "updateeUserLevelCode": {
+      "updateUserLevelCode": {
         "value": {
           "title": "회원 등급",
           "codes": [
@@ -2420,6 +2665,39 @@
               "sort": 3,
               "code": "UL03",
               "value": "VIP"
+            },
+            {
+              "sort": 4,
+              "code": "UL04",
+              "value": "VVIP"
+            }
+          ]
+        }
+      },
+      "updateUserLevelCodeRes": {
+        "value": {
+          "_id": "userLevel",
+          "title": "회원 등급",
+          "codes": [
+            {
+              "sort": 1,
+              "code": "UL01",
+              "value": "일반"
+            },
+            {
+              "sort": 2,
+              "code": "UL02",
+              "value": "프리미엄"
+            },
+            {
+              "sort": 3,
+              "code": "UL03",
+              "value": "VIP"
+            },
+            {
+              "sort": 4,
+              "code": "UL04",
+              "value": "VVIP"
             }
           ]
         }

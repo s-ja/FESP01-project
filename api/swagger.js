@@ -145,7 +145,7 @@ const doc = {
       },
       error404: {
         "ok": 0,
-        "message": "{/api/users/hello} 리소스를 찾을 수 없습니다."
+        "message": "/api/xxx 리소스를 찾을 수 없습니다."
       },
       error409: {
         "ok": 0,
@@ -350,35 +350,6 @@ const doc = {
         }
       },
 
-      productDeleteRes: {
-        "ok": 1,
-        "deleted": {
-          "_id": 6,
-          "seller_id": 2,
-          "price": 22000,
-          "shippingFees": 3000,
-          "show": true,
-          "active": false,
-          "name": "ZOZOFO 테이블 게임 축구 보드 사커 게임기 보드게임 2인경기 완구 가족모임 미니 월드컵 스포츠 어린이 크리스마스 선물 생일 선물",
-          "mainImages": [
-            "/uploads/sample-jjangu.jpg"
-          ],
-          "content": "<div class=\"product-detail\"><p>ZOZOFO 테이블 게임 축구 보드 사커 게임기 보드게임 2인경기 완구 가족모임 미니 월드컵 스포츠 어린이 크리스마스 선물 생일 선물 상세 설명</p></div>",
-          "createdAt": "2023.10.22 11:18:19",
-          "updatedAt": "2023.11.22 08:30:59",
-          "extra": {
-            "isNew": true,
-            "isBest": false,
-            "category": [
-              "PC03",
-              "PC0303"
-            ],
-            "quantity": 100,
-            "buyQuantity": 30,
-            "order": 1
-          }
-        }
-      },
 
       orderCreate: {
         "products": [
@@ -418,6 +389,90 @@ const doc = {
             "total": 211000
           }
         }
+      },
+
+      codeListRes: {
+        "ok": 1,
+        "item": {
+          "productCategory": {
+            "_id": "productCategory",
+            "title": "상품 카테고리",
+            "codes": [
+              {
+                "sort": 1,
+                "code": "PC02",
+                "value": "스포츠",
+                "depth": 1
+              }
+            ]
+          },
+          "orderState": {
+            "_id": "orderState",
+            "title": "주문 상태",
+            "codes": [
+              {
+                "sort": 1,
+                "code": "OS010",
+                "value": "주문 완료"
+              }
+            ]
+          },
+          "userLevel": {
+            "_id": "userLevel",
+            "title": "회원 등급",
+            "codes": [
+              {
+                "sort": 1,
+                "code": "UL01",
+                "value": "일반"
+              }
+            ]
+          }
+        }
+      },
+
+      codeDetailRes: {
+        "ok": 1,
+        "item": {
+          "productCategory": {
+            "_id": "productCategory",
+            "title": "상품 카테고리",
+            "codes": [
+              {
+                "sort": 2,
+                "code": "PC01",
+                "value": "어린이",
+                "depth": 1,
+              }
+            ],
+            "nestedCodes": [
+              {
+                "sort": 2,
+                "code": "PC01",
+                "value": "어린이",
+                "depth": 1,
+                "sub": [
+                  {
+                    "sort": 1,
+                    "code": "PC0102",
+                    "value": "보드게임",
+                    "parent": "PC01",
+                    "depth": 2,
+                    "sub": [
+                      {
+                        "sort": 1,
+                        "code": "PC010202",
+                        "value": "3~4인용",
+                        "parent": "PC0102",
+                        "depth": 3
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
       }
 
     },
@@ -442,7 +497,7 @@ const doc = {
           }
         ]
       },
-      updateeUserLevelCode: {
+      updateUserLevelCode: {
         "title": "회원 등급",
         "codes": [
           {
@@ -457,6 +512,33 @@ const doc = {
             "sort": 3,
             "code": "UL03",
             "value": "VIP"
+          }, {
+            "sort": 4,
+            "code": "UL04",
+            "value": "VVIP"
+          }
+        ]
+      },
+      updateUserLevelCodeRes: {
+        "_id": "userLevel",
+        "title": "회원 등급",
+        "codes": [
+          {
+            "sort": 1,
+            "code": "UL01",
+            "value": "일반"
+          }, {
+            "sort": 2,
+            "code": "UL02",
+            "value": "프리미엄"
+          }, {
+            "sort": 3,
+            "code": "UL03",
+            "value": "VIP"
+          }, {
+            "sort": 4,
+            "code": "UL04",
+            "value": "VVIP"
           }
         ]
       },
