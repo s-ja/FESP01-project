@@ -355,7 +355,7 @@ async function registProduct(){
       extra: {
         isNew: false,
         isBest: true,
-        category: ['PC01', 'PC0102'],
+        category: ['PC01', 'PC0102', 'PC010201'],
         sort: 3,
       }
 		},
@@ -379,7 +379,7 @@ async function registProduct(){
       extra: {
         isNew: true,
         isBest: true,
-        category: ['PC01', 'PC0102'],
+        category: ['PC01', 'PC0102', 'PC010202'],
         sort: 8,
       }
 		},
@@ -742,6 +742,20 @@ async function registCode(){
         },
         {
           sort: 2,
+          code: 'PC010201',
+          value: '2인용',
+          parent: 'PC0102',
+          depth: 3
+        },
+        {
+          sort: 1,
+          code: 'PC010202',
+          value: '3~4인용',
+          parent: 'PC0102',
+          depth: 3
+        },
+        {
+          sort: 2,
           code: 'PC0103',
           value: '레고',
           parent: 'PC01',
@@ -787,9 +801,8 @@ async function registCode(){
           sort: 3,
           code: 'PC03',
           value: '어른',
-          parent: 'PC03',
           depth: 1
-        },        
+        },
         {
           sort: 1,
           code: 'PC0301',
@@ -813,7 +826,7 @@ async function registCode(){
         },
       ]
 		}, {
-    _id: 'orderState',
+      _id: 'orderState',
       title: '주문 상태',
       codes: [
         {
