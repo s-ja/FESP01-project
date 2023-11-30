@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "1.1.1",
+    "version": "3.1.0",
     "title": "오픈마켓 API",
-    "description": "오픈마켓 API Server입니다."
+    "description": "오픈마켓 API Server입니다.<br><a href=\"https://localhost\">버전 히스토리</a>"
   },
   "servers": [
     {
