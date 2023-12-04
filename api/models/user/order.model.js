@@ -77,7 +77,7 @@ const buying = {
     orderInfo.cost.total = cost.products - discount.products;
 
     // 무료 배송 확인
-    if(orderInfo.cost.total >= global.config.freeShippingFees.value){
+    if(global.config.freeShippingFees.value && (orderInfo.cost.total >= global.config.freeShippingFees.value)){
       discount.shippingFees = cost.shippingFees;
     }
 
