@@ -745,6 +745,26 @@
         ]
       }
     },
+    "/orders/{_id}": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/replies/": {
       "post": {
         "tags": [
@@ -762,6 +782,34 @@
             "Access Token": []
           }
         ]
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/replies/seller/{seller_id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "seller_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/files/": {
@@ -770,17 +818,49 @@
           "파일"
         ],
         "summary": "파일 업로드 - 1차",
-        "description": "파일을 업로드 합니다.<br>회원 가입시 프로필 이미지를 첨부하거나 상품의 이미지를 미리 업로드 한 후 응답 받은 파일 경로를 사용하면 업로드한 파일에 접근이 가능합니다.<br>파일 업로드 완료 후 파일명과 경로를 반환합니다.",
+        "description": "한번에 최대 10개 까지 파일을 업로드 합니다.<br>회원 가입시 프로필 이미지를 첨부하거나 상품의 이미지를 미리 업로드 한 후 응답 받은 파일 경로를 사용하면 업로드한 파일에 접근이 가능합니다.<br>파일 업로드 완료 후 파일명과 경로를 반환합니다.",
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "성공",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "단일 파일 업로드": {
+                    "$ref": "#/components/examples/singleFileUploadRes"
+                  },
+                  "여러 파일 업로드": {
+                    "$ref": "#/components/examples/multiFileUploadRes"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "입력값 검증 오류",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "필드명 오류": {
+                    "$ref": "#/components/examples/fileUploadFieldError"
+                  },
+                  "최대 허용치 초과 ": {
+                    "$ref": "#/components/examples/fileUploadLimitError"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 에러",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error500"
+                }
+              }
+            }
           }
         },
-        "security": [
-          {
-            "Access Token": []
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -789,8 +869,151 @@
                 "type": "object",
                 "properties": {
                   "attach": {
-                    "type": "string",
-                    "format": "binary"
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "products": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts/{_id}": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "quantity": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/carts/cleanup": {
+      "delete": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/carts/replace": {
+      "put": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "products": {
+                    "example": "any"
                   }
                 }
               }
@@ -879,6 +1102,81 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/bookmarks/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "product_id": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/bookmarks/products/{product_id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/bookmarks/{_id}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -2624,6 +2922,44 @@
       }
     },
     "examples": {
+      "singleFileUploadRes": {
+        "value": {
+          "ok": 1,
+          "file": {
+            "name": "Cmw0AOtWf.jpg",
+            "path": "/uploads/Cmw0AOtWf.jpg"
+          }
+        }
+      },
+      "fileUploadFieldError": {
+        "value": {
+          "ok": 0,
+          "message": "첨부 파일 필드명은 attach로 지정해야 합니다."
+        }
+      },
+      "fileUploadLimitError": {
+        "value": {
+          "ok": 0,
+          "message": "파일은 한번에 10개 까지만 업로드가 가능합니다."
+        }
+      },
+      "multiFileUploadRes": {
+        "value": {
+          "ok": 1,
+          "files": [
+            {
+              "originalname": "sample-cat.jpg",
+              "name": "nQYGBCVZZ.jpg",
+              "path": "/uploads/nQYGBCVZZ.jpg"
+            },
+            {
+              "originalname": "sample-dog.jpg",
+              "name": "Gb4OJkEX2k.jpg",
+              "path": "/uploads/Gb4OJkEX2k.jpg"
+            }
+          ]
+        }
+      },
       "createUserLevelCode": {
         "value": {
           "_id": "userLevel",
