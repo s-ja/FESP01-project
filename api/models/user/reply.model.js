@@ -89,7 +89,100 @@ const reply = {
     
     logger.debug(list);    
     return list;
-  }
+  },
+
+  // 내 후기 목록 조회
+  async findByUser(user_id){
+    logger.trace(arguments);
+
+    const list = await db.reply.aggregate([
+      { $match: {user_id } },
+      {
+        $lookup: {
+          from: 'product',
+          localField: 'product_id',
+          foreignField: '_id',
+          as: 'product'
+        }
+      }, 
+      { 
+        $unwind: {
+          path: '$product'
+        }
+        }, 
+      {
+        $project: {
+          _id: 1,
+          product_id: 1,
+          rating: 1,
+          content: 1,
+          createdAt: 1,
+          'product.name': '$product.name',
+          'product.price': '$product.price',
+          'product.image': { $arrayElemAt: ['$product.mainImages', 0] }
+        }
+      }
+    ]).sort({ _id: -1 }).toArray();
+
+
+    logger.debug(list);
+    return list;
+  },
+
+  // 판매자 후기 목록 조회
+  async findBySeller(seller_id){
+    logger.trace(arguments);
+
+    const list = await db.product.aggregate([
+      { $match: { seller_id } },
+      {
+        $lookup: {
+          from: 'reply',
+          localField: '_id',
+          foreignField: 'product_id',
+          as: 'reply'
+        }
+      },
+      { $unwind: '$reply' }, 
+      {
+        $lookup: {
+          from: 'user',
+          localField: 'reply.user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      }, 
+      { $unwind: '$user' }, 
+      {
+        $project: {
+          // _id: 0,
+          product_id: '$_id',
+          price: 1,
+          name: 1,
+          'image': { $arrayElemAt: ['$mainImages', 0] },
+          'reply._id': '$reply._id',
+          'reply.user_name': '$user.name',
+          'reply.rating': '$reply.rating',
+          'reply.content': '$reply.content',
+          'reply.createdAt': '$reply.createdAt',
+        }
+      },
+      {
+        $group: {
+          _id: '$_id',
+          product_id: { $first: '$product_id' },
+          price: { $first: '$price' },
+          name: { $first: '$name' },
+          image: { $first: '$image' },
+          replies: { $push: '$reply' }
+        }
+      }
+    ]).sort({ _id: -1 }).toArray();
+
+
+    logger.debug(list);
+    return list;
+  },
 };
 
 export default reply;
