@@ -1,10 +1,13 @@
 import axios from 'axios';
 import mem from 'mem';
+import { useSetRecoilState } from 'recoil';
+import { userState } from '../recoil/user/atoms';
 
 const REFRESH_URL = '/users/refresh';
 const API_SERVER = import.meta.env.VITE_API_SERVER;
 
 const CustomAxios = function(){
+  const setUser = useSetRecoilState(userState);
   const instance = axios.create({
     baseURL: API_SERVER,
     timeout: 1000*5,
@@ -50,6 +53,9 @@ const CustomAxios = function(){
         }
       }else{
         alert ('로그인 후 이용 가능합니다.');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        setUser(null);
       }
     }else{
       const error = response?.data?.error;

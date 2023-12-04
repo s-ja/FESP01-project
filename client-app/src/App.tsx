@@ -11,13 +11,11 @@ import { useSetRecoilState } from 'recoil';
 
 const queryClient = new QueryClient();
 
-
-
 function App() {
   const setCode = useSetRecoilState(codeState);
   useEffect(() => {
     (async()=>{
-      const codes = await axios.get('/codes');
+      const codes = await axios.get('/codes?delay=1000');
       setCode(codes.data?.item);
     })();
     console.log('App 마운트');

@@ -6,31 +6,49 @@ const { persistAtom } = recoilPersist({
   storage: localStorage,
 });
 
-export interface OrderCodeType {
+export interface BaseCodeItemType {
   code: string;
   value: string;
   sort: number;
 }
 
-export interface CategoryCodeType extends OrderCodeType{
+export interface CategoryCodeItemType extends BaseCodeItemType{
   depth: number;
-  sub?: CategoryCodeType[];
+  sub?: CategoryCodeItemType[];
+  parent?: string;
 }
+
+export interface MembershipCodeItemType extends BaseCodeItemType{
+  discountRate: number;
+}
+
+export type CodeItemType = BaseCodeItemType | MembershipCodeItemType | CategoryCodeItemType;
 
 export interface CodeType {
   _id: string;
   title: string;
-  codes: CategoryCodeType[];
-  depth?: number;
-  nestedCodes?: CategoryCodeType[];
+  codes: CodeItemType[];
 }
+
+// export interface CategoryCodeType extends CodeType {
+//   depth: number;
+//   sub?: CategoryCodeItemType[];
+//   parent?: string;
+// }
 
 export interface CodeListType {
-  [code: string]: CodeType;
+  nested: {
+    productCategory: CodeType;
+    orderState: CodeType;
+    membershipClass: CodeType;
+  };
+  flatten: {
+    [code: string]: CodeItemType;
+  }
 }
 
-export const codeState = atom<CodeListType>({
+export const codeState = atom<CodeListType | null>({
   key: 'codeState',
-  default: {},
+  default: null,
   effects: [persistAtom]
 });

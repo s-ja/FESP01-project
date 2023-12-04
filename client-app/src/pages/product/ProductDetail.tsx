@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import useCustomAxios from '../../hooks/useCustomAxios';
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
-interface ProductResType {
+export interface ProductResType {
   ok: 0 | 1,
   item: ProductItemType
 }
@@ -39,7 +39,7 @@ const ProductNew = function(){
         <div className="pcontent">
           <Link to="/carts/new" state={data}>장바구니에 담기</Link><br />
           {(data.quantity > data.buyQuantity) ? 
-            <Link to="/orders/new" state={data}>바로 구매</Link>
+            <Link to={`/orders/new?product_id=${data._id}`} state={data}>바로 구매</Link>
           :
             <span>매진</span>
           }

@@ -1,11 +1,14 @@
 import { useRef } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { ProductItemType } from "../../components/product/ProductListTypeEntry";
 
 import QuantityInput from "../../components/common/QuantityInput";
 import { AxiosResponse, AxiosError } from 'axios';
 import useCustomAxios from '../../hooks/useCustomAxios';
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { isError } from "lodash";
+import { type ProductResType } from "../product/ProductDetail";
+import queryString from "query-string";
 
 interface OrderRes {
   ok: 0 | 1;
@@ -27,7 +30,8 @@ interface OrderInfo {
 }
 
 const OrderNew = function(){
-  const { state: info } = useLocation();
+  const location = useLocation();
+  const product_id = queryString.parse(location.search).product_id;
   const navigate = useNavigate();
   const quantityRef = useRef<number>(1);
 
@@ -37,12 +41,22 @@ const OrderNew = function(){
 
   const axios = useCustomAxios();
 
+  const {isLoading, data, error} = useQuery({
+    queryKey: ['orders/new', product_id], // 쿼리키를 파라미터마다 지정(검색어, 페이지 등)
+    queryFn: () => axios.get<ProductResType>(`/products/${product_id}?delay=500&`),
+    select: data => data.data.item,
+    staleTime: 1000*2,
+    refetchOnWindowFocus: false,
+    // retry: false
+  });
 
   const createOrder = useMutation<AxiosResponse<OrderRes>, AxiosError<OrderRes>, OrderInfo>({
     mutationFn: (order: OrderInfo) => {
       return axios.post('/orders', order);
     },
     retry: false,
+    // retry: 3,
+    // retryDelay: 1000,
     onSuccess: (data) => {
       if(data?.data.item){
         alert('주문 완료.');
@@ -60,7 +74,7 @@ const OrderNew = function(){
     createOrder.mutate({
       products: [
         {
-          _id: info._id,
+          _id: data!._id,
           quantity: quantityRef.current
         }
       ],
@@ -76,14 +90,19 @@ const OrderNew = function(){
     <div>
       <h3>상품 구매</h3>
 
+      
+      { error && error.message }
+      { data && 
       <div className="pcontent">
-        <img src={info.mainImages[0]} width="100px" />
-        <p>상품명: {info.name}</p>
+        <img src={data.mainImages[0]} width="100px" />
+        <p>상품명: {data.name}</p>
         <form>
-          <QuantityInput max={info.quantity-info.buyQuantity} setter={setQuantity} /> 가능 수량: {info.quantity-info.buyQuantity}
+          <QuantityInput max={data.quantity-data.buyQuantity} setter={setQuantity} /> 가능 수량: {data.quantity-data.buyQuantity}
         </form>
         <button onClick={ handleOrder }>결제 하기</button>
       </div>
+      }
+        
 
     </div>
   );

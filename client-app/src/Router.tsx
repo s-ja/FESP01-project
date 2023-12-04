@@ -12,6 +12,7 @@ import Login from './pages/user/Login';
 import Product from './pages/product';
 import Order from './pages/order';
 import OrderNew from './pages/order/OrderNew';
+import UserInfo from './pages/user/UserInfo';
 
 const Router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,10 +33,8 @@ const Router = createBrowserRouter(
 
       <Route path="/users" element={<User />}>
         <Route path="new" element={<Signup />} />
-        <Route
-          path="login"
-          element={<Login />}
-        />
+        <Route path="login" element={<Login />} />
+        <Route path=":_id" element={<UserInfo />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Route>

@@ -7,7 +7,7 @@ const Header = function(){
 
   const handleLogout = function(e: React.MouseEvent<HTMLElement>){
     e.preventDefault();
-    setUser({});
+    setUser(null);
     delete localStorage.accessToken;
     delete localStorage.refreshToken;
   }
@@ -21,10 +21,10 @@ const Header = function(){
             <li><Link to="/products?menu=new">신상품</Link></li>
             <li><Link to="/products?menu=kidult">키덜트 존</Link></li>
             <li><Link to="/products?menu=best">베스트</Link></li>
-            { user.name ?
+            { user?.name ?
               <li>
                 <ul>
-                  <li><Link to={`/users/${user._id}`}>{user.name}님 반갑습니다.</Link></li>
+                  <li><Link to={`/users/${user._id}`}>{user.name}님 반갑습니다.({user.membershipClass})</Link></li>
                   <li><Link to="" onClick={ handleLogout }>로그아웃</Link></li>
                 </ul>
               </li>

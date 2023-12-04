@@ -1,11 +1,11 @@
 import { Outlet, useLocation } from "react-router-dom";
 import queryString from 'query-string';
-import { codeState, type CategoryCodeType, type CodeListType } from "../../recoil/code/atoms";
+import { codeState } from "../../recoil/code/atoms";
 import { useRecoilValue } from "recoil";
 import _ from 'lodash';
 
 const Product = function(){
-  const codeList = useRecoilValue(codeState) as CodeListType;
+  const codeList = useRecoilValue(codeState)!.flatten;
   const location = useLocation();
   const menu = queryString.parse(location.search).menu;
   const category = queryString.parse(location.search).category || queryString.parse(location.search).subCategory;
@@ -23,10 +23,11 @@ const Product = function(){
       break;
   }
 
-  if(category){
-    const categoryCode = _.find(codeList.productCategory.codes, { code: category }) as CategoryCodeType;
-    if(categoryCode){
-      title = categoryCode.value;
+  if(typeof category === 'string'){
+    const result = _.find(codeList, {code: category});
+    console.log(result);
+    if(result){
+      title = result.value;
     }
   }
 

@@ -1,9 +1,10 @@
 import { ChangeEvent, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { userState } from '../../recoil/user/atoms';
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import useCustomAxios from '../../hooks/useCustomAxios';
 import { useNavigate } from "react-router";
+import { CodeListType, codeState } from "../../recoil/code/atoms";
 
 interface LoginRes {
   data: {
@@ -15,7 +16,7 @@ interface LoginRes {
       address: string,
       type: 'user' | 'seller' | 'admin',
       extra: {
-        level: string;
+        membershipClass: string;
       };
       token: {
         accessToken: string;
@@ -42,6 +43,7 @@ interface ErrorRes {
 
 const Login = function(){
   const navigate = useNavigate();
+  const code = useRecoilValue(codeState)!;
   const setUser = useSetRecoilState(userState);
   const [values, setValues] = useState({
     email: 's1@market.com',
@@ -66,7 +68,7 @@ const Login = function(){
           _id: userInfo._id,
           name: userInfo.name,
           type: userInfo.type,
-          level: userInfo.extra.level,
+          membershipClass: code.flatten[userInfo.extra.membershipClass].value,
         });
         alert('로그인 되었습니다.');
         // navigate(`/orders/${data.item._id}`);

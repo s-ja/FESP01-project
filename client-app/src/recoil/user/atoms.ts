@@ -6,8 +6,15 @@ const { persistAtom } = recoilPersist({
   storage: localStorage,
 });
 
-export const userState = atom({
+export interface UserType {
+  _id: number;
+  name: string;
+  type: 'user' | 'seller' | 'admin';
+  membershipClass: string;
+}
+
+export const userState = atom<UserType | null>({
   key: 'userState',
-  default: {},
+  default: null,
   effects: [persistAtom]
 });

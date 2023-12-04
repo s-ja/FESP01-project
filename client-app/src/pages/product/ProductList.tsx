@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import useCustomAxios from '../../hooks/useCustomAxios';
 import Category from "../../components/product/Category";
 import _ from 'lodash';
-import { CategoryCodeType, CodeListType, codeState } from "../../recoil/code/atoms";
+import { CategoryCodeItemType, codeState } from "../../recoil/code/atoms";
 import { useRecoilValue } from "recoil";
 
 interface ProductResType {
@@ -18,7 +18,9 @@ interface ProductResType {
 }
 
 const ProductList = function(){
-  const categoryList = useRecoilValue<CodeListType>(codeState).productCategory;
+  console.log(useRecoilValue(codeState)!.nested);
+  // const categoryList = useRecoilValue(codeState)!.nested.productCategory;
+  const codeList = useRecoilValue(codeState)!.flatten;
   const location = useLocation();
   const menu = queryString.parse(location.search).menu;
   const category = queryString.parse(location.search).category;
@@ -37,9 +39,9 @@ const ProductList = function(){
   }
 
   if(typeof category === 'string'){
-    const depth = _.find<CategoryCodeType>(categoryList.codes, {code: category})?.depth;
-    if(depth){
-      filter = {[`extra.category.${depth-1}`]: category};
+    const result = codeList[category] as CategoryCodeItemType;
+    if(result?.depth){
+      filter = {[`extra.category.${result.depth-1}`]: category};
     }
   }
 
