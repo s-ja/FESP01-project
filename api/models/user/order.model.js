@@ -6,6 +6,8 @@ import logger from '#utils/logger.js';
 import db, { nextSeq } from '#utils/dbutil.js';
 import productModel from '#models/user/product.model.js';
 import replyModel from '#models/user/reply.model.js';
+import userModel from '#models/user/user.model.js';
+import codeutil from '#utils/codeutil.js';
 
 const buying = {
   // 주문 등록
@@ -18,7 +20,7 @@ const buying = {
     const products = [];
 
     for(let {_id, quantity} of orderInfo.products){
-      const product = await productModel.findById(_id);
+      const product = await productModel.findById({ _id });
       if(product){
         if(product.quantity-product.buyQuantity >= quantity){
           // 상품의 구매된 수량 수정
@@ -37,7 +39,7 @@ const buying = {
             price: product.price * quantity
           });
         }else{
-          throw createError(422, `[${product.name}] 상품의 구매 가능한 수량은 ${product.quantity-product.buyQuantity}개 입니다.`);
+          throw createError(422, `[${product._id} ${product.name}] 상품의 구매 가능한 수량은 ${product.quantity-product.buyQuantity}개 입니다.`);
         }
       }else{
         throw createError(422, `상품번호 ${_id}인 상품이 존재하지 않습니다.`);
@@ -45,12 +47,41 @@ const buying = {
     }
 
     orderInfo.products = products;
-    orderInfo.cost = {
+
+    // 할인 전 금액
+    const cost = {
       products: _.sumBy(orderInfo.products, 'price'),
-      shippingFees: _.sum(Object.values(sellerBaseShippingFees))
+      shippingFees: _.sum(Object.values(sellerBaseShippingFees)),
     };
 
-    orderInfo.cost.total = orderInfo.cost.products + orderInfo.cost.shippingFees;
+    // 상품 할인 쿠폰, 배송비 쿠폰 처럼 주문 정보에 포함된 할인 금액
+    const clientDiscount = {
+      products: orderInfo.discount?.products ? orderInfo.discount.products : 0,
+      shippingFees: orderInfo.discount?.shippingFees ? orderInfo.discount.shippingFees : 0,
+    };
+
+    // 회원 등급별 할인율
+    const membershipClass = await userModel.findAttrById(orderInfo.user_id, 'extra.membershipClass');
+    const discountRate = codeutil.getCodeAttr(membershipClass?.extra.membershipClass, 'discountRate');
+
+    const discount = {
+      products: clientDiscount.products + (cost.products - clientDiscount.products) * (discountRate/100),
+      shippingFees: clientDiscount.shippingFees
+    };
+
+    orderInfo.cost = {
+      ...cost,
+      discount
+    };
+
+    orderInfo.cost.total = cost.products - discount.products;
+
+    // 무료 배송 확인
+    if(orderInfo.cost.total >= global.config.freeShippingFees.value){
+      discount.shippingFees = cost.shippingFees;
+    }
+
+    orderInfo.cost.total += cost.shippingFees - discount.shippingFees;
     
     logger.log(orderInfo);
 
@@ -112,6 +143,18 @@ const buying = {
     logger.debug(result);
     return result;
   },
+
+  // 주문 상태 수정
+  async update(_id, order, history){
+    logger.trace(arguments);
+
+    order.updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
+
+    const result = await db.order.updateOne({ _id }, { $set: order, $push: { history } });
+    logger.debug(result);
+    const item = { _id, ...order };
+    return item;
+  }
 };
 
 export default buying;

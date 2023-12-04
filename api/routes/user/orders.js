@@ -1,6 +1,7 @@
 import express from 'express';
 import { query, body } from 'express-validator';
 
+import moment from 'moment';
 import logger from '#utils/logger.js';
 import validator from '#middlewares/validator.js';
 import model from '#models/user/order.model.js';
@@ -133,6 +134,30 @@ try{
 }catch(err){
   next(err);
 }
+});
+
+// 주문 상태 수정
+router.patch('/:_id', [
+  body('state').trim().notEmpty().withMessage('state 값은 필수로 입력해야 합니다.'),
+], validator.checkResult, async function(req, res, next) {
+  try{
+    logger.trace(req.query);
+    const _id = Number(req.params._id);
+    const order = await model.findById(_id);
+    if(req.user.type === 'admin' || req.user._id === order.user_id){
+      const history = {
+        actor: req.user._id,
+        updated: { ...req.body },
+        createdAt: moment().format('YYYY.MM.DD HH:mm:ss')
+      };
+      const result = await model.update(_id, req.body, history);
+      res.json({ok: 1, updated: result});
+    }else{
+      next();
+    }
+  }catch(err){
+    next(err);
+  }
 });
 
 export default router;
