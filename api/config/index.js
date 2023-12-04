@@ -2,7 +2,7 @@ import logger from '../utils/logger.js';
 import dotenv from 'dotenv';
 
 // 기본 .env 파일 로딩(package.json에서 로딩함)
-// dotenv.config({ path: '.env' });
+dotenv.config({ path: '.env' });
 // 환경별 .env 파일 로딩
 logger.log('NODE_ENV', process.env.NODE_ENV);
 if (process.env.NODE_ENV) {
