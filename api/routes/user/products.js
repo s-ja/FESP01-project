@@ -175,9 +175,9 @@ router.get('/:_id', async function(req, res, next) {
   */
 
   try{
-    const result = await model.findById(Number(req.params._id));
-    if(result){
-      res.json({ok: 1, item: result});
+    const item = await model.findById({ _id: Number(req.params._id) });
+    if(item){
+      res.json({ ok: 1, item });
     }else{
       next();
     }

@@ -119,7 +119,7 @@ router.get('/:_id', async function(req, res, next) {
 
   */
   try{
-    const result = await model.findById(Number(req.params._id));
+    const result = await model.findById({ _id: Number(req.params._id), seller_id: req.user._id });
     if(result && (result.seller_id == req.user._id || req.user.type === 'admin')){
         res.json({ok: 1, item: result});
     }else{
@@ -282,10 +282,10 @@ router.patch('/:_id', [
   */
 
   try{
-    const productId = Number(req.params._id);
-    const product = await model.findAttrById(productId, 'seller_id');
+    const _id = Number(req.params._id);
+    const product = await model.findAttrById({ _id, attr: 'seller_id', seller_id: req.user._id });
     if(req.user.type === 'admin' || product?.seller_id == req.user._id){
-      const result = await model.update(productId, req.body);
+      const result = await model.update(_id, req.body);
       res.json({ok: 1, updated: result});
     }else{
       next(); // 404
@@ -349,10 +349,10 @@ router.delete('/:_id', async function(req, res, next) {
   */
 
   try{
-    const productId = Number(req.params._id);
-    const product = await model.findAttrById(productId, 'seller_id');
+    const _id = Number(req.params._id);
+    const product = await model.findAttrById({ _id, attr: 'seller_id', seller_id: req.user._id });
     if(req.user.type === 'admin' || product?.seller_id == req.user._id){
-      const result = await model.delete(productId);
+      const result = await model.delete(_id);
       res.json({ ok: 1 });
     }else{
       next(); // 404

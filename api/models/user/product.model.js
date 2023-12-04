@@ -3,6 +3,7 @@ import moment from 'moment';
 import logger from '#utils/logger.js';
 import db, { nextSeq } from '#utils/dbutil.js';
 import replyModel from '#models/user/reply.model.js';
+import bookmarkModel from '#models/user/bookmark.model.js';
 
 const product = {
   // 상품 등록
@@ -39,20 +40,29 @@ const product = {
   },
 
   // 상품 상세 조회
-  async findById(_id){
+  async findById({ _id, seller_id }){
     logger.trace(arguments);
-    const item = await db.product.findOne({ _id, active: true, show: true });
+    const query = { _id, active: true };
+    if(!seller_id){
+      query.show = true;
+    }
+    const item = await db.product.findOne(query);
     if(item){
       item.replies = await replyModel.findByProductId(_id);
+      item.bookmarks = await bookmarkModel.findByProduct(_id);
     }
     logger.debug(item);
     return item;
   },
 
   // 상품 상세 조회(단일 속성)
-  async findAttrById(_id, attr){
+  async findAttrById({ _id, attr, seller_id }){
     logger.trace(arguments);
-    const item = await db.product.findOne({ _id, active: true, show: true }, { projection: { [attr]: 1, _id: 0 }});
+    const query = { _id, active: true };
+    if(!seller_id){
+      query.show = true;
+    }
+    const item = await db.product.findOne(query, { projection: { [attr]: 1, _id: 0 }});
     logger.debug(item);
     return item;
   },
