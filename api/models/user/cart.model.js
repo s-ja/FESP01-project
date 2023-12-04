@@ -67,6 +67,8 @@ const cart = {
           updatedAt: 1,
           'product.name': '$product.name',
           'product.price': '$product.price',
+          'product.quantity': '$product.quantity',
+          'product.buyQuantity': '$product.buyQuantity',
           'product.image': { $arrayElemAt: ['$product.mainImages', 0] }
         }
       }
