@@ -185,7 +185,11 @@ router.post('/login', [
   */
   try{
     const user = await userService.login(req.body);
-    res.json({ ok: 1, item: user });
+    if(user.extra?.confirm === false){
+      res.status(403).json({ ok: 0, message: '관리자의 승인이 필요합니다.' });
+    }else{
+      res.json({ ok: 1, item: user });
+    }
   }catch(err){
     next(err);
   }
@@ -466,12 +470,20 @@ router.patch('/:_id', jwtAuth.auth('user'), async function(req, res, next) {
     }
   */
   try{
-    if(req.user.type === 'admin' || req.params._id == req.user._id){
-      if(req.user.type !== 'admin'){ // 관리자가 아니라면 타입은 수정 못함
-        delete req.body.type; 
+    logger.trace(req.body);
+    const _id = Number(req.params._id);
+    if(req.user.type === 'admin' || _id === req.user._id){
+      if(req.user.type !== 'admin'){ // 관리자가 아니라면 회원 타입과 회원 승인 정보는 수정 못함
+        delete req.body.type;
+        delete (req.body.extra && req.body.extra.confirm);
+        delete req.body['extra.confirm'];
       }
-      const result = await model.update(Number(req.params._id), req.body);
-      res.json({ok: 1, updated: result});
+      const updated = await model.update(_id, req.body);
+      if(updated){
+        res.json({ ok: 1, updated });
+      }else{
+        next();
+      }
     }else{
       next(); // 404
     }
