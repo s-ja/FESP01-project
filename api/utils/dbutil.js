@@ -1,6 +1,8 @@
 import logger from './logger.js';
 import { db as DBConfig } from '../config/index.js';
 import { MongoClient } from 'mongodb';
+import _ from 'lodash';
+import codeutil from '#utils/codeutil.js';
 
 var db;
 
@@ -12,10 +14,10 @@ if(process.env.NODE_ENV === 'production'){
   url = `mongodb://${DBConfig.host}:${DBConfig.port}`;
 }
 
+logger.log(`DB 접속: ${url}`);
 const client = new MongoClient(url);
 
 try{
-  logger.log(`DB 접속: ${url}`);
   await client.connect();
   logger.info(`DB 접속 성공: ${url}`);
   db = client.db(DBConfig.database);
@@ -26,6 +28,13 @@ try{
   db.reply = db.collection('reply');
   db.seq = db.collection('seq');
   db.code = db.collection('code');
+  db.bookmark = db.collection('bookmark');
+  db.config = db.collection('config');
+
+  await codeutil.initCode(db);
+
+  await codeutil.initConfig(db);
+
 }catch(err){
   logger.error(err);
 }

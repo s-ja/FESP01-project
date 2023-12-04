@@ -1,7 +1,53 @@
 import _ from 'lodash';
 import logger from '#utils/logger.js';
+import dbutil from '#utils/dbutil.js';
 
 const codeutil = {
+  async initCode(db = dbutil){
+    global.codeList = await db.code.find().toArray();
+    global.codeList.forEach(code => _.sortBy(code.codes, 'sort'));
+    global.codeFlatten = _.flatten(_.map(global.codeList, 'codes')).reduce((codes, item) => {
+      return {
+        ...codes,
+        [item['code']]: item
+      };
+    }, {});
+    global.codeObj = codeutil.generateCodeObj(global.codeList);
+  },
+
+  async initConfig(db = dbutil){
+    global.config = (await db.config.find().toArray()).reduce((configs, item) => {
+      return {
+        ...configs,
+        [item['_id']]: item
+      };
+    }, {});
+  },
+
+  getCodeList() {
+    return global.codeList;
+  },
+
+  getCodeObj() {
+    return global.codeObj;
+  },
+
+  getCodeFlatten() {
+    return global.codeFlatten;
+  },
+
+  getCode(_id) {
+    return global.codeObj[_id];
+  },
+  
+  getCodeValue(code){
+    return this.getCodeAttr(code, 'value');
+  },
+
+  getCodeAttr(code, attr){
+    return global.codeFlatten[code] && global.codeFlatten[code][attr];
+  },
+
   // 트리 구조의 코드일 경우 자식 코드를 포함하는 중첩 구조로 변경
   createNestedStructure(data) {
     const sortedData = _.sortBy(data, ['depth', 'sort']);
@@ -21,16 +67,22 @@ const codeutil = {
     return nestedData;
   },
 
-  getCodeObj(codeArray) {
+  generateCodeObj(codeArray) {
     const codeObj = {};
-    codeArray.map(code => {
+    _.cloneDeep(codeArray).forEach(code => {
       codeObj[code._id] = code;
       if(code.codes[0].depth){
-        code.nestedCodes = this.createNestedStructure(_.cloneDeep(code.codes));
+        code.codes = this.createNestedStructure(code.codes);
+        
+      // }else{
+      //   // 정렬만
+      //   code.codes = _.sortBy(code.codes, 'sort');
       }
     });
     return codeObj;
-  }
+  },
+
+
 };
 
 export default codeutil;

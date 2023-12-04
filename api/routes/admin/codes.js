@@ -6,6 +6,7 @@ import logger from '#utils/logger.js';
 import validator from '#middlewares/validator.js';
 import model from '#models/code/code.model.js';
 import jwtAuth from '#middlewares/jwtAuth.js';
+import codeutil from '#utils/codeutil.js';
 
 const router = express.Router();
 
@@ -79,6 +80,7 @@ router.post('/', async function(req, res, next) {
 
   try{
     const item = await model.create(req.body);
+    await codeutil.initCode();
     res.status(201).json({ok: 1, item});
   }catch(err){
     next(err);
@@ -151,10 +153,12 @@ router.put('/:_id', async function(req, res, next) {
   */
   try{
     const result = await model.update(req.params._id, req.body);
-    if(!result){
-      
+    if(result){
+      await codeutil.initCode();
+      res.json({ok: 1, updated: result});  
+    }else{
+      next();
     }
-    res.json({ok: 1, updated: result});
   }catch(err){
     next(err);
   }
@@ -214,6 +218,7 @@ router.delete('/:_id', async function(req, res, next) {
   try{
     const result = await model.delete(req.params._id);
     if(result.deletedCount){
+      await codeutil.initCode();
       res.json({ok: 1});
     }else{
       next();

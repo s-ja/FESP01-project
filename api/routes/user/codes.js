@@ -36,10 +36,14 @@ router.get('/', async function(req, res, next) {
   */
 
   try{
-    let item = await model.find();
-    if(item.length > 0){
-      item = codeutil.getCodeObj(item);
-    }
+    // let item = await model.find();
+    // logger.debug('code', item);
+    // if(item.length > 0){
+      const item = {
+        nested: codeutil.getCodeObj(),
+        flatten: codeutil.getCodeFlatten()
+      };
+    // }
     res.json({ ok: 1, item });
   }catch(err){
     next(err);
@@ -87,9 +91,13 @@ router.get('/:_id', async function(req, res, next) {
   */
 
   try{
+    // 검색어 포함
     let item = await model.findById(req.params._id, req.query);
     if(item){
-      item = codeutil.getCodeObj([item]);
+      // 검색 조건이 없을 경우 중첩 객체로 변환
+      if(Object.keys(req.query).length === 0 ) {
+        item = codeutil.generateCodeObj([item]);
+      }
       res.json({ ok: 1, item });
     }else{
       next();
