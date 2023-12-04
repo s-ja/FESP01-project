@@ -98,11 +98,11 @@ const cart = {
     return item;
   },
 
-  // 장바구니 상품 삭제
-  async delete(user_id){
+  // 장바구니 상품 한건 삭제
+  async delete(_id){
     logger.trace(arguments);
 
-    const result = await db.cart.deleteOne({ user_id });
+    const result = await db.cart.deleteOne({ _id });
     logger.debug(result);
     return result;
   },
