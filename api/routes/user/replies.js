@@ -35,11 +35,40 @@ router.post('/', jwtAuth.auth('user'), async function(req, res, next) {
   }
 });
 
+// 모든 후기 목록 조회
+router.get('/all', async function(req, res, next) {
+  try{
+    const item = await model.findBy();
+    res.json({ok: 1, item});
+  }catch(err){
+    next(err);
+  }
+});
+
+// 지정한 상품 후기 조회
+router.get('/products/:_id', async function(req, res, next) {
+  try{
+    const item = await model.findBy({ product_id: Number(req.params._id) });
+    res.json({ok: 1, item});
+  }catch(err){
+    next(err);
+  }
+});
+
+// 후기 상세 조회
+router.get('/:_id', async function(req, res, next) {
+  try{
+    const item = await model.findBy({ _id: Number(req.params._id) });
+    res.json({ok: 1, item});
+  }catch(err){
+    next(err);
+  }
+});
+
 // 내 후기 목록 조회
 router.get('/', jwtAuth.auth('user'), async function(req, res, next) {
   try{
-    const user_id = req.user._id;
-    const item = await model.findByUser(user_id);
+    const item = await model.findBy( { user_id: req.user._id });
     res.json({ok: 1, item});
   }catch(err){
     next(err);
@@ -56,5 +85,7 @@ router.get('/seller/:seller_id', async function(req, res, next) {
     next(err);
   }
 });
+
+
 
 export default router;

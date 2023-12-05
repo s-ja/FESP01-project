@@ -27,45 +27,19 @@ const reply = {
     return replyInfo;
   },
 
-  // 후기 상세 조회
-  async findById(_id){
-    logger.trace(arguments);
-    // const item = await db.reply.findOne({ _id });
-    const item = await db.reply.aggregate([
-      { $match: { _id } },
+  // 조건에 맞는 후기 목록 조회
+  async findBy( query={} ){
+    const list = await db.reply.aggregate([
+      { $match: query },
       {
         $lookup: {
-          from: 'user',
-          localField: 'user_id',
+          from: 'product',
+          localField: 'product_id',
           foreignField: '_id',
-          as: 'user'
+          as: 'product'
         }
-      }, 
-      { 
-        $unwind: {
-          path: '$user',
-          preserveNullAndEmptyArrays: true
-        }
-       }, 
-      {
-        $project: {
-          _id: 1,
-          userName: '$user.name',
-          rating: 1,
-          content: 1,
-          createdAt: 1
-        }
-      }
-    ]).next();
-    logger.debug(item);
-    return item;
-  },
-
-  // 상품 후기 조회
-  async findByProductId(product_id){
-    logger.trace(arguments);
-    const list = await db.reply.aggregate([
-      { $match: { product_id } },
+      },
+      { $unwind: '$product' }, 
       {
         $lookup: {
           from: 'user',
@@ -78,52 +52,30 @@ const reply = {
       {
         $project: {
           _id: 1,
-          userName: '$user.name',
-          rating: 1,
-          content: 1,
-          createdAt: 1
-        }
-      }
-    ]).toArray();
-
-    
-    logger.debug(list);    
-    return list;
-  },
-
-  // 내 후기 목록 조회
-  async findByUser(user_id){
-    logger.trace(arguments);
-
-    const list = await db.reply.aggregate([
-      { $match: {user_id } },
-      {
-        $lookup: {
-          from: 'product',
-          localField: 'product_id',
-          foreignField: '_id',
-          as: 'product'
-        }
-      }, 
-      { 
-        $unwind: {
-          path: '$product'
-        }
-        }, 
-      {
-        $project: {
-          _id: 1,
-          product_id: 1,
           rating: 1,
           content: 1,
           createdAt: 1,
+          'product._id': '$product._id',
+          'product.image': { $arrayElemAt: ['$product.mainImages', 0] },
           'product.name': '$product.name',
-          'product.price': '$product.price',
-          'product.image': { $arrayElemAt: ['$product.mainImages', 0] }
+          'user._id': '$user._id',
+          'user.name': {
+            $concat: [
+              { $substrCP: ['$user.name', 0, 1 ] }, // 첫 번째 문자 추출
+              {
+                $reduce: {
+                  input: { $range: [1, { $strLenCP: '$user.name' }] }, // 첫 문자 이후의 길이 범위
+                  initialValue: '',
+                  in: {
+                    $concat: ['$$value', '*'] // 나머지 문자 '*'로 대체
+                  }
+                }
+              }
+            ]
+          }
         }
       }
     ]).sort({ _id: -1 }).toArray();
-
 
     logger.debug(list);
     return list;
@@ -161,7 +113,20 @@ const reply = {
           name: 1,
           'image': { $arrayElemAt: ['$mainImages', 0] },
           'reply._id': '$reply._id',
-          'reply.user_name': '$user.name',
+          'reply.user_name': {
+            $concat: [
+              { $substrCP: ['$user.name', 0, 1 ] }, // 첫 번째 문자 추출
+              {
+                $reduce: {
+                  input: { $range: [1, { $strLenCP: '$user.name' }] }, // 첫 문자 이후의 길이 범위
+                  initialValue: '',
+                  in: {
+                    $concat: ['$$value', '*'] // 나머지 문자 '*'로 대체
+                  }
+                }
+              }
+            ]
+          },
           'reply.rating': '$reply.rating',
           'reply.content': '$reply.content',
           'reply.createdAt': '$reply.createdAt',
