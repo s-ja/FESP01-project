@@ -597,16 +597,17 @@ async function registCart() {
   await db.cart.insertMany(data);
 }
 
-// 구매 등록
+// 주문 등록
 async function registOrder() {
   var data = [
     {
       _id: await nextSeq('order'),
       user_id: 4,
-      state: 'OS010',
       products: [
         {
           _id: 2,
+          seller_id: 2,
+          state: 'OS010',
           name: '헬로카봇 스톰다이버',
           image: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-diver.jpg`,
           quantity: 2,
@@ -633,15 +634,11 @@ async function registOrder() {
     {
       _id: await nextSeq('order'),
       user_id: 4,
-      state: 'OS035',
-      delivery: {
-        company: "한진 택배",
-        trackingNumber: "364495958003",
-        url: "https://trace.cjlogistics.com/next/tracking.html?wblNo=364495958003"
-      },
       products: [
         {
           _id: 3,
+          seller_id: 2,
+          state: 'OS010',
           name: '레고 클래식 라지 조립 박스 10698',
           image: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-classic.jpg`,
           quantity: 1,
@@ -649,6 +646,8 @@ async function registOrder() {
         },
         {
           _id: 4,
+          seller_id: 3,
+          state: 'OS010',
           name: '레고 테크닉 42151 부가티 볼리드',
           image: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-bugatti.png`,
           quantity: 2,
@@ -675,10 +674,11 @@ async function registOrder() {
     {
       _id: await nextSeq('order'),
       user_id: 4,
-      state: 'OS310',
       products: [
         {
           _id: 4,
+          seller_id: 3,
+          state: 'OS310',
           name: '레고 테크닉 42151 부가티 볼리드',
           image: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-bugatti.png`,
           quantity: 1,
@@ -702,6 +702,42 @@ async function registOrder() {
       createdAt: getTime(-3, -60 * 60 * 18),
       updatedAt: getTime(-1, -60 * 60 * 1)
     },
+    {
+      _id: await nextSeq('order'),
+      user_id: 2,
+      products: [
+        {
+          _id: 2,
+          seller_id: 2,
+          state: 'OS310',
+          name: '헬로카봇 스톰다이버',
+          image: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-diver.jpg`,
+          quantity: 1,
+          price: 17260,
+          reply_id: 2,
+          delivery: {
+            company: "한진 택배",
+            trackingNumber: "364495958003",
+            url: "https://trace.cjlogistics.com/next/tracking.html?wblNo=364495958003"
+          },
+        }
+      ],
+      cost: {
+        products: 17260,
+        shippingFees: 2500,
+        discount: {
+          products: 0,
+          shippingFees: 0,
+        },
+        total: 19760
+      },
+      address: {
+        name: '학교',
+        value: '서울시 강남구 역삼동 234',
+      },
+      createdAt: getTime(-3, -60 * 60 * 18),
+      updatedAt: getTime(-1, -60 * 60 * 1)
+    },
   ];
 
   await db.order.insertMany(data);
@@ -713,7 +749,8 @@ async function registReply() {
     {
       _id: await nextSeq('reply'),
       user_id: 4,
-      product_id: 4,
+      order_id: 1,
+      product_id: 2,
       rating: 5,
       content: '아이가 좋아해요.',
       createdAt: getTime(-4, -60 * 60 * 12),
@@ -721,7 +758,8 @@ async function registReply() {
     {
       _id: await nextSeq('reply'),
       user_id: 2,
-      product_id: 4,
+      order_id: 4,
+      product_id: 2,      
       rating: 4,
       content: '배송이 좀 느려요.',
       createdAt: getTime(-3, -60 * 60 * 1),
@@ -729,7 +767,8 @@ async function registReply() {
     {
       _id: await nextSeq('reply'),
       user_id: 4,
-      product_id: 2,
+      order_id: 2,
+      product_id: 3,
       rating: 1,
       content: '하루만에 고장났어요.',
       createdAt: getTime(-2, -60 * 60 * 10),
