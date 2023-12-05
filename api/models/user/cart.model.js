@@ -107,6 +107,15 @@ const cart = {
     return result;
   },
 
+  // 장바구니 상품 여러건 삭제
+  async deleteMany(cartIdList){
+    logger.trace(arguments);
+
+    const result = await db.cart.deleteMany({ _id: { $in: cartIdList } });
+    logger.debug(result);
+    return result;
+  },
+
   // 장바구니 비우기
   async cleanup(user_id){
     logger.trace(arguments);
