@@ -117,6 +117,7 @@ const buying = {
         const reply = await replyModel.findById(product.reply_id);
         if(reply){
           delete reply._id;
+          delete reply.user_id;
           delete reply.order_id;
           delete reply.product_id;
           product.reply = reply;
@@ -157,16 +158,29 @@ const buying = {
   },
 
   // 주문 상태 수정
-  async update(_id, order, history){
+  async updateState(_id, order, history){
     logger.trace(arguments);
 
     order.updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
 
-    const result = await db.order.updateOne({ _id }, { $set: order, $push: { history } });
+    const set = { 'products.$[elem].state': order.state };
+    if(order.delivery){
+      set['products.$[elem].delivery'] = order.delivery;
+    }
+
+    logger.log(set);
+
+    const result = await db.order.updateOne(
+      { _id }, 
+      { $set: set, $push: { 'products.$[elem].history': history } }, 
+      { arrayFilters: [{ 'elem._id': order.product_id }] }
+    );
+
     logger.debug(result);
     const item = { _id, ...order };
     return item;
   }
+
 };
 
 export default buying;

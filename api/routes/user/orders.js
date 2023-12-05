@@ -139,6 +139,7 @@ try{
 // 주문 상태 수정
 router.patch('/:_id', [
   body('state').trim().notEmpty().withMessage('state 값은 필수로 입력해야 합니다.'),
+  body('product_id').isNumeric().withMessage('product_id 값은 숫자만 가능합니다.'),
 ], validator.checkResult, async function(req, res, next) {
   try{
     logger.trace(req.query);
@@ -150,7 +151,7 @@ router.patch('/:_id', [
         updated: { ...req.body },
         createdAt: moment().format('YYYY.MM.DD HH:mm:ss')
       };
-      const result = await model.update(_id, req.body, history);
+      const result = await model.updateState(_id, req.body, history);
       res.json({ok: 1, updated: result});
     }else{
       next();
