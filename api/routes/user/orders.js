@@ -71,7 +71,7 @@ router.post('/', [
   */
 
   try{
-    req.body.state = 'OS020'; // 결제 완료 상태로 주문
+    req.body.state = req.body.state || 'OS020'; // 결제 완료 상태로 주문
     const item = await model.create({ ...req.body, user_id: req.user._id });
     res.json({ok: 1, item});
   }catch(err){
