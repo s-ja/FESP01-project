@@ -7,6 +7,7 @@ import db, { nextSeq } from '#utils/dbutil.js';
 import productModel from '#models/user/product.model.js';
 import replyModel from '#models/user/reply.model.js';
 import userModel from '#models/user/user.model.js';
+import cartModel from '#models/user/cart.model.js';
 import codeutil from '#utils/codeutil.js';
 
 const buying = {
@@ -87,9 +88,20 @@ const buying = {
 
     if(!orderInfo.dryRun){
       await db.order.insertOne(orderInfo);
+      // 장바구니 상품 구매시 구매한 상품은 장바구니 목록에서 제거
+      if(orderInfo.type == 'cart'){
+        const cartList = await cartModel.findByUser(orderInfo.user_id);
+        const deleteIdList = _.chain(cartList)
+          .filter(cart => _.find(orderInfo.products, { '_id': cart.product_id }))
+          .map('_id')
+          .value();
+        await cartModel.deleteMany(deleteIdList);
+      }
     }
     return orderInfo;
   },
+
+
 
   // 주문 목록 검색
   async findBy({ user_id, search, sortBy }){
