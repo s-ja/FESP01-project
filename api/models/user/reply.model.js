@@ -81,6 +81,15 @@ const reply = {
     return list;
   },
 
+  // 후기만 조회
+  async findById(_id){
+    logger.trace(arguments);
+
+    const item = await db.reply.findOne({ _id });
+    logger.debug(item);
+    return item;
+  },
+
   // 판매자 후기 목록 조회
   async findBySeller(seller_id){
     logger.trace(arguments);
