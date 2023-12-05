@@ -48,7 +48,7 @@ const product = {
     }
     const item = await db.product.findOne(query);
     if(item){
-      item.replies = await replyModel.findByProductId(_id);
+      item.replies = await replyModel.findBy({ product_id: _id });
       item.bookmarks = await bookmarkModel.findByProduct(_id);
     }
     logger.debug(item);
