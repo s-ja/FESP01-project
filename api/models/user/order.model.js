@@ -101,8 +101,6 @@ const buying = {
     return orderInfo;
   },
 
-
-
   // 주문 목록 검색
   async findBy({ user_id, search, sortBy }){
     logger.trace(arguments);
