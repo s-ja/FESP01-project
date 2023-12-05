@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import logger from '#utils/logger.js';
-import db, { nextSeq } from '#utils/dbutil.js';
+import db, { nextSeq } from '#utils/dbUtil.js';
 
 
 const user = {

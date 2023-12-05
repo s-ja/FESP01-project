@@ -2,7 +2,7 @@ import logger from './logger.js';
 import { db as DBConfig } from '../config/index.js';
 import { MongoClient } from 'mongodb';
 import _ from 'lodash';
-import codeutil from '#utils/codeutil.js';
+import codeUtil from '#utils/codeUtil.js';
 
 var db;
 
@@ -31,9 +31,9 @@ try{
   db.bookmark = db.collection('bookmark');
   db.config = db.collection('config');
 
-  await codeutil.initCode(db);
+  await codeUtil.initCode(db);
 
-  await codeutil.initConfig(db);
+  await codeUtil.initConfig(db);
 
 }catch(err){
   logger.error(err);

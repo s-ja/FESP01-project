@@ -3,12 +3,12 @@ import moment from 'moment';
 import createError from 'http-errors';
 
 import logger from '#utils/logger.js';
-import db, { nextSeq } from '#utils/dbutil.js';
+import db, { nextSeq } from '#utils/dbUtil.js';
 import productModel from '#models/user/product.model.js';
 import replyModel from '#models/user/reply.model.js';
 import userModel from '#models/user/user.model.js';
 import cartModel from '#models/user/cart.model.js';
-import codeutil from '#utils/codeutil.js';
+import codeUtil from '#utils/codeUtil.js';
 
 const buying = {
   // 주문 등록
@@ -63,7 +63,7 @@ const buying = {
 
     // 회원 등급별 할인율
     const membershipClass = await userModel.findAttrById(orderInfo.user_id, 'extra.membershipClass');
-    const discountRate = codeutil.getCodeAttr(membershipClass?.extra.membershipClass, 'discountRate');
+    const discountRate = codeUtil.getCodeAttr(membershipClass?.extra.membershipClass, 'discountRate');
 
     const discount = {
       products: clientDiscount.products + (cost.products - clientDiscount.products) * (discountRate/100),

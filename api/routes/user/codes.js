@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import logger from '#utils/logger.js';
 import model from '#models/code/code.model.js';
-import codeutil from '#utils/codeutil.js';
+import codeUtil from '#utils/codeUtil.js';
 import querystring from 'querystring';
 
 const router = express.Router();
@@ -40,8 +40,8 @@ router.get('/', async function(req, res, next) {
     // logger.debug('code', item);
     // if(item.length > 0){
       const item = {
-        nested: codeutil.getCodeObj(),
-        flatten: codeutil.getCodeFlatten()
+        nested: codeUtil.getCodeObj(),
+        flatten: codeUtil.getCodeFlatten()
       };
     // }
     res.json({ ok: 1, item });
@@ -96,7 +96,7 @@ router.get('/:_id', async function(req, res, next) {
     if(item){
       // 검색 조건이 없을 경우 중첩 객체로 변환
       if(Object.keys(req.query).length === 0 ) {
-        item = codeutil.generateCodeObj([item]);
+        item = codeUtil.generateCodeObj([item]);
       }
       res.json({ ok: 1, item });
     }else{

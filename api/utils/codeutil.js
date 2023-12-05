@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import logger from '#utils/logger.js';
-import dbutil from '#utils/dbutil.js';
+import dbUtil from '#utils/dbUtil.js';
 
-const codeutil = {
-  async initCode(db = dbutil){
+const codeUtil = {
+  async initCode(db = dbUtil){
     global.codeList = await db.code.find().toArray();
     global.codeList.forEach(code => _.sortBy(code.codes, 'sort'));
     global.codeFlatten = _.flatten(_.map(global.codeList, 'codes')).reduce((codes, item) => {
@@ -12,10 +12,10 @@ const codeutil = {
         [item['code']]: item
       };
     }, {});
-    global.codeObj = codeutil.generateCodeObj(global.codeList);
+    global.codeObj = codeUtil.generateCodeObj(global.codeList);
   },
 
-  async initConfig(db = dbutil){
+  async initConfig(db = dbUtil){
     global.config = (await db.config.find().toArray()).reduce((configs, item) => {
       return {
         ...configs,
@@ -85,4 +85,4 @@ const codeutil = {
 
 };
 
-export default codeutil;
+export default codeUtil;

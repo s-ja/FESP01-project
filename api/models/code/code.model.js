@@ -3,7 +3,7 @@ import moment from 'moment';
 import createError from 'http-errors';
 
 import logger from '#utils/logger.js';
-import db from '#utils/dbutil.js';
+import db from '#utils/dbUtil.js';
 
 const code = {
   // 코드 등록

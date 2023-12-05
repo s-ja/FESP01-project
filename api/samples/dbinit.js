@@ -9,7 +9,7 @@ if (process.env.NODE_ENV) {
   dotenv.config({ override: true, path: `.env.${process.env.NODE_ENV}` });
 }
 
-import db, { getClient, nextSeq } from '../utils/dbutil.js';
+import db, { getClient, nextSeq } from '../utils/dbUtil.js';
 import moment from 'moment';
 
 async function main() {

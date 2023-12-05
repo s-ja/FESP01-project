@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import logger from '#utils/logger.js';
-import db, { nextSeq, getClient } from '#utils/dbutil.js';
+import db, { nextSeq, getClient } from '#utils/dbUtil.js';
 
 const bookmark = {
   // 북마크 등록
