@@ -8,6 +8,7 @@ import productModel from '#models/user/product.model.js';
 import replyModel from '#models/user/reply.model.js';
 import userModel from '#models/user/user.model.js';
 import codeUtil from '#utils/codeUtil.js';
+import priceUtil from '#utils/priceUtil.js';
 
 const cart = {
   // 장바구니 등록
@@ -39,12 +40,12 @@ const cart = {
   },
 
   // 회원의 장바구니 목록 조회
-  async findByUser(user_id){
+  async findByUser(user_id, discount){
     logger.trace(arguments);
     // const list = await db.cart.find({ user_id }).sort({ createdAt: -1 }).toArray();
 
     const list = await db.cart.aggregate([
-      { $match: {user_id } },
+      { $match: { user_id } },
       {
         $lookup: {
           from: 'product',
@@ -61,12 +62,13 @@ const cart = {
       {
         $project: {
           _id: 1,
-          product_id: 1,
           quantity: 1,
           createdAt: 1,
           updatedAt: 1,
+          'product._id': '$product._id',
           'product.name': '$product.name',
           'product.price': '$product.price',
+          'product.seller_id': '$product.seller_id',
           'product.quantity': '$product.quantity',
           'product.buyQuantity': '$product.buyQuantity',
           'product.image': { $arrayElemAt: ['$product.mainImages', 0] }
@@ -74,6 +76,8 @@ const cart = {
       }
     ]).sort({ _id: -1 }).toArray();
 
+
+    list.cost = await priceUtil.getCost(user_id, _.map(list, cart => ({ _id: cart.product._id })), discount);
 
     logger.debug(list);
     return list;

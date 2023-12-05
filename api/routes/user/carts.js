@@ -12,8 +12,10 @@ const router = express.Router();
 router.get('/', async function(req, res, next) {
   try{
     const user_id = req.user._id;
-    const item = await model.findByUser(user_id);
-    res.json({ok: 1, item});
+    const item = await model.findByUser(user_id, req.body.discount);
+    const cost = item.cost;
+    delete item.cost;
+    res.json({ ok: 1, item, cost });
   }catch(err){
     next(err);
   }
