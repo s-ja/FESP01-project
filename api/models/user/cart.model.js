@@ -62,6 +62,7 @@ const cart = {
       {
         $project: {
           _id: 1,
+          product_id: 1,
           quantity: 1,
           createdAt: 1,
           updatedAt: 1,
