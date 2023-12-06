@@ -771,6 +771,9 @@ async function registReply() {
       product_id: 3,
       rating: 1,
       content: '하루만에 고장났어요.',
+      extra: {
+        title: '추천하지 않습니다.'
+      },
       createdAt: getTime(-2, -60 * 60 * 10),
     }
   ];
