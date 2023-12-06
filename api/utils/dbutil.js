@@ -8,7 +8,7 @@ var db;
 
 // Connection URL
 var url;
-if(process.env.NODE_ENV === 'production'){
+if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development'){
   url = `mongodb://${DBConfig.user}:${DBConfig.password}@${DBConfig.host}:${DBConfig.port}/${DBConfig.database}`;
 }else{
   url = `mongodb://${DBConfig.host}:${DBConfig.port}`;
