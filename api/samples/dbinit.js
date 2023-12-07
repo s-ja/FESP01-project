@@ -499,11 +499,12 @@ async function registProduct() {
         sort: 7,
       },
     },
+    // 13번 상품
     {
       _id: await nextSeq('product'),
       seller_id: 3,
       price: 21600,
-      shippingFees: 3500,
+      shippingFees: 5500,
       show: true,
       active: true,
       name: 'KC인증 스키비디 토일렛 피규어 블럭 4종 중국 호환 레고 블록 장난감 어린이 선물',
@@ -525,11 +526,12 @@ async function registProduct() {
         sort: 6,
       },
     },
+    // 14번 상품. shippingFees가 없을 경우 config.shippingFees 사용
     {
       _id: await nextSeq('product'),
       seller_id: 3,
       price: 12900,
-      shippingFees: 3500,
+      // shippingFees: 3500,
       show: true,
       active: true,
       name: '푸쉬팝게임기 팝잇 푸시팝 게임기 두더지게임 핑거 뽁뽁이 애니멀 1+1',
@@ -550,6 +552,46 @@ async function registProduct() {
         isBest: true,
         category: ['PC01', 'PC0102'], // 어린이 > 보드게임
         sort: 5,
+      },
+    },
+    // 15번 상품. 옵션이 있는 경우 메인 상품 정보
+    {
+      _id: await nextSeq('product'),
+      seller_id: 3,
+      price: 12900,
+      shippingFees: 3500,
+      show: true,
+      active: true,
+      name: '샤넬 NO.5',
+      quantity: 999999,
+      buyQuantity: 0,
+      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop01.jpg`],
+      content: `샤넬 향수`,
+      createdAt: getTime(-3, -60 * 60 * 12),
+      updatedAt: getTime(-3, -60 * 60 * 12),
+      extra: {
+        depth: 1
+      },
+    },
+    // 16번 상품. 옵션이 있는 경우 옵션 상품 정보. 15번 상품의 하위 상품(옵션)
+    {
+      _id: await nextSeq('product'),
+      seller_id: 3,
+      price: 6900,
+      shippingFees: 3500,
+      name: '샤넬 NO.5',
+      quantity: 1,
+      buyQuantity: 0,
+      show: true,
+      active: true,
+      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop03.jpg`],
+      content: `3달 쓴 향수입니다.`,
+      createdAt: getTime(-3, -60 * 60 * 12),
+      updatedAt: getTime(-3, -60 * 60 * 12),
+      extra: {
+        depth: 2,
+        parent: 15,
+        size: '200mm'
       },
     },
   ];

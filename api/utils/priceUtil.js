@@ -21,9 +21,9 @@ const priceUtil = {
       const beforeShippingFees = sellerBaseShippingFees[product.seller_id];
       product.price = product.price * _.find(products, {_id: product._id}).quantity;
       if(beforeShippingFees === undefined){
-        sellerBaseShippingFees[product.seller_id] = product.shippingFees;
+        sellerBaseShippingFees[product.seller_id] = product.shippingFees === undefined ? global.config.shippingFees.value : product.shippingFees;
       }else{
-        sellerBaseShippingFees[product.seller_id] = Math.max(beforeShippingFees, product.shippingFees);
+        sellerBaseShippingFees[product.seller_id] = Math.max(beforeShippingFees, product.shippingFees === undefined ? global.config.shippingFees.value : product.shippingFees);
       }
     });
 
