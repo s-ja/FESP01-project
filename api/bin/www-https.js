@@ -6,7 +6,8 @@
 
 import https from 'node:https';
 import fs from 'node:fs';
-
+import socketServer from './socketServer.js';
+import { Server }  from 'socket.io';
 import app from '../app.js';
 import logger from '../utils/logger.js';
 
@@ -94,3 +95,8 @@ function onError(error) {
 function onListening() {
   logger.info(`API 서버 구동 완료. ${process.env.API_HOST}:${port}`);
 }
+
+
+// socket.io 서버 구동
+const io = new Server(server, { cors: { origin: /^https?:\/\/localhost/ } } );
+socketServer(io);

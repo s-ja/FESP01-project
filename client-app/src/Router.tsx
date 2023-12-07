@@ -13,6 +13,9 @@ import Product from './pages/product';
 import Order from './pages/order';
 import OrderNew from './pages/order/OrderNew';
 import UserInfo from './pages/user/UserInfo';
+import Chat from './pages/chat';
+import CreateRoom from './pages/chat/CreateRoom';
+import JoinRoom from './pages/chat/ChatRoom';
 
 const Router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +38,11 @@ const Router = createBrowserRouter(
         <Route path="new" element={<Signup />} />
         <Route path="login" element={<Login />} />
         <Route path=":_id" element={<UserInfo />} />
+      </Route>
+      
+      <Route path="/chat" element={<Chat />}>
+        <Route index element={<CreateRoom />} />
+        <Route path=":roomId" element={<JoinRoom />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Route>

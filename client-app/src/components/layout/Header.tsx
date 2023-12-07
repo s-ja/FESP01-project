@@ -21,6 +21,7 @@ const Header = function(){
             <li><Link to="/products?menu=new">신상품</Link></li>
             <li><Link to="/products?menu=kidult">키덜트 존</Link></li>
             <li><Link to="/products?menu=best">베스트</Link></li>
+            <li><Link to="/chat">채팅</Link></li>
             { user?.name ?
               <li>
                 <ul>
