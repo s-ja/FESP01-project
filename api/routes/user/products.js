@@ -81,8 +81,10 @@ router.get('/', [
   try{
     logger.trace(req.query);
 
-    // 검색 옵션
-    let search = {};
+    // 검색
+    // 옵션이 있는 상품의 옵션은 extra.depth: 2로 저장하기로 해서 옵션은 제외하고 검색
+    let search = { 'extra.depth': { $ne: 2 } };
+    // let search = {};
 
     const minPrice = Number(req.query.minPrice);
     const maxPrice = Number(req.query.maxPrice);
