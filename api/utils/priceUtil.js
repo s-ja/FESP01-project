@@ -17,8 +17,9 @@ const priceUtil = {
     const productArray = _.map(products, '_id');
     const dbProducts = await db.product.find({ _id: { $in: productArray } }).toArray();
 
-    dbProducts.forEach(product => {
+    dbProducts.forEach((product) => {
       const beforeShippingFees = sellerBaseShippingFees[product.seller_id];
+      product.price = product.price * _.find(products, {_id: product._id}).quantity;
       if(beforeShippingFees === undefined){
         sellerBaseShippingFees[product.seller_id] = product.shippingFees;
       }else{

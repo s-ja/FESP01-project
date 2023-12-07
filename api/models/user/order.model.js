@@ -47,7 +47,7 @@ const buying = {
     orderInfo.products = products;
     const cost = await priceUtil.getCost(orderInfo.user_id, orderInfo.products, orderInfo.discount);
     delete orderInfo.discount;
-    orderInfo = { ...orderInfo, ...cost };
+    orderInfo = { ...orderInfo, cost };
 
     if(!orderInfo.dryRun){
       await db.order.insertOne(orderInfo);
