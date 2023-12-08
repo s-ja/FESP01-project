@@ -50,7 +50,7 @@ const product = {
     if(item){
       item.replies = await replyModel.findBy({ product_id: _id });
       item.bookmarks = await bookmarkModel.findByProduct(_id);
-      item.options = await this.findBy({ search: { 'extra.parent': item._id } });
+      item.options = item.options || await this.findBy({ search: { 'extra.parent': item._id } });
     }
     logger.debug(item);
     return item;
