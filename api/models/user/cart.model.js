@@ -78,7 +78,7 @@ const cart = {
     ]).sort({ _id: -1 }).toArray();
 
 
-    list.cost = await priceUtil.getCost(user_id, _.map(list, cart => ({ _id: cart.product._id })), discount);
+    list.cost = await priceUtil.getCost(user_id, _.map(list, cart => ({ _id: cart.product._id, quantity: cart.quantity })), discount);
 
     logger.debug(list);
     return list;

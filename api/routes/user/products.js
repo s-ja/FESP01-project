@@ -81,24 +81,38 @@ router.get('/', [
   try{
     logger.trace(req.query);
 
-    // 검색 옵션
-    let search = {
-      price: {},
-      shippingFees: {}
-    };
+    // 검색
+    // 옵션이 있는 상품의 옵션은 extra.depth: 2로 저장하기로 해서 옵션은 제외하고 검색
+    let search = { 'extra.depth': { $ne: 2 } };
+    // let search = {};
 
-    const minPrice = Number(req.query.minPrice) || 0;
-    const maxPrice = Number(req.query.maxPrice) || 99999999999;
-    const minShippingFees = Number(req.query.minShippingFees) || 0;    
-    const maxShippingFees = Number(req.query.maxShippingFees) || 99999999999;    
+    const minPrice = Number(req.query.minPrice);
+    const maxPrice = Number(req.query.maxPrice);
+    const minShippingFees = Number(req.query.minShippingFees);    
+    const maxShippingFees = Number(req.query.maxShippingFees);    
     const seller = Number(req.query.seller_id);
     const keyword = req.query.keyword;
     const extra = req.query.extra;
 
-    search.price['$gte'] = minPrice;
-    search.price['$lte'] = maxPrice;
-    search.shippingFees['$gte'] = minShippingFees;
-    search.shippingFees['$lte'] = maxShippingFees;
+    if(minPrice >= 0){
+      search.price = search.price || {};
+      search.price['$gte'] = minPrice;
+    }
+
+    if(maxPrice >=0){
+      search.price = search.price || {};
+      search.price['$lte'] = maxPrice;
+    }
+
+    if(minShippingFees >= 0){
+      search.shippingFees = search.shippingFees || {};
+      search.shippingFees['$gte'] = minShippingFees;
+    }
+
+    if(maxShippingFees >= 0){
+      search.shippingFees = search.shippingFees || {};
+      search.shippingFees['$lte'] = maxShippingFees;
+    }
 
     if(seller){
       search['seller_id'] = seller;
