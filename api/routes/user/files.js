@@ -118,16 +118,17 @@ router.post('/', upload.array('attach', 10), handleError, async function(req, re
 });
 
 // 파일 다운로드
-router.get('/:filename', function(req, res, next){
+router.get('/:fileName', function(req, res, next){
   try{
-    logger.log(req.params.filename);
-    const filename = req.params.filename;
-    const filepath = '../public/uploads/' + filename;
+    
+    const orgName = req.query.name;
+    logger.error(orgName);
+    const filepath = '../public/uploads/' + req.params.fileName;
     fs.stat(filepath, (err, state) => {
       if(err || state.isDirectory()){
-        next(createError(404, `${filename} 파일이 존재하지 않습니다.`));
+        next(createError(404, `${fileName} 파일이 존재하지 않습니다.`));
       }else{
-        res.download(filepath);
+        res.download(filepath, orgName);
       }
     });
   }catch(err){
