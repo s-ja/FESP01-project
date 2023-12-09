@@ -209,7 +209,11 @@ async function registProduct() {
       name: '캥거루 스턴트 독 로봇완구',
       quantity: 320,
       buyQuantity: 310,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-dog.jpg`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-dog.jpg`,
+        fileName: 'sample-dog.jpg',
+        orgName: '스턴트 독.jpg'
+      }],
       content: `
         <div class="product-detail">
           <p>캥거루 스턴트 독 로봇완구 상세 설명</p>
@@ -233,7 +237,11 @@ async function registProduct() {
       name: '헬로카봇 스톰다이버',
       quantity: 200,
       buyQuantity: 198,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-diver.jpg`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-diver.jpg`,
+        fileName: 'sample-diver.jpg',
+        orgName: '헬로카봇.jpg'
+      }],
       content: `
         <div class="product-detail">
           <p>헬로카봇 스톰다이버 상세 설명</p>
@@ -257,7 +265,11 @@ async function registProduct() {
       name: '레고 클래식 라지 조립 박스 10698',
       quantity: 100,
       buyQuantity: 99,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-classic.jpg`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-classic.jpg`,
+        fileName: 'sample-classic.jpg',
+        orgName: '레고 클래식.jpg'
+      }],
       content: `
         <div class="product-detail">
           <p>레고 클래식 라지 조립 박스 10698 상세 설명</p>
@@ -281,7 +293,11 @@ async function registProduct() {
       name: '레고 테크닉 42151 부가티 볼리드',
       quantity: 100,
       buyQuantity: 89,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-bugatti.png`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-bugatti.png`,
+        fileName: 'sample-bugatti.png',
+        orgName: '부가티.png'
+      }],
       content: `
         <div class="product-detail">
           <p>레고 테크닉 42151 부가티 볼리드 상세 설명</p>
@@ -305,7 +321,11 @@ async function registProduct() {
       name: '레고 마인크래프트 21246 깊고 어두운 전장',
       quantity: 100,
       buyQuantity: 98,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-minecraft.png`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-minecraft.png`,
+        fileName: 'sample-minecraft.png',
+        orgName: '마인크래프트.png'
+      }],
       content: `
         <div class="product-detail">
           <p>레고 마인크래프트 21246 깊고 어두운 전장 상세 설명</p>
@@ -330,7 +350,11 @@ async function registProduct() {
       name: '레고 마블 76247 헐크버스터: 와칸다의 전투',
       quantity: 100,
       buyQuantity: 99,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-hulk.png`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-hulk.png`,
+        fileName: 'sample-hulk.png',
+        orgName: '헐크.png'
+      }],
       content: `
         <div class="product-detail">
           <p>레고 마블 76247 헐크버스터: 와칸다의 전투 상세 설명</p>
@@ -354,7 +378,11 @@ async function registProduct() {
       name: '할리갈리 보드게임',
       quantity: 100,
       buyQuantity: 98,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-halligalli.jpg`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-halligalli.jpg`,
+        fileName: 'sample-halligalli.jpg',
+        orgName: '할리갈리.jpg'
+      }],
       content: `
         <div class="product-detail">
           <p>할리갈리 보드게임 상세 설명</p>
@@ -378,7 +406,11 @@ async function registProduct() {
       name: '루미큐브 클래식',
       quantity: 100,
       buyQuantity: 97,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-rummikub.png`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-rummikub.png`,
+        fileName: 'sample-rummikub.png',
+        orgName: '루미큐브.png'
+      }],
       content: `
         <div class="product-detail">
           <p>루미큐브 클래식 상세 설명</p>
@@ -402,7 +434,11 @@ async function registProduct() {
       name: '짱구는 못말려 숲속 산책 직소퍼즐',
       quantity: 100,
       buyQuantity: 96,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-jjangu.jpg`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-jjangu.jpg`,
+        fileName: 'sample-jjangu.jpg',
+        orgName: '짱구.jpg'
+      }],
       content: `
         <div class="product-detail">
           <p>짱구는 못말려 숲속 산책 직소퍼즐 상세 설명</p>
@@ -427,7 +463,11 @@ async function registProduct() {
       name: '라푼젤 그녀의 꿈 직소퍼즐 KD-1000-001 + 그림 엽서(랜덤) + 품질보증서',
       quantity: 100,
       buyQuantity: 95,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-rapunzel.jpg`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-rapunzel.jpg`,
+        fileName: 'sample-rapunzel.jpg',
+        orgName: '라푼젤.jpg'
+      }],
       content: `
         <div class="product-detail">
           <p>라푼젤 그녀의 꿈 직소퍼즐 KD-1000-001 + 그림 엽서(랜덤) + 품질보증서 상세 설명</p>
@@ -451,7 +491,16 @@ async function registProduct() {
       name: 'KC인증 스키비디 토일렛 피규어 블럭 8종 중국 호환 레고 블록 장난감 어린이 선물',
       quantity: 100,
       buyQuantity: 94,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi01.jpg`, `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi02.jpg`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi01.jpg`,
+        fileName: 'sample-skibidi01.jpg',
+        orgName: '피규어1.jpg'
+      },
+      {
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi02.jpg`,
+        fileName: 'sample-skibidi02.jpg',
+        orgName: '피규어2.jpg'
+      }],
       content: `
         <div align="center"><p>*크리스마스 배송 안내</p></div>
         <div align="center"><p>택배사 물량 증가로 평소보다 2~3일 더 걸립니다.</p></div>
@@ -481,7 +530,11 @@ async function registProduct() {
       name: '스키비디 토일렛 봉제 인형 (25cm-30cm) 시리즈 크리스마스 선물',
       quantity: 999,
       buyQuantity: 800,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi11.jpg`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi11.jpg`,
+        fileName: 'sample-skibidi11.jpg',
+        orgName: '토일렛.jpg'
+      }],
       content: `
         <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi12.jpg"></div>
         <div align="center"><br></div>
@@ -510,7 +563,11 @@ async function registProduct() {
       name: 'KC인증 스키비디 토일렛 피규어 블럭 4종 중국 호환 레고 블록 장난감 어린이 선물',
       quantity: 99,
       buyQuantity: 94,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi21.jpg`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi21.jpg`,
+        fileName: 'sample-skibidi21.jpg',
+        orgName: '스키비디.jpg'
+      }],
       content: `
         <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi22.jpg"></div>
         <div align="center"><br></div>
@@ -537,7 +594,21 @@ async function registProduct() {
       name: '푸쉬팝게임기 팝잇 푸시팝 게임기 두더지게임 핑거 뽁뽁이 애니멀 1+1',
       quantity: 300,
       buyQuantity: 298,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop01.jpg`, `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop02.jpg`, `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop03.jpg`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop01.jpg`,
+        fileName: 'sample-pushpop01.jpg',
+        orgName: '푸쉬팝1.jpg'
+      },
+      {
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop02.jpg`,
+        fileName: 'sample-pushpop02.jpg',
+        orgName: '푸쉬팝2.jpg'
+      },
+      {
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop03.jpg`,
+        fileName: 'sample-pushpop03.jpg',
+        orgName: '푸쉬팝3.jpg'
+      }],
       content: `
         <div align="center"><p>푸쉬팝게임기 팝잇 푸시팝 게임기 두더지게임 핑거 뽁뽁이 애니멀을 구매하시는 모든 분께 사은품(무작위)으로 하나 더 드립니다.</p></div>
         <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop04.gif"></div>
@@ -565,7 +636,11 @@ async function registProduct() {
       name: '샤넬 NO.5',
       quantity: 999999,
       buyQuantity: 0,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop01.jpg`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop01.jpg`,
+        fileName: 'sample-pushpop01.jpg',
+        orgName: '샤넬.jpg'
+      }],
       content: `샤넬 향수`,
       createdAt: getTime(-3, -60 * 60 * 12),
       updatedAt: getTime(-3, -60 * 60 * 12),
@@ -584,7 +659,11 @@ async function registProduct() {
       buyQuantity: 0,
       show: true,
       active: true,
-      mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop03.jpg`],
+      mainImages: [{
+        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/pushpop03.jpg`,
+        fileName: 'pushpop03.jpg',
+        orgName: '샤넬.jpg'
+      }],
       content: `3달 쓴 향수입니다.`,
       createdAt: getTime(-3, -60 * 60 * 12),
       updatedAt: getTime(-3, -60 * 60 * 12),
