@@ -118,7 +118,7 @@ router.post('/', upload.array('attach', 10), handleError, async function(req, re
 });
 
 // 파일 다운로드
-router.get('/downloads/:filename', function(req, res, next){
+router.get('/:filename', function(req, res, next){
   try{
     logger.log(req.params.filename);
     const filename = req.params.filename;
