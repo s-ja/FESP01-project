@@ -163,7 +163,7 @@ async function registUser() {
       _id: await nextSeq('user'),
       email: 'u1@market.com',
       password: '$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2',
-      name: '제이지',
+      name: '데이지',
       phone: '01044445555',
       address: '서울시 강남구 논현동 222',
       type: 'user',
@@ -1169,27 +1169,39 @@ async function registPost() {
       type: 'qna',
       product_id: 1,
       seller_id: 2,
-      user_id: 4,
+      user: {
+        _id: 4,
+        name: '데이지'
+      },
       title: '크기가 얼만만한가요?',
       content: '아이가 6살인데 가지고 놀기 적당한 크기인가요?',
       replies: [
         {
           _id: 1,
-          user_id: 2,
+          user: {
+            _id: 2,
+            name: '네오'
+          },
           content: '크기는 상품 상세정보에 나와 있습니다.',
           createdAt: getTime(-2, -60 * 60 * 20),
           updatedAt: getTime(-2, -60 * 60 * 2)
         },
         {
           _id: 2,
-          user_id: 4,
+          user: {
+            _id: 4,
+            name: '데이지'
+          },
           content: '어디있나 모르겠어요.',
           createdAt: getTime(-2, -60 * 60 * 10),
           updatedAt: getTime(-2, -60 * 60 * 1)
         },
         {
           _id: 3,
-          user_id: 2,
+          user: {
+            _id: 2,
+            name: '네오'
+          },
           content: '높이 60cm 입니다.',
           createdAt: getTime(-2, -60 * 60 * 9),
           updatedAt: getTime(-1, -60 * 60 * 20)
@@ -1202,7 +1214,10 @@ async function registPost() {
       type: 'qna',
       product_id: 1,
       seller_id: 2,
-      user_id: 4,
+      user: {
+        _id: 4,
+        name: '데이지'
+      },
       title: '이번주 토요일까지 받아볼 수 있을까요?',
       content: '토요일 생일 선물로 준비중인데 그때까지 배송 가능할까요?',
       createdAt: getTime(-2, -60 * 60 * 1),
@@ -1212,7 +1227,10 @@ async function registPost() {
       type: 'qna',
       product_id: 4,
       seller_id: 3,
-      user_id: 2,
+      user: {
+        _id: 2,
+        name: '네오'
+      },
       title: '배송 빨리 보내주세요.',
       content: '양품으로 보내주세요.',
       createdAt: getTime(-1, -60 * 60 * 14),
@@ -1220,7 +1238,10 @@ async function registPost() {
     }, {
       _id: await nextSeq('post'),
       type: 'notice',
-      user_id: 1,
+      user: {
+        _id: 1,
+        name: '무지'
+      },
       title: '배송지연 안내',
       content: '크리스마스 물류 증가로 인해 평소보다 2~3일 지연될 예정입니다.',
       createdAt: getTime(-4, -60 * 60 * 2),
@@ -1228,7 +1249,10 @@ async function registPost() {
     }, {
       _id: await nextSeq('post'),
       type: 'notice',
-      user_id: 1,
+      user: {
+        _id: 1,
+        name: '무지'
+      },
       title: '배송비 인상 안내',
       content: '택배사 배송비 인상으로 인해 기존 3,000원에서 3,500원으로 인상됩니다.',
       createdAt: getTime(-6, -60 * 60 * 20),
