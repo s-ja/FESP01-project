@@ -34,7 +34,8 @@ const buying = {
             seller_id: product.seller_id,
             name: product.name,
             image: product.mainImages[0],
-            price: product.price * quantity
+            price: product.price * quantity,
+            extra: product.extra
           });
         }else{
           throw createError(422, `[${product._id} ${product.name}] 상품의 구매 가능한 수량은 ${product.quantity-product.buyQuantity}개 입니다.`);
