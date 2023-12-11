@@ -19,19 +19,28 @@
     <ul>
       <li>[파일] 기존 파일 링크 이외에 파일 다운로드를 위한 API 추가
         <ul>
-          <li>파일 링크: <code><img src="https://localhost/uploads/파일명" /></code></li>
-          <li>파일 다운로드: <code><a href="https://localhost/api/files/업로드된파일명?name=원본파일명">다운로드</a></code></li>
+          <li>파일 링크: <pre>&lt;img src="https://localhost/uploads/파일명" /></pre></li>
+          <li>파일 다운로드: <pre>&lt;a href="https://localhost/api/files/업로드된파일명?name=원본파일명">다운로드&lt;/a></pre></li>
         </ul>
       </li>
       <li>[문서] dbinit.js 파일의 샘플 상품 등록시 mainImages 형식을 파일 다운로드 기능을 고려해서 수정함
         <ul>
           <li>업로드한 파일을 다운로드 해야 한다면 단순히 이미지 링크 뿐만 아니라 다운로드 API에서 사용할 업로드된 파일명과 원본 파일명을 추가적인 속성으로 지정해야 함</li>
-          <li>수정 이전: <code>mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-dog.jpg`]</code></li>
-          <li>수정 이후: <code>mainImages: [{
-            url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-dog.jpg`,
-            fileName: 'sample-dog.jpg',
-            orgName: '스턴트 독.jpg'
-          }]</code>
+          <li>수정 이전: 
+            <pre>
+              mainImages: [`${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-dog.jpg`]
+            </pre>
+          </li>
+          <li>수정 이후: 
+            <pre>
+              mainImages: [
+                {
+                  url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-dog.jpg`,
+                  fileName: 'sample-dog.jpg',
+                  orgName: '스턴트 독.jpg'
+                }
+              ]
+            </pre>
           </li>
         </ul>
       </li>
