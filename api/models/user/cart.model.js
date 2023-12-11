@@ -103,7 +103,8 @@ const cart = {
           'product.seller_id': '$product.seller_id',
           'product.quantity': '$product.quantity',
           'product.buyQuantity': '$product.buyQuantity',
-          'product.image': { $arrayElemAt: ['$product.mainImages', 0] }
+          'product.image': { $arrayElemAt: ['$product.mainImages', 0] },
+          'product.extra': '$product.extra',
         }
       }
     ]).sort({ _id: -1 }).toArray();

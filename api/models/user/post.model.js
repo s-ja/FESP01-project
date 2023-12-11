@@ -37,7 +37,7 @@ const post = {
           type: 1,
           product_id: 1,
           seller_id: 1,
-          user_id: 1,
+          user: 1,
           title: 1,
           content: 1,
           extra: 1,
