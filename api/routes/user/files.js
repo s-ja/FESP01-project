@@ -2,6 +2,8 @@ import logger from '#utils/logger.js';
 import express from 'express';
 import multer from 'multer';
 import path from 'node:path';
+import fs from 'node:fs';
+import createError from 'http-errors';
 
 import shortid from 'shortid';
 
@@ -111,6 +113,26 @@ router.post('/', upload.array('attach', 10), handleError, async function(req, re
     }
     res.status(201).json(result);
   }catch(err){
+    next(err);
+  }
+});
+
+// 파일 다운로드
+router.get('/:fileName', function(req, res, next){
+  try{
+    
+    const orgName = req.query.name;
+    logger.error(orgName);
+    const filepath = '../public/uploads/' + req.params.fileName;
+    fs.stat(filepath, (err, state) => {
+      if(err || state.isDirectory()){
+        next(createError(404, `${fileName} 파일이 존재하지 않습니다.`));
+      }else{
+        res.download(filepath, orgName);
+      }
+    });
+  }catch(err){
+    logger.error(err);
     next(err);
   }
 });

@@ -34,6 +34,7 @@ try {
   db.code = db.collection("code");
   db.bookmark = db.collection("bookmark");
   db.config = db.collection("config");
+  db.post = db.collection("post");
 
   await codeUtil.initCode(db);
 
@@ -48,6 +49,10 @@ export const getClient = () => client;
 
 export const nextSeq = async (_id) => {
   let result = await db.seq.findOneAndUpdate({ _id }, { $inc: { no: 1 } });
+  if (!result) {
+    result = { _id, no: 1 };
+    await db.seq.insertOne({ _id, no: 2 });
+  }
   logger.debug(_id, result.no);
   return result.no;
 };

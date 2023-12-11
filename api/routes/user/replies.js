@@ -24,12 +24,8 @@ router.post('/', jwtAuth.auth('user'), async function(req, res, next) {
 
 
   try{
-    try{
-      const item = await model.create({ ...req.body, user_id: req.user._id });
-      res.json({ok: 1, item});
-    }catch(err){
-      next(err);
-    }
+    const item = await model.create({ ...req.body, user_id: req.user._id });
+    res.json({ok: 1, item});
   }catch(err){
     next(err);
   }

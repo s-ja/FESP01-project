@@ -81,7 +81,7 @@ router.post('/', [
 
 // 구매 목록 조회
 router.get('/', [
-  query('extra').optional().isJSON().withMessage('extra 값은 JSON 형식의 문자열이어야 합니다.'),
+  query('custom').optional().isJSON().withMessage('custom 값은 JSON 형식의 문자열이어야 합니다.'),
   query('sort').optional().isJSON().withMessage('sort 값은 JSON 형식의 문자열이어야 합니다.')
 ], validator.checkResult, async function(req, res, next) {
 
@@ -105,15 +105,15 @@ try{
   let search = {};
 
   const keyword = req.query.keyword;
-  const extra = req.query.extra;
+  const custom = req.query.custom;
 
   if(keyword){
     const regex = new RegExp(keyword, 'i');
-    search['name'] = { '$regex': regex };
+    search['products'] = { $elemMatch: { name: { '$regex': regex } } };
   }
   
-  if(extra){
-    search = { ...search, ...JSON.parse(extra) };
+  if(custom){
+    search = { ...search, ...JSON.parse(custom) };
   }
 
   // 정렬 옵션

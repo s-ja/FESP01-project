@@ -478,7 +478,7 @@ router.patch('/:_id', jwtAuth.auth('user'), async function(req, res, next) {
         delete (req.body.extra && req.body.extra.confirm);
         delete req.body['extra.confirm'];
       }
-      const updated = await model.update(_id, req.body);
+      const updated = await userService.update(_id, req.body);
       if(updated){
         res.json({ ok: 1, updated });
       }else{
