@@ -9,9 +9,13 @@ var db;
 // Connection URL
 var url;
 if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development'){
-  url = `mongodb://${DBConfig.user}:${DBConfig.password}@${DBConfig.host}:${DBConfig.port}/${DBConfig.database}`;
+  if(DBConfig.protocol === 'mongodb+srv'){  // mongodb atlas
+    url = `${DBConfig.protocol}://${DBConfig.user}:${DBConfig.password}@${DBConfig.host}`;
+  }else{
+    url = `${DBConfig.protocol}://${DBConfig.user}:${DBConfig.password}@${DBConfig.host}:${DBConfig.port}/${DBConfig.database}`;
+  }
 }else{
-  url = `mongodb://${DBConfig.host}:${DBConfig.port}`;
+  url = `${DBConfig.protocol}://${DBConfig.host}:${DBConfig.port}`;
 }
 
 logger.log(`DB 접속: ${url}`);
