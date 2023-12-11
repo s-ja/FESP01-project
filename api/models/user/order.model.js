@@ -46,7 +46,7 @@ const buying = {
     }
 
     orderInfo.products = products;
-    const cost = await priceUtil.getCost(orderInfo.user_id, orderInfo.products, orderInfo.discount);
+    const cost = await priceUtil.getCost({ products: orderInfo.products, clientDiscount: orderInfo.discount, user_id: orderInfo.user_id });
     delete orderInfo.discount;
     orderInfo = { ...orderInfo, cost };
 
