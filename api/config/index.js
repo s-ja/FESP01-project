@@ -10,6 +10,7 @@ if (process.env.NODE_ENV) {
 }
 
 export const db = {
+  protocol: process.env.DB_PROTOCOL,
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   database: process.env.DB_DATABASE,

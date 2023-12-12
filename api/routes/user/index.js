@@ -17,7 +17,7 @@ router.use('/products', productRouter);
 router.use('/orders', jwtAuth.auth('user'), orderRouter);
 router.use('/replies', replyRouter);
 router.use('/files', fileRouter);
-router.use('/carts', jwtAuth.auth('user'), cartRouter);
+router.use('/carts', cartRouter);
 router.use('/codes', codeRouter);
 router.use('/bookmarks', jwtAuth.auth('user'), bookmarkRouter);
 router.use('/posts', postRouter);

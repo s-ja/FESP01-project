@@ -30,7 +30,7 @@ const userService = {
     if(user){
       const isSame = await bcrypt.compare(password, user.password);
       if(isSame){
-        const token = await authService.sign({ _id: user._id, type: user.type });
+        const token = await authService.sign({ _id: user._id, type: user.type, name: user.name });
         logger.log('token', token);
         await userModel.updateRefreshToken(user._id, token.refreshToken);
         user.token = token;

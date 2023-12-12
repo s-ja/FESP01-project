@@ -60,7 +60,7 @@ const authService = {
     this.verifyToken(refreshToken, 'refresh');
     const user = await userModel.findBy({ refreshToken });
     if(user){
-      const token = await this.sign({ _id: user._id, type: user.type });
+      const token = await this.sign({ _id: user._id, type: user.type, name: user.name });
       logger.log('token', token);
       return token.accessToken;
     }else{
