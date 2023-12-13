@@ -19,7 +19,7 @@ const product = {
   },
 
   // 상품 검색
-  async findBy({ sellerId, search={}, sortBy={} }){
+  async findBy({ sellerId, search={}, sortBy={}, page=1, limit=0, depth }){
     logger.trace(arguments);
     const query = { active: true, ...search };
     if(sellerId){
@@ -28,15 +28,33 @@ const product = {
     }else{
       // 일반 회원이 조회할 경우
       query['show'] = true;
-      query['$expr'] = {
-        '$gt': ['$quantity', '$buyQuantity']
-      };
+      if(depth !== 2){ // 옵션 목록 조회일 경우 수량 체크 필요 없음
+        query['$expr'] = {
+          '$gt': ['$quantity', '$buyQuantity']
+        };
+      }
     }
+
+    const skip = (page-1) * limit;
     
     logger.debug(query);
-    const list = await db.product.find(query).project({ content: 0 }).sort(sortBy).toArray();
-    logger.debug(list.length, list);
-    return list;
+    const cursor = await db.product.find(query);
+    const totalCount = await cursor.count();
+    const list = await cursor.project({ content: 0 }).skip(skip).limit(limit).sort(sortBy).toArray();
+    // const list = await db.product.find(query).project({ content: 0 }).skip(skip).limit(limit).sort(sortBy).toArray();
+
+    const result = { item: list };
+    if(depth !== 2){  // 옵션 목록 조회일 경우 pagination 필요 없음
+      result.pagination = {
+        page,
+        limit,
+        total: totalCount,
+        totalPages: (limit === 0) ? 1 : Math.ceil(totalCount / limit)
+      };
+    }
+
+    logger.debug(list.length);
+    return result;
   },
 
   // 상품 상세 조회
@@ -50,7 +68,9 @@ const product = {
     if(item){
       item.replies = await replyModel.findBy({ product_id: _id });
       item.bookmarks = await bookmarkModel.findByProduct(_id);
-      item.options = item.options || await this.findBy({ search: { 'extra.parent': item._id } });
+      if(item.extra?.depth === 1){ // 옵션이 있는 상품일 경우
+        item.options = await this.findBy({ search: { 'extra.parent': item._id }, depth: 2 });
+      }
     }
     logger.debug(item);
     return item;

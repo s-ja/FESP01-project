@@ -138,10 +138,13 @@ router.get('/', [
 
     // 기본 정렬 옵션은 등록일의 내림차순
     sortBy['createdAt'] = sortBy['createdAt'] || -1; // 내림차순
+
+    const page = Number(req.query.page || 1);
+    const limit = Number(req.query.limit || 0);
   
-    const item = await model.findBy({ search, sortBy });
+    const result = await model.findBy({ search, sortBy, page, limit });
     
-    res.json({ ok: 1, item });
+    res.json({ ok: 1, ...result });
   }catch(err){
     next(err);
   }

@@ -10,7 +10,7 @@
 			"name": "인증",
 			"item": [
 				{
-					"name": "[1차] Access Token 재발행",
+					"name": "[필수]  Access Token 재발행",
 					"event": [
 						{
 							"listen": "test",
@@ -58,7 +58,7 @@
 			"name": "파일",
 			"item": [
 				{
-					"name": "[1차] 파일 업로드",
+					"name": "[필수] 파일 업로드",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -93,7 +93,7 @@
 					"response": []
 				},
 				{
-					"name": "파일 링크",
+					"name": "[필수] 파일 링크",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -186,7 +186,7 @@
 					"name": "회원",
 					"item": [
 						{
-							"name": "[1차] 이메일 중복 체크",
+							"name": "[필수] 이메일 중복 체크",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -210,7 +210,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 회원 가입",
+							"name": "[필수] 회원 가입",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -236,7 +236,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 일반 회원 로그인(_id=4)",
+							"name": "[필수] 일반 회원 로그인(_id=4)",
 							"event": [
 								{
 									"listen": "test",
@@ -280,7 +280,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 회원 정보 조회(모든 속성)",
+							"name": "[필수] 회원 정보 조회(모든 속성)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -308,7 +308,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 회원 정보 조회(단일 속성, email)",
+							"name": "회원 정보 조회(단일 속성, email)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -337,7 +337,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 회원 정보 조회(중첩 속성, extra.address)",
+							"name": "회원 정보 조회(중첩 속성, extra.address)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -367,7 +367,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 회원 정보 수정(단일 속성, phone)",
+							"name": "회원 정보 수정(단일 속성, phone)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -404,7 +404,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 회원 정보 수정(여러 속성, phone, name)",
+							"name": "회원 정보 수정(여러 속성, phone, name)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -441,7 +441,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 회원 정보 수정(중첩 속성, extra.address)",
+							"name": "회원 정보 수정(중첩 속성, extra.address)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -483,7 +483,7 @@
 					"name": "상품",
 					"item": [
 						{
-							"name": "[1차] 상품 목록 조회",
+							"name": "[필수] 상품 목록 조회",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -500,7 +500,35 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 상품 상세 조회",
+							"name": "[필수] 상품 목록 조회(Pagination)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/products?page=3&limit=3",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"products"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "3"
+										},
+										{
+											"key": "limit",
+											"value": "3",
+											"description": "생략하면 page값이 무시되고 모든 목록 반환"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[필수] 상품 상세 조회",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -518,7 +546,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 상품 검색(기본 검색)",
+							"name": "[필수] 상품 검색(기본 검색)",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -561,12 +589,12 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 상품 검색(범위 검색, 가격이 10000 이하인 상품)",
+							"name": "상품 검색(범위 검색, 가격이 10000 이하인 상품)",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/products?custom={\"price\": {\"$lte\": 10000}}",
+									"raw": "{{url}}/products?custom={\"price\":{\"$lte\":10000}}",
 									"host": [
 										"{{url}}"
 									],
@@ -576,7 +604,7 @@
 									"query": [
 										{
 											"key": "custom",
-											"value": "{\"price\": {\"$lte\": 10000}}"
+											"value": "{\"price\":{\"$lte\":10000}}"
 										}
 									]
 								}
@@ -584,7 +612,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 상품 검색(범위 검색, 등록일이 \"2023.11.10\" 이후인 상품)",
+							"name": "상품 검색(범위 검색, 등록일이 \"2023.11.10\" 이후인 상품)",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -607,7 +635,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 상품 검색(범위 검색, 등록일이 \"2023.12.01\" 부터 \"2023-12.05\" 인 상품)",
+							"name": "상품 검색(범위 검색, 등록일이 \"2023.12.01\" 부터 \"2023-12.05\" 인 상품)",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -630,7 +658,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 상품 검색(extra 속성으로 검색, 신상품만 조회)",
+							"name": "상품 검색(extra 속성으로 검색, 신상품만 조회)",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -653,12 +681,12 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 상품 검색(extra 속성으로 검색, 신상품만 조회) Copy",
+							"name": "상품 검색(extra 속성으로 검색, 신상품이거나 베스트 상품 조회)",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/products?custom={\"extra.isNew\": true}",
+									"raw": "{{url}}/products?custom={\"$or\":[{\"extra.isNew\": true},{\"extra.isBest\": true}]}",
 									"host": [
 										"{{url}}"
 									],
@@ -667,13 +695,8 @@
 									],
 									"query": [
 										{
-											"key": "extra",
-											"value": "{\"extra.isNew\": true}",
-											"disabled": true
-										},
-										{
 											"key": "custom",
-											"value": "{\"extra.isNew\": true}"
+											"value": "{\"$or\":[{\"extra.isNew\": true},{\"extra.isBest\": true}]}"
 										}
 									]
 								}
@@ -681,7 +704,30 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 상품 검색(extra 속성으로 검색, 카테고리가 PC03만 조회)",
+							"name": "상품 검색(extra 속성으로 검색, 신상품이면서 베스트 상품 조회)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/products?custom={\"extra.isNew\": true,\"extra.isBest\": true}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"products"
+									],
+									"query": [
+										{
+											"key": "custom",
+											"value": "{\"extra.isNew\": true,\"extra.isBest\": true}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "상품 검색(extra 속성으로 검색, 카테고리가 PC03만 조회)",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -704,7 +750,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 상품 정렬(price 내림차순)",
+							"name": "상품 정렬(price 내림차순)",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -727,7 +773,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 상품 정렬(price 오름차순)",
+							"name": "상품 정렬(price 오름차순)",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -750,7 +796,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 상품 검색과 정렬",
+							"name": "상품 검색과 정렬",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -782,7 +828,7 @@
 					"name": "구매",
 					"item": [
 						{
-							"name": "[1차] 상품 구매",
+							"name": "[필수] 상품 구매",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -818,7 +864,34 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 상품 구매(재고 체크)",
+							"name": "[필수] 구매 목록 조회",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/orders",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "상품 구매(재고 체크)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -854,7 +927,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 상품 구매(shippingFees 속성이 없을 경우 config.shippingFees 사용)",
+							"name": "상품 구매(shippingFees 속성이 없을 경우 config.shippingFees 사용)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -890,7 +963,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 상품 구매(쿠폰 적용)",
+							"name": "상품 구매(쿠폰 적용)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -926,34 +999,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 구매 목록 조회",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{accessToken}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{url}}/orders",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"orders"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "[1차] 구매 목록 검색(기본 검색)",
+							"name": "구매 목록 검색(기본 검색)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -987,7 +1033,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 구매 목록 검색(사용자 정의 검색)",
+							"name": "구매 목록 검색(사용자 정의 검색)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1021,7 +1067,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 구매 목록 정렬(구매일 오름차순)",
+							"name": "구매 목록 정렬(구매일 오름차순)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1639,7 +1685,7 @@
 					"name": "후기",
 					"item": [
 						{
-							"name": "[1차] 후기 등록",
+							"name": "[필수] 후기 등록",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2188,7 +2234,7 @@
 					"name": "상품 관리",
 					"item": [
 						{
-							"name": "[1차] 상품 등록",
+							"name": "[필수] 상품 등록",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2225,7 +2271,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 상품 등록(옵션 있는 상품의 메인 정보)",
+							"name": "상품 등록(옵션 있는 상품의 메인 정보)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2262,7 +2308,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 상품 등록(옵션 있는 상품의 옵션)",
+							"name": "상품 등록(옵션 있는 상품의 옵션)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2299,7 +2345,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 내 상품 상세 조회",
+							"name": "내 상품 상세 조회",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2335,7 +2381,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 내 상품 목록 조회",
+							"name": "내 상품 목록 조회",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2363,7 +2409,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 상품 수정1",
+							"name": "상품 수정1",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2401,7 +2447,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 상품 수정2",
+							"name": "상품 수정2",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2439,7 +2485,7 @@
 							"response": []
 						},
 						{
-							"name": "[1차] 상품 삭제",
+							"name": "상품 삭제",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2468,7 +2514,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 내 상품 검색(기본 검색)",
+							"name": "내 상품 검색(기본 검색)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2518,7 +2564,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 내 상품 검색(extra 속성으로 검색, 신상품만 조회)",
+							"name": "내 상품 검색(extra 속성으로 검색, 신상품만 조회)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2552,7 +2598,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 내 상품 검색(extra 속성으로 검색, 카테고리가 PC01만 조회)",
+							"name": "내 상품 검색(extra 속성으로 검색, 카테고리가 PC01만 조회)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2586,7 +2632,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 내 상품 정렬(price 내림차순)",
+							"name": "내 상품 정렬(price 내림차순)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2620,7 +2666,7 @@
 							"response": []
 						},
 						{
-							"name": "[2차] 내 상품 정렬(price 오름차순)",
+							"name": "내 상품 정렬(price 오름차순)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2650,14 +2696,6 @@
 										}
 									]
 								}
-							},
-							"response": []
-						},
-						{
-							"name": "상품 문의 답변 - 구현예정",
-							"request": {
-								"method": "POST",
-								"header": []
 							},
 							"response": []
 						}
@@ -2773,7 +2811,11 @@
 					]
 				},
 				{
-					"name": "[1차] 판매 회원 로그인(_id=2)",
+					"name": "후기 관리",
+					"item": []
+				},
+				{
+					"name": "[필수] 판매 회원 로그인(_id=2)",
 					"event": [
 						{
 							"listen": "test",
@@ -2817,7 +2859,7 @@
 					"response": []
 				},
 				{
-					"name": "[1차] 판매 회원 로그인(관리자 미승인, _id=3)",
+					"name": "판매 회원 로그인(관리자 미승인, _id=3)",
 					"event": [
 						{
 							"listen": "test",
