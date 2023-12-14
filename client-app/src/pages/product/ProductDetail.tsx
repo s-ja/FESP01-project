@@ -44,8 +44,8 @@ const ProductNew = function(){
             <span>매진</span>
           }
           <br /><br />
-          <img src={data.mainImages[0].url} width="300px" />
-          <Link to={`${import.meta.env.VITE_API_SERVER}/files/${data.mainImages[0].fileName}?name=${data.mainImages[0].orgName}`}>이미지 다운로드</Link>
+          <img src={data.mainImages[0]?.url} width="300px" />
+          <Link to={`${import.meta.env.VITE_API_SERVER}/files/${data.mainImages[0]?.fileName}?name=${data.mainImages[0]?.orgName}`}>이미지 다운로드</Link>
           <p>가격: {data.price}</p>
           <p>배송비: {data.shippingFees}</p>
           <div dangerouslySetInnerHTML={{ __html: data.content }}/>

@@ -94,7 +94,7 @@ const OrderNew = function(){
       { error && error.message }
       { data && 
       <div className="pcontent">
-        <img src={data.mainImages[0]} width="100px" />
+        <img src={data.mainImages[0]?.url} width="100px" />
         <p>상품명: {data.name}</p>
         <form>
           <QuantityInput max={data.quantity-data.buyQuantity} setter={setQuantity} /> 가능 수량: {data.quantity-data.buyQuantity}
