@@ -67,6 +67,9 @@ const Login = function(){
         setUser({
           _id: userInfo._id,
           name: userInfo.name,
+          phone: userInfo.phone,
+          email: userInfo.email,
+          address: userInfo.address,
           type: userInfo.type,
           membershipClass: code.flatten[userInfo.extra.membershipClass].value,
         });

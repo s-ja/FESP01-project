@@ -23,7 +23,7 @@ const OrderList = function(){
   const {isLoading, data, error} = useQuery({
     queryKey: ['orders'],
     queryFn: () => axios.get<OrderRes>(`/orders`),
-    select: data => data.data.item,
+    select: res => res.data.item,
     staleTime: 1000*2,
     refetchOnWindowFocus: false,
     retry: false
