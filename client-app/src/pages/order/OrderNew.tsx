@@ -1,14 +1,17 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { ProductItemType } from "../../components/product/ProductListTypeEntry";
+import { Helmet } from 'react-helmet';
 
 import QuantityInput from "../../components/common/QuantityInput";
 import { AxiosResponse, AxiosError } from 'axios';
 import useCustomAxios from '../../hooks/useCustomAxios';
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { isError } from "lodash";
 import { type ProductResType } from "../product/ProductDetail";
 import queryString from "query-string";
+import { userState } from "../../recoil/user/atoms";
+import { useRecoilValue } from "recoil";
+
 
 interface OrderRes {
   ok: 0 | 1;
@@ -19,6 +22,7 @@ interface OrderRes {
 interface OrderProduct {
   _id: number;
   quantity: number;
+  state: string;
 }
 
 interface OrderInfo {
@@ -26,17 +30,25 @@ interface OrderInfo {
   address: {
     name: string;
     value: string;
-  }
+  },
+  payment: object
+}
+
+interface IamportRes {
+  success: boolean;
+  error_msg: string;
+  [attr: string]: string | boolean;
 }
 
 const OrderNew = function(){
+  const user = useRecoilValue(userState);
   const location = useLocation();
   const product_id = queryString.parse(location.search).product_id;
   const navigate = useNavigate();
-  const quantityRef = useRef<number>(1);
+  const [quantity, setQuantity] = useState(1);
 
-  const setQuantity = (quantity: number) => {
-    quantityRef.current = quantity
+  const handleSetQuantity = (quantity: number) => {
+    setQuantity(quantity);
   };
 
   const axios = useCustomAxios();
@@ -50,6 +62,36 @@ const OrderNew = function(){
     // retry: false
   });
 
+  function requestPay(): Promise<IamportRes> {
+    return new Promise((resolve, reject) => {
+      const { IMP } = window;
+      IMP.init('imp14397622');
+  
+      const payInfo = {
+        pg: "html5_inicis",
+        pay_method: "card",
+        merchant_uid: `mid_${new Date().getTime()}`,  // 주문 id
+        name: data!.name,
+        amount: data!.price * quantity,
+        buyer_name: user!.name,
+        buyer_tel: user!.phone,
+        buyer_email: user!.email,
+        buyer_address: user!.address
+      };
+  
+      console.log(payInfo);
+  
+      IMP.request_pay(payInfo, (res: IamportRes) => {
+        console.log(res);
+        if(res.success){
+          resolve(res);
+        }else{
+          reject(new Error(`결제 실패\n${res.error_msg}`));
+        }
+      });
+    });
+  }
+
   const createOrder = useMutation<AxiosResponse<OrderRes>, AxiosError<OrderRes>, OrderInfo>({
     mutationFn: (order: OrderInfo) => {
       return axios.post('/orders', order);
@@ -57,8 +99,9 @@ const OrderNew = function(){
     retry: false,
     // retry: 3,
     // retryDelay: 1000,
-    onSuccess: (data) => {
-      if(data?.data.item){
+    onSuccess: (res) => {
+      console.log(res);
+      if(res?.data.item){
         alert('주문 완료.');
         navigate(`/orders`);
         // navigate(`/orders/${data.item._id}`);
@@ -71,33 +114,54 @@ const OrderNew = function(){
 
   const handleOrder = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    createOrder.mutate({
-      products: [
-        {
-          _id: data!._id,
-          quantity: quantityRef.current
-        }
-      ],
-      address: {
-        name: '학교',
-        value: '서울시 송파구'
+
+    try{
+      // 결제
+      const res = await requestPay();
+
+      createOrder.mutate({
+        products: [
+          {
+            _id: data!._id,
+            quantity,
+            // state: 'OS010', // 결제 없이 주문만 할 경우
+            state: 'OS020', // 결제 완료 상태
+          }
+        ],
+        address: {
+          name: '기본',
+          value: user!.address
+        },
+        payment: res
+      });
+   
+    }catch(err){
+      console.log(err);
+      if(err instanceof Error){
+        alert(err.message);
       }
-    });
+    }
   };
+    
 
 
   return (
     <div>
       <h3>상품 구매</h3>
-
+      <Helmet>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+        <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+      </Helmet>
       
       { error && error.message }
       { data && 
       <div className="pcontent">
-        <img src={data.mainImages[0]} width="100px" />
+        <img src={data.mainImages[0]?.url} width="100px" />
         <p>상품명: {data.name}</p>
+        <p>가격: <output>{data.price*quantity}</output></p>
         <form>
-          <QuantityInput max={data.quantity-data.buyQuantity} setter={setQuantity} /> 가능 수량: {data.quantity-data.buyQuantity}
+          <QuantityInput max={data.quantity-data.buyQuantity} setter={handleSetQuantity} /> 가능 수량: {data.quantity-data.buyQuantity}
+          
         </form>
         <button onClick={ handleOrder }>결제 하기</button>
       </div>
