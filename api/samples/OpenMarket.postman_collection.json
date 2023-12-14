@@ -533,13 +533,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/products/2",
+									"raw": "{{url}}/products/1",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
 										"products",
-										"2"
+										"1"
 									]
 								}
 							},
@@ -681,12 +681,12 @@
 							"response": []
 						},
 						{
-							"name": "상품 검색(extra 속성으로 검색, 신상품이거나 베스트 상품 조회)",
+							"name": "상품 검색(extra 속성으로 검색, OR 검색 1)",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/products?custom={\"$or\":[{\"extra.isNew\": true},{\"extra.isBest\": true}]}",
+									"raw": "{{url}}/products?custom={\"$or\":[{\"extra.isNew\":true},{\"extra.isBest\":true}]}",
 									"host": [
 										"{{url}}"
 									],
@@ -696,7 +696,32 @@
 									"query": [
 										{
 											"key": "custom",
-											"value": "{\"$or\":[{\"extra.isNew\": true},{\"extra.isBest\": true}]}"
+											"value": "{\"$or\":[{\"extra.isNew\":true},{\"extra.isBest\":true}]}",
+											"description": "$or는 범위 검색도 가능"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "상품 검색(extra 속성으로 검색, OR 검색 2)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/products?custom={\"extra.isNew\":{\"$in\":[true, false]},\"_id\":{\"$in\":[1,2,3]}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"products"
+									],
+									"query": [
+										{
+											"key": "custom",
+											"value": "{\"extra.isNew\":{\"$in\":[true, false]},\"_id\":{\"$in\":[1,2,3]}}",
+											"description": "$in은 equal 검색만 가능"
 										}
 									]
 								}
@@ -2050,7 +2075,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"title\": \"크기가 얼마나 큰가요?\",\r\n    \"content\": \"6세 아이가 가지고 놀 수 있을 정도로 컸으면 좋겠네요.\"\r\n}",
+									"raw": "{\r\n    \"title\": \"크기가 얼마나 큰가요?\",\r\n    \"content\": \"6세 아이가 가지고 놀 수 있을 정도로 컸으면 좋겠네요.\",\r\n    \"extra\": {\r\n        \"image\": \"hello.jpg\"\r\n    }\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
