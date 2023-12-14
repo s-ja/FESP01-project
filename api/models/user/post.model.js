@@ -86,6 +86,7 @@ const post = {
           $set: {
             title: post.title,
             content: post.content,
+            extra: post.extra,
             updatedAt: post.updatedAt
           }
         }
