@@ -719,11 +719,12 @@ async function registOrder() {
     {
       _id: await nextSeq('order'),
       user_id: 4,
+      state: 'OS020',
       products: [
         {
           _id: 2,
           seller_id: 2,
-          state: 'OS010',
+          state: 'OS020',
           name: '헬로카봇 스톰다이버',
           image: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-diver.jpg`,
           quantity: 2,
@@ -750,6 +751,7 @@ async function registOrder() {
     {
       _id: await nextSeq('order'),
       user_id: 4,
+      state: 'OS010',
       products: [
         {
           _id: 3,
@@ -790,11 +792,12 @@ async function registOrder() {
     {
       _id: await nextSeq('order'),
       user_id: 4,
+      state: 'OS040',
       products: [
         {
           _id: 4,
           seller_id: 3,
-          state: 'OS310',
+          state: 'OS110',
           name: '레고 테크닉 42151 부가티 볼리드',
           image: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-bugatti.png`,
           quantity: 1,
@@ -815,12 +818,44 @@ async function registOrder() {
         name: '학교',
         value: '서울시 강남구 역삼동 234',
       },
+      payment: {
+        "success": true,
+        "imp_uid": "imp_138601212227",
+        "pay_method": "card",
+        "merchant_uid": "mid_1702540599641",
+        "name": "레고 테크닉 42151 부가티 볼리드",
+        "paid_amount": 45000,
+        "currency": "KRW",
+        "pg_provider": "html5_inicis",
+        "pg_type": "payment",
+        "pg_tid": "StdpayCARDINIpayTest20231214165706277441",
+        "apply_num": "30123157",
+        "buyer_name": "데이지",
+        "buyer_email": "aceppin@daum.net",
+        "buyer_tel": "01044445555",
+        "buyer_addr": "",
+        "buyer_postcode": "",
+        "custom_data": null,
+        "status": "paid",
+        "paid_at": 1702540626,
+        "receipt_url": "https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/mCmReceipt_head.jsp?noTid=StdpayCARDINIpayTest20231214165706277441&noMethod=1",
+        "card_name": "국민KB카드",
+        "bank_name": null,
+        "card_quota": 0,
+        "card_number": "457973*********5"
+      },
+      delivery: {
+        company: "한진 택배",
+        trackingNumber: "364495958003",
+        url: "https://trace.cjlogistics.com/next/tracking.html?wblNo=364495958003"
+      },
       createdAt: getTime(-3, -60 * 60 * 18),
       updatedAt: getTime(-1, -60 * 60 * 1)
     },
     {
       _id: await nextSeq('order'),
       user_id: 2,
+      state: 'OS040',
       products: [
         {
           _id: 2,
@@ -831,11 +866,6 @@ async function registOrder() {
           quantity: 1,
           price: 17260,
           reply_id: 2,
-          delivery: {
-            company: "한진 택배",
-            trackingNumber: "364495958003",
-            url: "https://trace.cjlogistics.com/next/tracking.html?wblNo=364495958003"
-          },
         }
       ],
       cost: {
@@ -850,6 +880,11 @@ async function registOrder() {
       address: {
         name: '학교',
         value: '서울시 강남구 역삼동 234',
+      },
+      delivery: {
+        company: "한진 택배",
+        trackingNumber: "364495958003",
+        url: "https://trace.cjlogistics.com/next/tracking.html?wblNo=364495958003"
       },
       createdAt: getTime(-3, -60 * 60 * 18),
       updatedAt: getTime(-1, -60 * 60 * 1)
