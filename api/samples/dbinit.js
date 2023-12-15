@@ -205,7 +205,7 @@ async function registProduct() {
       quantity: 320,
       buyQuantity: 310,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-dog.jpg`,
+        url: `files/sample-dog.jpg`,
         fileName: 'sample-dog.jpg',
         orgName: '스턴트 독.jpg'
       }],
@@ -233,7 +233,7 @@ async function registProduct() {
       quantity: 200,
       buyQuantity: 198,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-diver.jpg`,
+        url: `files/sample-diver.jpg`,
         fileName: 'sample-diver.jpg',
         orgName: '헬로카봇.jpg'
       }],
@@ -261,7 +261,7 @@ async function registProduct() {
       quantity: 100,
       buyQuantity: 99,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-classic.jpg`,
+        url: `files/sample-classic.jpg`,
         fileName: 'sample-classic.jpg',
         orgName: '레고 클래식.jpg'
       }],
@@ -289,7 +289,7 @@ async function registProduct() {
       quantity: 100,
       buyQuantity: 89,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-bugatti.png`,
+        url: `files/sample-bugatti.png`,
         fileName: 'sample-bugatti.png',
         orgName: '부가티.png'
       }],
@@ -317,7 +317,7 @@ async function registProduct() {
       quantity: 100,
       buyQuantity: 98,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-minecraft.png`,
+        url: `files/sample-minecraft.png`,
         fileName: 'sample-minecraft.png',
         orgName: '마인크래프트.png'
       }],
@@ -346,7 +346,7 @@ async function registProduct() {
       quantity: 100,
       buyQuantity: 99,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-hulk.png`,
+        url: `files/sample-hulk.png`,
         fileName: 'sample-hulk.png',
         orgName: '헐크.png'
       }],
@@ -374,7 +374,7 @@ async function registProduct() {
       quantity: 100,
       buyQuantity: 98,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-halligalli.jpg`,
+        url: `files/sample-halligalli.jpg`,
         fileName: 'sample-halligalli.jpg',
         orgName: '할리갈리.jpg'
       }],
@@ -402,7 +402,7 @@ async function registProduct() {
       quantity: 100,
       buyQuantity: 97,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-rummikub.png`,
+        url: `files/sample-rummikub.png`,
         fileName: 'sample-rummikub.png',
         orgName: '루미큐브.png'
       }],
@@ -430,7 +430,7 @@ async function registProduct() {
       quantity: 100,
       buyQuantity: 96,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-jjangu.jpg`,
+        url: `files/sample-jjangu.jpg`,
         fileName: 'sample-jjangu.jpg',
         orgName: '짱구.jpg'
       }],
@@ -459,7 +459,7 @@ async function registProduct() {
       quantity: 100,
       buyQuantity: 95,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-rapunzel.jpg`,
+        url: `files/sample-rapunzel.jpg`,
         fileName: 'sample-rapunzel.jpg',
         orgName: '라푼젤.jpg'
       }],
@@ -487,12 +487,12 @@ async function registProduct() {
       quantity: 100,
       buyQuantity: 94,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi01.jpg`,
+        url: `files/sample-skibidi01.jpg`,
         fileName: 'sample-skibidi01.jpg',
         orgName: '피규어1.jpg'
       },
       {
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi02.jpg`,
+        url: `files/sample-skibidi02.jpg`,
         fileName: 'sample-skibidi02.jpg',
         orgName: '피규어2.jpg'
       }],
@@ -500,9 +500,9 @@ async function registProduct() {
         <div align="center"><p>*크리스마스 배송 안내</p></div>
         <div align="center"><p>택배사 물량 증가로 평소보다 2~3일 더 걸립니다.</p></div>
         <div align="center"><br></div>
-        <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi03.jpg"></div>
+        <div align="center"><img src="files/sample-skibidi03.jpg"></div>
         <div align="center"><br></div>
-        <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi04.jpg"></div>
+        <div align="center"><img src="files/sample-skibidi04.jpg"></div>
         <div align="center"><br></div>
         <div align="center"><p>*반품 안내</p></div>`,
       createdAt: getTime(-16, -60 * 60 * 3),
@@ -526,18 +526,18 @@ async function registProduct() {
       quantity: 999,
       buyQuantity: 800,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi11.jpg`,
+        url: `files/sample-skibidi11.jpg`,
         fileName: 'sample-skibidi11.jpg',
         orgName: '토일렛.jpg'
       }],
       content: `
-        <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi12.jpg"></div>
+        <div align="center"><img src="files/sample-skibidi12.jpg"></div>
         <div align="center"><br></div>
-        <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi13.jpg"></div>
+        <div align="center"><img src="files/sample-skibidi13.jpg"></div>
         <div align="center"><br></div>
-        <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi14.jpg"></div>
+        <div align="center"><img src="files/sample-skibidi14.jpg"></div>
         <div align="center"><br></div>
-        <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi15.jpg"></div>`,
+        <div align="center"><img src="files/sample-skibidi15.jpg"></div>`,
       createdAt: getTime(-11, -60 * 60 * 12),
       updatedAt: getTime(-5, -60 * 60 * 6),
       extra: {
@@ -559,16 +559,16 @@ async function registProduct() {
       quantity: 99,
       buyQuantity: 94,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi21.jpg`,
+        url: `files/sample-skibidi21.jpg`,
         fileName: 'sample-skibidi21.jpg',
         orgName: '스키비디.jpg'
       }],
       content: `
-        <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi22.jpg"></div>
+        <div align="center"><img src="files/sample-skibidi22.jpg"></div>
         <div align="center"><br></div>
-        <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi23.jpg"></div>
+        <div align="center"><img src="files/sample-skibidi23.jpg"></div>
         <div align="center"><br></div>
-        <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-skibidi24.jpg"></div>`,
+        <div align="center"><img src="files/sample-skibidi24.jpg"></div>`,
       createdAt: getTime(-10, -60 * 60 * 12),
       updatedAt: getTime(-5, -60 * 60 * 6),
       extra: {
@@ -590,27 +590,27 @@ async function registProduct() {
       quantity: 300,
       buyQuantity: 298,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop01.jpg`,
+        url: `files/sample-pushpop01.jpg`,
         fileName: 'sample-pushpop01.jpg',
         orgName: '푸쉬팝1.jpg'
       },
       {
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop02.jpg`,
+        url: `files/sample-pushpop02.jpg`,
         fileName: 'sample-pushpop02.jpg',
         orgName: '푸쉬팝2.jpg'
       },
       {
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop03.jpg`,
+        url: `files/sample-pushpop03.jpg`,
         fileName: 'sample-pushpop03.jpg',
         orgName: '푸쉬팝3.jpg'
       }],
       content: `
         <div align="center"><p>푸쉬팝게임기 팝잇 푸시팝 게임기 두더지게임 핑거 뽁뽁이 애니멀을 구매하시는 모든 분께 사은품(무작위)으로 하나 더 드립니다.</p></div>
-        <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop04.gif"></div>
+        <div align="center"><img src="files/sample-pushpop04.gif"></div>
         <div align="center"><br></div>
-        <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop05.jpg"></div>
+        <div align="center"><img src="files/sample-pushpop05.jpg"></div>
         <div align="center"><br></div>
-        <div align="center"><img src="${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop06.jpg"></div>`,
+        <div align="center"><img src="files/sample-pushpop06.jpg"></div>`,
       createdAt: getTime(-3, -60 * 60 * 12),
       updatedAt: getTime(-3, -60 * 60 * 12),
       extra: {
@@ -632,7 +632,7 @@ async function registProduct() {
       quantity: 999999,
       buyQuantity: 0,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-pushpop01.jpg`,
+        url: `files/sample-pushpop01.jpg`,
         fileName: 'sample-pushpop01.jpg',
         orgName: '샤넬.jpg'
       }],
@@ -655,7 +655,7 @@ async function registProduct() {
       show: true,
       active: true,
       mainImages: [{
-        url: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/pushpop03.jpg`,
+        url: `files/pushpop03.jpg`,
         fileName: 'pushpop03.jpg',
         orgName: '샤넬.jpg'
       }],
@@ -726,7 +726,7 @@ async function registOrder() {
           seller_id: 2,
           state: 'OS020',
           name: '헬로카봇 스톰다이버',
-          image: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-diver.jpg`,
+          image: `files/sample-diver.jpg`,
           quantity: 2,
           price: 34520,
           reply_id: 3,
@@ -758,7 +758,7 @@ async function registOrder() {
           seller_id: 2,
           state: 'OS010',
           name: '레고 클래식 라지 조립 박스 10698',
-          image: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-classic.jpg`,
+          image: `files/sample-classic.jpg`,
           quantity: 1,
           price: 48870,
         },
@@ -767,7 +767,7 @@ async function registOrder() {
           seller_id: 3,
           state: 'OS010',
           name: '레고 테크닉 42151 부가티 볼리드',
-          image: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-bugatti.png`,
+          image: `files/sample-bugatti.png`,
           quantity: 2,
           price: 90000,
           reply_id: 2,
@@ -799,7 +799,7 @@ async function registOrder() {
           seller_id: 3,
           state: 'OS110',
           name: '레고 테크닉 42151 부가티 볼리드',
-          image: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-bugatti.png`,
+          image: `files/sample-bugatti.png`,
           quantity: 1,
           price: 45000,
           reply_id: 1,
@@ -862,7 +862,7 @@ async function registOrder() {
           seller_id: 2,
           state: 'OS310',
           name: '헬로카봇 스톰다이버',
-          image: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}/uploads/sample-diver.jpg`,
+          image: `files/sample-diver.jpg`,
           quantity: 1,
           price: 17260,
           reply_id: 2,

@@ -21,9 +21,9 @@
     "dbinit:prod": "cross-env NODE_ENV=production node -r dotenv/config ./samples/dbinit.js",
     "dbinit:local:team": "cross-env NODE_ENV=local node -r dotenv/config ./samples/dbinit-team.js",
     "dbinit:team:prod": "cross-env NODE_ENV=production node -r dotenv/config ./samples/dbinit-team.js"
-
   },
   "dependencies": {
+    "@lenne.tech/multer-gridfs-storage": "^5.0.6",
     "bcrypt": "^5.1.1",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
