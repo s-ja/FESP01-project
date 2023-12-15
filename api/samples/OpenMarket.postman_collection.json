@@ -71,12 +71,7 @@
 								{
 									"key": "attach",
 									"type": "file",
-									"src": [
-										"/D:/cloud/OneDrive-skku/03.likelion/01.frontend_plus/01.class/01/04.Project/FESP01-API/api/samples/dbinit.js",
-										"/D:/cloud/OneDrive-skku/03.likelion/01.frontend_plus/01.class/01/04.Project/FESP01-API/api/samples/dbinit_3.js",
-										"/D:/cloud/OneDrive-skku/03.likelion/01.frontend_plus/01.class/01/04.Project/FESP01-API/api/samples/dbinit_4.js",
-										"/D:/cloud/OneDrive-skku/03.likelion/01.frontend_plus/01.class/01/04.Project/FESP01-API/api/samples/dbinit_6.js"
-									]
+									"src": "/D:/cloud/OneDrive-skku/03.likelion/01.frontend_plus/FESP_1st_zoom_background.png"
 								}
 							]
 						},
@@ -133,7 +128,7 @@
 					"response": []
 				},
 				{
-					"name": "파일 다운로드(브라우저에서 요청하면 파일이 다운로드 됨)",
+					"name": "파일 링크(img의 src 속성으로 지정)",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -165,6 +160,52 @@
 							],
 							"path": [
 								"files",
+								"sample-classic.jpg"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "레고.jpg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "파일 다운로드(브라우저에서 요청하면 파일이 다운로드 됨)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "attach",
+									"type": "file",
+									"src": [
+										"/D:/cloud/OneDrive-skku/03.likelion/01.frontend_plus/01.class/01/04.Project/FESP01-API/api/samples/dbinit.js",
+										"/D:/cloud/OneDrive-skku/03.likelion/01.frontend_plus/01.class/01/04.Project/FESP01-API/api/samples/dbinit_3.js",
+										"/D:/cloud/OneDrive-skku/03.likelion/01.frontend_plus/01.class/01/04.Project/FESP01-API/api/samples/dbinit_4.js",
+										"/D:/cloud/OneDrive-skku/03.likelion/01.frontend_plus/01.class/01/04.Project/FESP01-API/api/samples/dbinit_6.js"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/files/download/sample-classic.jpg?name=레고.jpg",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"files",
+								"download",
 								"sample-classic.jpg"
 							],
 							"query": [
