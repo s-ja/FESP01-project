@@ -109,13 +109,13 @@ router.post('/', upload.array('attach', 10), handleError, async function(req, re
       result.file = {
         originalname: req.files[0].originalname,
         name: req.files[0].filename,
-        path: `/uploads/${req.files[0].filename}`
+        path: `/files/${req.files[0].filename}`
       }
     }else{  // 여러 파일
       result.files = req.files.map(file => ({
         originalname: file.originalname,
         name: file.filename,
-        path: `/uploads/${file.filename}`
+        path: `/files/${file.filename}`
       }));
     }
     res.status(201).json(result);
