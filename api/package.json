@@ -16,7 +16,7 @@
     "prestart": "node ./swagger.js",
     "start": "cross-env NODE_ENV=production node -r dotenv/config ./bin/www-https-prod.js",
     "dev": "cross-env NODE_ENV=development node -r dotenv/config ./bin/www-https.js",
-    "local": "cross-env NODE_ENV=local nodemon -r dotenv/config ./bin/www-https.js",
+    "local": "cross-env NODE_ENV=local node -r dotenv/config ./bin/www-https.js",
     "dbinit:local": "cross-env NODE_ENV=local node -r dotenv/config ./samples/dbinit.js",
     "dbinit:prod": "cross-env NODE_ENV=production node -r dotenv/config ./samples/dbinit.js",
     "dbinit:local:team": "cross-env NODE_ENV=local node -r dotenv/config ./samples/dbinit-team.js",
