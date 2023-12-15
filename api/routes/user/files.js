@@ -1,20 +1,26 @@
 import logger from '#utils/logger.js';
 import express from 'express';
 import multer from 'multer';
+import { GridFsStorage } from '@lenne.tech/multer-gridfs-storage';
 import path from 'node:path';
-import fs from 'node:fs';
 import createError from 'http-errors';
+import db from '#utils/dbUtil.js';
+import { GridFSBucket  } from 'mongodb';
 
 import shortid from 'shortid';
 
 const router = express.Router();
-
-const storage = multer.diskStorage({
-  destination: '../public/uploads/',
-  filename: function (req, file, cb) {
+const storage = new GridFsStorage({
+  db,
+  file: (req, file) => {
     const ext = path.extname(file.originalname);
     const uniqueId = shortid.generate();
-    cb(null, `${uniqueId}${ext}`);
+    const filename = `${uniqueId}${ext}`;
+    return {
+      bucketName: 'upload',
+      filename,
+      org: file.originalname
+    };
   }
 });
 
@@ -101,6 +107,7 @@ router.post('/', upload.array('attach', 10), handleError, async function(req, re
     const result = { ok: 1 };
     if(req.files.length == 1){  // 단일 파일
       result.file = {
+        originalname: req.files[0].originalname,
         name: req.files[0].filename,
         path: `/uploads/${req.files[0].filename}`
       }
@@ -117,24 +124,72 @@ router.post('/', upload.array('attach', 10), handleError, async function(req, re
   }
 });
 
-// 파일 다운로드
+// 파일 링크
 router.get('/:fileName', function(req, res, next){
-  try{
-    
-    const orgName = req.query.name;
-    logger.error(orgName);
-    const filepath = '../public/uploads/' + req.params.fileName;
-    fs.stat(filepath, (err, state) => {
-      if(err || state.isDirectory()){
-        next(createError(404, `${fileName} 파일이 존재하지 않습니다.`));
-      }else{
-        res.download(filepath, orgName);
-      }
-    });
-  }catch(err){
-    logger.error(err);
-    next(err);
-  }
+  sendFile(req, res, next, 'view');
 });
+
+// 파일 다운로드
+router.get('/download/:fileName', function(req, res, next){
+  sendFile(req, res, next, 'download');
+});
+
+// 파일을 클라이언트에 전송
+const sendFile = (req, res, next, mode='view') => {
+  try {
+    
+    const fileBucket = new GridFSBucket(db, {
+      bucketName: 'upload',
+    });
+
+    let downloadStream = fileBucket.openDownloadStreamByName(req.params.fileName);
+
+    
+    
+    downloadStream.on('open', function (data) {
+      console.log('open', data)
+    });
+
+    downloadStream.on('data', function (data) {
+      if(mode === 'download' && !res.getHeader('Content-Disposition')){
+        const orgName = req.query.name || req.params.fileName;
+        const disposition = `attachment; filename="${encodeURIComponent(orgName)}"`;
+        res.setHeader('Content-Disposition', disposition);
+      }
+      return res.write(data);
+    });
+
+    downloadStream.on('error', function (err) {
+      next(createError(404, `${req.params.fileName} 파일이 존재하지 않습니다.`));
+    });
+
+    downloadStream.on('end', () => {
+      return res.end();
+    });
+  } catch (err) {
+    next(err)
+  }
+}
+
+
+// // 파일 다운로드
+// router.get('/:fileName', function(req, res, next){
+//   try{
+    
+//     const orgName = req.query.name;
+//     logger.error(orgName);
+//     const filepath = '../public/uploads/' + req.params.fileName;
+//     fs.stat(filepath, (err, state) => {
+//       if(err || state.isDirectory()){
+//         next(createError(404, `${req.params.fileName} 파일이 존재하지 않습니다.`));
+//       }else{
+//         res.download(filepath, orgName);
+//       }
+//     });
+//   }catch(err){
+//     logger.error(err);
+//     next(err);
+//   }
+// });
 
 export default router;
