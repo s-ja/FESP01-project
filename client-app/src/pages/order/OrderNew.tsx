@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { ProductItemType } from "../../components/product/ProductListTypeEntry";
 import { Helmet } from 'react-helmet';
@@ -61,6 +61,13 @@ const OrderNew = function(){
     refetchOnWindowFocus: false,
     // retry: false
   });
+
+  useEffect(() => {
+    console.log('OrderNew 마운트')
+    return () => console.log('OrderNew 언마운트');
+  }, []);
+
+  console.log(data, error);
 
   function requestPay(): Promise<IamportRes> {
     return new Promise((resolve, reject) => {
