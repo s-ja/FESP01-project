@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import type { ProductItemType } from "../../components/product/ProductListTypeEntry";
 import { Link } from "react-router-dom";
 import useCustomAxios from '../../hooks/useCustomAxios';
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export interface ProductResType {
   ok: 0 | 1,

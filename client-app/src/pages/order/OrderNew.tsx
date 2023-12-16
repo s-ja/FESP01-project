@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 import { ProductItemType } from "../../components/product/ProductListTypeEntry";
 import { Helmet } from 'react-helmet';
 
@@ -53,7 +53,7 @@ const OrderNew = function(){
 
   const axios = useCustomAxios();
 
-  const {isLoading, data, error} = useQuery({
+  const { data, error } = useQuery({
     queryKey: ['orders/new', product_id], // 쿼리키를 파라미터마다 지정(검색어, 페이지 등)
     queryFn: () => axios.get<ProductResType>(`/products/${product_id}?delay=500&`),
     select: data => data.data.item,

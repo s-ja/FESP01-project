@@ -3,8 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { userState } from '../../recoil/user/atoms';
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import useCustomAxios from '../../hooks/useCustomAxios';
-import { useNavigate } from "react-router";
-import { CodeListType, codeState } from "../../recoil/code/atoms";
+import { codeState } from "../../recoil/code/atoms";
 
 interface LoginRes {
   data: {
@@ -42,7 +41,6 @@ interface ErrorRes {
 }
 
 const Login = function(){
-  const navigate = useNavigate();
   const code = useRecoilValue(codeState)!;
   const setUser = useSetRecoilState(userState);
   const [values, setValues] = useState({
