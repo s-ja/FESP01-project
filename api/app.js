@@ -22,7 +22,8 @@ app.use(
     origin: [
       /^https?:\/\/localhost/,
       /^https?:\/\/127.0.0.1/,
-      /^https?:\/\/hanmogeum.netlify.app/
+      /^https?:\/\/hanmogeum.netlify.app/,
+      new RegExp(`^${process.env.API_HOST}`)
     ],
     credentials: true,
   })
