@@ -54,7 +54,6 @@ export const nextSeq = async _id => {
     result = { _id, no: 1 };
     await db.seq.insertOne({ _id, no: 2});
   }
-  logger.debug(_id, result.no);
   return result.no;
 }
 
