@@ -21,7 +21,7 @@ const ProductList = function(){
 
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get<ProductRes>(`/products?extra={"extra.today": true}`);
+      const res = await axios.get<ProductRes>(`/products?custom={"extra.today": true}`);
       console.log(res);
       setList(res.data.item);
     }
