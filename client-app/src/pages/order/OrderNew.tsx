@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { ProductItemType } from "../../components/product/ProductListTypeEntry";
-import { Helmet } from 'react-helmet';
 
 import QuantityInput from "../../components/common/QuantityInput";
 import { AxiosResponse, AxiosError } from 'axios';
@@ -55,7 +54,7 @@ const OrderNew = function(){
 
   const { data, error } = useQuery({
     queryKey: ['orders/new', product_id], // 쿼리키를 파라미터마다 지정(검색어, 페이지 등)
-    queryFn: () => axios.get<ProductResType>(`/products/${product_id}?delay=500&`),
+    queryFn: () => axios.get<ProductResType>(`/products/${product_id}`),
     select: data => data.data.item,
     staleTime: 1000*2,
     refetchOnWindowFocus: false,
@@ -93,7 +92,9 @@ const OrderNew = function(){
         if(res.success){
           resolve(res);
         }else{
-          reject(new Error(`결제 실패\n${res.error_msg}`));
+          const error = new Error(`결제 실패\n${res.error_msg}`);
+          error.name = 'checkout';
+          reject(error);
         }
       });
     });
@@ -144,26 +145,20 @@ const OrderNew = function(){
    
     }catch(err){
       console.log(err);
-      if(err instanceof Error){
+      if(err instanceof Error && err.name === 'checkout'){
         alert(err.message);
       }
     }
   };
-    
-
-
+  
   return (
     <div>
       <h3>상품 구매</h3>
-      <Helmet>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-        <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
-      </Helmet>
       
       { error && error.message }
       { data && 
       <div className="pcontent">
-        <img src={data.mainImages[0]?.url} width="100px" />
+        <img src={`${import.meta.env.VITE_API_SERVER}${data.mainImages[0]?.url}`} width="100px" />
         <p>상품명: {data.name}</p>
         <p>가격: <output>{data.price*quantity}</output></p>
         <form>
