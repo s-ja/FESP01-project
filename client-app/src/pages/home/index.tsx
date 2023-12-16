@@ -1,4 +1,4 @@
-import ProductEntry, { ProductItem } from "../../components/product/ProductListTypeEntry";
+import ProductEntry, { ProductItemType } from "../../components/product/ProductListTypeEntry";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -7,12 +7,12 @@ axios.defaults.baseURL = 'https://localhost/api';
 interface ProductRes {
   ok: 0 | 1,
   item: [
-    ProductItem
+    ProductItemType
   ]
 }
 
 const ProductList = function(){
-  const [list, setList] = useState<ProductItem[]>([]);
+  const [list, setList] = useState<ProductItemType[]>([]);
 
   useEffect(() => {
     console.log('Home 마운트');
