@@ -2,7 +2,7 @@ import ProductEntry, { ProductItemType } from "../../components/product/ProductL
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-axios.defaults.baseURL = 'https://localhost/api';
+axios.defaults.baseURL = import.meta.env.VITE_API_SERVER;
 
 interface ProductRes {
   ok: 0 | 1,
