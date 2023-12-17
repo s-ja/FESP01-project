@@ -556,12 +556,13 @@
 									"query": [
 										{
 											"key": "page",
-											"value": "3"
+											"value": "3",
+											"description": "페이지"
 										},
 										{
 											"key": "limit",
 											"value": "3",
-											"description": "생략하면 page값이 무시되고 모든 목록 반환"
+											"description": "한 페이지에 보여줄 개수(생략하면 page값이 무시되고 모든 목록 반환)"
 										}
 									]
 								}
@@ -574,13 +575,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/products/1",
+									"raw": "{{url}}/products/15",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
 										"products",
-										"1"
+										"15"
 									]
 								}
 							},
@@ -951,6 +952,71 @@
 									],
 									"path": [
 										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "구매 목록 조회(pagination)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/orders?page=1&limit=2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "구매 상세 조회",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/orders/3",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"orders",
+										"3"
 									]
 								}
 							},
@@ -1949,6 +2015,38 @@
 							"response": []
 						},
 						{
+							"name": "게시물 목록 조회(pagination)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/posts?type=qna&page=2&limit=2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "qna",
+											"description": "QnA 게시판"
+										},
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "limit",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "게시물 목록 조회(키워드 검색)",
 							"request": {
 								"method": "GET",
@@ -2433,14 +2531,14 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{url}}/seller/products/6",
+									"raw": "{{url}}/seller/products/2",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
 										"seller",
 										"products",
-										"6"
+										"2"
 									]
 								}
 							},
@@ -2873,6 +2971,108 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "판매자에게 주문한 모든 주문 목록 조회(검색)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/seller/orders?state=OS020",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"seller",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "state",
+											"value": "OS020",
+											"description": "결제 완료 상태"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "판매자에게 주문한 모든 주문 목록 조회(pagination)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/seller/orders?page=2&limit=2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"seller",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "limit",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "주문 상세 조회",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/seller/orders/4",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"seller",
+										"orders",
+										"4"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -3008,6 +3208,173 @@
 									"path": [
 										"users",
 										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "회원 목록 조회",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/admin/users",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "회원 목록 조회(검색)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/admin/users?_id=4&email=u1@market.com&name=데이지&phone=01044445555&type=user&address=강남&custom={\"extra.membershipClass\":\"MC02\"}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									],
+									"query": [
+										{
+											"key": "_id",
+											"value": "4",
+											"description": "일치 검색"
+										},
+										{
+											"key": "email",
+											"value": "u1@market.com",
+											"description": "일치 검색"
+										},
+										{
+											"key": "name",
+											"value": "데이지",
+											"description": "일치 검색"
+										},
+										{
+											"key": "phone",
+											"value": "01044445555",
+											"description": "일치 검색"
+										},
+										{
+											"key": "type",
+											"value": "user",
+											"description": "일치 검색"
+										},
+										{
+											"key": "address",
+											"value": "강남",
+											"description": "문자열 포함 검색"
+										},
+										{
+											"key": "custom",
+											"value": "{\"extra.membershipClass\":\"MC02\"}",
+											"description": "일치 검색"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "회원 목록 조회(검색, 미승인 회원)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/admin/users?custom={\"extra.confirm\":false}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									],
+									"query": [
+										{
+											"key": "custom",
+											"value": "{\"extra.confirm\":false}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "회원 목록 조회(pagination)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/admin/users?page=2&limit=2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2",
+											"description": "페이지"
+										},
+										{
+											"key": "limit",
+											"value": "2",
+											"description": "한 페이지에 보여줄 개수(생략하면 page값이 무시되고 모든 목록 반환)"
+										}
 									]
 								}
 							},
