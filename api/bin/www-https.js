@@ -98,5 +98,5 @@ function onListening() {
 
 
 // socket.io 서버 구동
-const io = new Server(server, { cors: { origin: /^https?:\/\/localhost/ } } );
+const io = new Server(server, { cors: { origin: config.CORS.origin } } );
 socketServer(io);
