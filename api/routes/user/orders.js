@@ -103,7 +103,6 @@ try{
 
   // 검색 옵션
   let search = {};
-
   const keyword = req.query.keyword;
   const custom = req.query.custom;
 
@@ -117,23 +116,34 @@ try{
   }
 
   // 정렬 옵션
-  let sortBy = { createdAt: -1 };
-  const sort = req.query.sort;
-
-  if(sort){
-    const parseOrder = JSON.parse(sort);
-    sortBy = parseOrder;
-  }
+  let sortBy = JSON.parse(req.query.sort || '{}');
 
   // 기본 정렬 옵션은 등록일의 내림차순
   sortBy['createdAt'] = sortBy['createdAt'] || -1; // 내림차순
 
-  const item = await model.findBy({ user_id: req.user._id, search, sortBy });
+  const page = Number(req.query.page || 1);
+  const limit = Number(req.query.limit || 0);
+
+  const result = await model.findBy({ user_id: req.user._id, search, sortBy, page, limit });
   
-  res.json({ ok: 1, item });
+  res.json({ ok: 1, ...result });
 }catch(err){
   next(err);
 }
+});
+
+// 구매 상세 조회
+router.get('/:_id', async function(req, res, next) {
+  try{
+    const item = await model.findById(Number(req.params._id), req.user._id);
+    if(item){
+      res.json({ ok: 1, item });
+    }else{
+      next();
+    }
+  }catch(err){
+    next(err);
+  }
 });
 
 // 주문 상태 수정
