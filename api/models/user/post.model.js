@@ -7,15 +7,17 @@ import productModel from '#models/user/product.model.js';
 
 const post = {
   // 게시물 목록 조회
-  async find({ type='post', search={} }){
+  async find({ type='post', search={}, sortBy={}, page=1, limit=0 }){
     logger.trace(arguments);
-    const sortBy = { _id: -1 };
     const query = { type, ...search };
     logger.trace(query);
 
+    const skip = (page-1) * limit;
+
+    const totalCount = await db.post.countDocuments(query);
     // const list = await db.post.find(query).sort(sortBy).toArray();
 
-    const list = await db.post.aggregate([
+    let list = db.post.aggregate([
       { $match: query },
       {
         $lookup: {
@@ -47,12 +49,24 @@ const post = {
           'product.image': { $arrayElemAt: ['$product.mainImages', 0] }
         }
       }
-    ]).sort(sortBy).toArray();
+    ]).sort(sortBy).skip(skip);
 
+    // aggregate()에서는 limit(0) 안됨
+    if(limit > 0){
+      list = list.limit(limit);
+    }
+    list = await list.toArray();
 
+    const result = { item: list };
+    result.pagination = {
+      page,
+      limit,
+      total: totalCount,
+      totalPages: (limit === 0) ? 1 : Math.ceil(totalCount / limit)
+    };
 
-    logger.debug(list);
-    return list;
+    logger.debug(list.length);
+    return result;
   },
 
   // 게시물 상세 조회
