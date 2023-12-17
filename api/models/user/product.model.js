@@ -4,20 +4,9 @@ import logger from '#utils/logger.js';
 import db, { nextSeq } from '#utils/dbUtil.js';
 import replyModel from '#models/user/reply.model.js';
 import bookmarkModel from '#models/user/bookmark.model.js';
+import orderModel from '#models/seller/order.model.js';
 
 const product = {
-  // 상품 등록
-  async create(newProduct){
-    logger.trace(arguments);
-    newProduct._id = await nextSeq('product');
-    newProduct.active = true;
-    newProduct.updatedAt = newProduct.createdAt = moment().format('YYYY.MM.DD HH:mm:ss');
-    if(!newProduct.dryRun){
-      await db.product.insertOne(newProduct);
-    }
-    return newProduct;
-  },
-
   // 상품 검색
   async findBy({ sellerId, search={}, sortBy={}, page=1, limit=0, depth }){
     logger.trace(arguments);
@@ -28,7 +17,7 @@ const product = {
     }else{
       // 일반 회원이 조회할 경우
       query['show'] = true;
-      if(depth !== 2){ // 옵션 목록 조회일 경우 수량 체크 필요 없음
+      if(depth !== 2){ // 옵션 목록 조회가 아닐 경우에만 수량 체크
         query['$expr'] = {
           '$gt': ['$quantity', '$buyQuantity']
         };
@@ -38,13 +27,18 @@ const product = {
     const skip = (page-1) * limit;
     
     logger.debug(query);
-    const cursor = await db.product.find(query);
-    const totalCount = await cursor.count();
-    const list = await cursor.project({ content: 0 }).skip(skip).limit(limit).sort(sortBy).toArray();
+    const totalCount = await db.product.countDocuments(query);
+    const list = await db.product.find(query).project({ content: 0 }).skip(skip).limit(limit).sort(sortBy).toArray();
     // const list = await db.product.find(query).project({ content: 0 }).skip(skip).limit(limit).sort(sortBy).toArray();
-
+    for(const item of list){
+      item.replies = (await replyModel.findBy({ product_id: item._id })).length;
+      item.bookmarks = (await bookmarkModel.findByProduct(item._id)).length;
+      if(item.extra?.depth === 1){ // 옵션이 있는 상품일 경우
+        item.options = (await this.findBy({ search: { 'extra.parent': item._id }, depth: 2 })).length;
+      }
+    }
     const result = { item: list };
-    if(depth !== 2){  // 옵션 목록 조회일 경우 pagination 필요 없음
+    if(depth !== 2){  // 옵션 목록 조회가 아닐 경우에만 pagination 필요
       result.pagination = {
         page,
         limit,
@@ -76,41 +70,6 @@ const product = {
     return item;
   },
 
-  // 상품 상세 조회(단일 속성)
-  async findAttrById({ _id, attr, seller_id }){
-    logger.trace(arguments);
-    const query = { _id, active: true };
-    if(!seller_id){
-      query.show = true;
-    }
-    const item = await db.product.findOne(query, { projection: { [attr]: 1, _id: 0 }});
-    logger.debug(item);
-    return item;
-  },
-  
-  // 상품 수정
-  async update(_id, updateProduct){
-    logger.trace(arguments);
-    updateProduct.updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
-    const result = await db.product.updateOne({ _id, active: true }, { $set: updateProduct });
-    logger.debug(result);
-    if(result.modifiedCount){
-      return updateProduct;
-    }else{
-      return null;
-    }
-  },
-
-  // 상품 삭제
-  async delete(_id){
-    logger.trace(arguments);
-    const updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
-    const result = await db.product.findOneAndUpdate({ _id }, { $set: { active: false, updatedAt } });
-    logger.debug(result);
-    result.active = false;
-    return result;
-  },
-  
 };
   
 
