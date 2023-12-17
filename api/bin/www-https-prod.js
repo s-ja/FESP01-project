@@ -102,6 +102,6 @@ function onListening() {
 //   process.env.APP_HOST,
 //   new RegExp(`^${process.env.APP_HOST}`)
 // ];
-// const io = new Server(server, { cors: { origin: cors } } );
-const io = new Server(server);
+const io = new Server(server, { cors: { origin: 'https://toytsrus.vercel.app' }, credentials: true, } );
+// const io = new Server(server);
 socketServer(io);
