@@ -7,7 +7,7 @@ import swaggerFile from './swagger-output.json' assert {type: 'json'};
 import logger from './utils/logger.js';
 import indexRouter from './routes/index.js';
 import timer from 'node:timers/promises';
-import config from '#config';
+import config from './config/index.js';
 
 var app = express();
 
@@ -20,7 +20,7 @@ app.use('/apidocs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(
   cors({
-    origin: config.CORS.origin,
+    origin: config.cors.origin,
     credentials: true,
   })
 );

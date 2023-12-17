@@ -8,7 +8,7 @@ import http from 'node:http';
 
 import app from '../app.js';
 import logger from '../utils/logger.js';
-import config from '#config';
+import config from '#config/index.js';
 import { Server }  from 'socket.io';
 import socketServer from './socketServer.js';
 
@@ -90,5 +90,5 @@ function onListening() {
 }
 
 // socket.io 서버 구동
-const io = new Server(server, { cors: { origin: config.CORS.origin } } );
+const io = new Server(server, { cors: { origin: config.cors.origin } } );
 socketServer(io);
