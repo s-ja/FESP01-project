@@ -94,8 +94,6 @@ function onListening() {
 
 
 // socket.io 서버 구동
-const cors = [
-  process.env.APP_HOST
-];
+const cors = process.env.APP_HOST;
 const io = new Server(server, { cors: { origin: cors } } );
 socketServer(io);
