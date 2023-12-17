@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment';
+
 import logger from '#utils/logger.js';
 import db, { nextSeq } from '#utils/dbUtil.js';
 
@@ -15,16 +16,6 @@ const product = {
     }
     return newProduct;
   },
-
-  // 상품 상세 조회
-  // async findById({ _id, seller_id }){
-  //   const item = userProductModel.findById({ _id, seller_id });
-  //   if(item){
-  //     item.orders = await orderModel.findByProductId(_id, seller_id);
-  //   }
-  //   logger.debug(item);
-  //   return item;
-  // },
 
   // 상품 상세 조회(단일 속성)
   async findAttrById({ _id, attr, seller_id }){
@@ -63,5 +54,4 @@ const product = {
   
 };
   
-
 export default product;

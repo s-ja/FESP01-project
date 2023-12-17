@@ -1,10 +1,11 @@
 import express from 'express';
 import { query } from 'express-validator';
-import jwtAuth from '#middlewares/jwtAuth.js';
+import _ from 'lodash';
+
 import logger from '#utils/logger.js';
+import jwtAuth from '#middlewares/jwtAuth.js';
 import validator from '#middlewares/validator.js';
 import model from '#models/user/post.model.js';
-import _ from 'lodash';
 
 const router = express.Router();
 

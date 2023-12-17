@@ -5,7 +5,6 @@ import logger from '../utils/logger.js';
 import authService from './auth.service.js';
 import userModel from '../models/user/user.model.js';
 
-
 const userService = {
   // 회원 가입
   async signup(userInfo){

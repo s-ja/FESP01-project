@@ -1,13 +1,14 @@
-import logger from '#utils/logger.js';
-import express from 'express';
-import multer from 'multer';
-import { GridFsStorage } from '@lenne.tech/multer-gridfs-storage';
 import path from 'node:path';
-import createError from 'http-errors';
-import db from '#utils/dbUtil.js';
-import { GridFSBucket  } from 'mongodb';
 
+import express from 'express';
+import createError from 'http-errors';
+import multer from 'multer';
 import shortid from 'shortid';
+import { GridFSBucket  } from 'mongodb';
+import { GridFsStorage } from '@lenne.tech/multer-gridfs-storage';
+
+import logger from '#utils/logger.js';
+import db from '#utils/dbUtil.js';
 
 const router = express.Router();
 const storage = new GridFsStorage({
@@ -137,15 +138,11 @@ router.get('/download/:fileName', function(req, res, next){
 // 파일을 클라이언트에 전송
 const sendFile = (req, res, next, mode='view') => {
   try {
-    
     const fileBucket = new GridFSBucket(db, {
       bucketName: 'upload',
     });
-
     let downloadStream = fileBucket.openDownloadStreamByName(req.params.fileName);
 
-    
-    
     downloadStream.on('open', function (data) {
       console.log('open', data)
     });
@@ -170,26 +167,5 @@ const sendFile = (req, res, next, mode='view') => {
     next(err)
   }
 }
-
-
-// // 파일 다운로드
-// router.get('/:fileName', function(req, res, next){
-//   try{
-    
-//     const orgName = req.query.name;
-//     logger.error(orgName);
-//     const filepath = '../public/uploads/' + req.params.fileName;
-//     fs.stat(filepath, (err, state) => {
-//       if(err || state.isDirectory()){
-//         next(createError(404, `${req.params.fileName} 파일이 존재하지 않습니다.`));
-//       }else{
-//         res.download(filepath, orgName);
-//       }
-//     });
-//   }catch(err){
-//     logger.error(err);
-//     next(err);
-//   }
-// });
 
 export default router;

@@ -4,12 +4,10 @@ import createError from 'http-errors';
 
 import logger from '#utils/logger.js';
 import db, { nextSeq } from '#utils/dbUtil.js';
+import priceUtil from '#utils/priceUtil.js';
 import productModel from '#models/user/product.model.js';
 import replyModel from '#models/user/reply.model.js';
-import userModel from '#models/user/user.model.js';
 import cartModel from '#models/user/cart.model.js';
-import codeUtil from '#utils/codeUtil.js';
-import priceUtil from '#utils/priceUtil.js';
 
 const buying = {
   // 주문 등록
