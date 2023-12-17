@@ -24,6 +24,7 @@ app.use(
       /^https?:\/\/127.0.0.1/,
       /^https?:\/\/hanmogeum.netlify.app/,
       /vercel\.app$/,
+      'https://toytsrus.vercel.app',
       new RegExp(`^${process.env.APP_HOST}`)
     ],
     credentials: true,
