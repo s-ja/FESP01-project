@@ -94,5 +94,12 @@ function onListening() {
 
 
 // socket.io 서버 구동
-const io = new Server(server, { cors: { origin: /^https?:\/\/localhost/ } } );
+const cors = [
+  /^https?:\/\/locahost/,
+  /^https?:\/\/127.0.0.1/,
+  /^https?:\/\/hanmogeum.netlify.app/,
+  /vercel.app/,
+  // new RegExp(`^${process.env.APP_HOST}`)
+];
+const io = new Server(server, { cors: { origin: cors } } );
 socketServer(io);
