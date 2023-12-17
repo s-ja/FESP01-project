@@ -23,7 +23,8 @@ app.use(
       /^https?:\/\/localhost/,
       /^https?:\/\/127.0.0.1/,
       /^https?:\/\/hanmogeum.netlify.app/,
-      new RegExp(`^${process.env.APP_HOST}`)
+      /vercel.app/,
+      // new RegExp(`^${process.env.APP_HOST}`)
     ],
     credentials: true,
   })
