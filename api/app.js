@@ -9,6 +9,8 @@ import indexRouter from './routes/index.js';
 import timer from 'node:timers/promises';
 import config from './config/index.js';
 
+logger.debug(process.env.TEST);
+
 var app = express();
 
 app.use(morgan('dev'));
