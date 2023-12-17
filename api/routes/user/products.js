@@ -128,13 +128,7 @@ router.get('/', [
     }
 
     // 정렬 옵션
-    let sortBy = {};
-    const sort = req.query.sort;
-
-    if(sort){
-      const parseOrder = JSON.parse(sort);
-      sortBy = parseOrder;
-    }
+    let sortBy = JSON.parse(req.query.sort || '{}');
 
     // 기본 정렬 옵션은 등록일의 내림차순
     sortBy['createdAt'] = sortBy['createdAt'] || -1; // 내림차순
