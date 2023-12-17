@@ -20,11 +20,11 @@ app.use('/apidocs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use(
   cors({
     origin: [
-      /^https?:\/\/localhost/,
+      /^https?:\/\/locahost/,
       /^https?:\/\/127.0.0.1/,
       /^https?:\/\/hanmogeum.netlify.app/,
       /vercel.app/,
-      // new RegExp(`^${process.env.APP_HOST}`)
+      new RegExp(`^${process.env.APP_HOST}`)
     ],
     credentials: true,
   })
