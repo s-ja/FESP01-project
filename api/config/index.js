@@ -40,12 +40,14 @@ export const jwt = {
   }
 };
 
-export const CORS = {
+export const cors = {
   origin: [
     /^https?:\/\/locahost/,
     /^https?:\/\/127.0.0.1/,
-    /^https?:\/\/hanmogeum.netlify.app/,
+    /netlify.app$/,
     /vercel.app$/,
-    new RegExp(`^${process.env.APP_HOST}`)
+    new RegExp(process.env.APP_HOST)
   ]
 };
+
+export default {db, jwt, cors};
