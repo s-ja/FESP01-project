@@ -59,11 +59,13 @@ async function initDB(initData) {
   }
 }
 
+await db.dropDatabase();
+logger.info('DB 삭제.');
+
 import(`./${sampleFolder}/dbinit-data.js`).then(async ({ initData }) => {
-  await db.dropDatabase();
-  logger.info('DB 삭제.');
   await initDB(initData);
   getClient().close();
   logger.info('DB 초기화 완료.');
 });
+
 
