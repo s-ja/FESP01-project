@@ -42,7 +42,7 @@ export const jwt = {
 
 export const cors = {
   origin: [
-    /^https?:\/\/locahost/,
+    /^https?:\/\/localhost/,
     /^https?:\/\/127.0.0.1/,
     /netlify.app$/,
     /vercel.app$/,
