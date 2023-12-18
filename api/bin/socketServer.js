@@ -75,7 +75,7 @@ const server = (io) => {
     // 룸 생성
     socket.on(
       "createRoom",
-      ({ user_id, hostName, roomName, parents_option, callback }) => {
+      ({ user_id, hostName, roomName, parents_option }, callback) => {
         const roomId = shortid.generate();
         io.roomList = io.roomList || new Map();
         io.roomList.set(roomId, {
@@ -95,10 +95,12 @@ const server = (io) => {
         //   success: true,
         //   roomList: getRooms(),
         // });
+
         callback({
           success: true,
           roomList: getRooms(),
         });
+        // console.log(user_id, hostName, roomName, parents_option, callback);
       }
     );
 
