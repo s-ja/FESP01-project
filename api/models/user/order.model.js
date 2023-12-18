@@ -4,12 +4,10 @@ import createError from 'http-errors';
 
 import logger from '#utils/logger.js';
 import db, { nextSeq } from '#utils/dbUtil.js';
+import priceUtil from '#utils/priceUtil.js';
 import productModel from '#models/user/product.model.js';
 import replyModel from '#models/user/reply.model.js';
-import userModel from '#models/user/user.model.js';
 import cartModel from '#models/user/cart.model.js';
-import codeUtil from '#utils/codeUtil.js';
-import priceUtil from '#utils/priceUtil.js';
 
 const buying = {
   // 주문 등록
@@ -138,8 +136,31 @@ const buying = {
     return result;
   },
 
-  // 주문 상태 수정
+  // 주문별 주문 상태 수정
   async updateState(_id, order, history){
+    logger.trace(arguments);
+
+    order.updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
+
+    const set = { state: order.state };
+    if(order.delivery){
+      set['delivery'] = order.delivery;
+    }
+
+    logger.log(set);
+
+    const result = await db.order.updateOne(
+      { _id }, 
+      { $set: set, $push: { history } }
+    );
+
+    logger.debug(result);
+    const item = { _id, ...order };
+    return item;
+  },
+
+  // 상품별 주문 상태 수정
+  async updateStateByProduct(_id, product_id, order, history){
     logger.trace(arguments);
 
     order.updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
@@ -154,7 +175,7 @@ const buying = {
     const result = await db.order.updateOne(
       { _id }, 
       { $set: set, $push: { 'products.$[elem].history': history } }, 
-      { arrayFilters: [{ 'elem._id': order.product_id }] }
+      { arrayFilters: [{ 'elem._id': product_id }] }
     );
 
     logger.debug(result);

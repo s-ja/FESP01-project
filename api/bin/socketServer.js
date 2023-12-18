@@ -59,9 +59,6 @@ const server = (io) => {
     // 클라이언트 접속 종료시
     socket.on("disconnect", function () {
       leaveRoom(socket);
-      // io.roomList?.get(socket.roomId)?.memberList?.delete(socket.id);
-      // sendMsg(socket, '시스템', `${socket.nickName}님이 퇴장했습니다.`);
-      // socket.nsp.to(socket.roomId).emit('setMembers', getMembers(socket.roomId));
     });
 
     // 채팅방 정보 반환

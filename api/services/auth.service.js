@@ -5,7 +5,6 @@ import logger from '../utils/logger.js';
 import { jwt as JWTConfig } from '../config/index.js';
 import userModel from '../models/user/user.model.js';
 
-
 const authService = {
   // JWT 토큰 생성
   async sign(payload) {

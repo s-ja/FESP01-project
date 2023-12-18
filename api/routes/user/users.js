@@ -1,12 +1,12 @@
 import express from 'express';
 import { query, body } from 'express-validator';
 
-import validator from '#middlewares/validator.js';
 import logger from '#utils/logger.js';
-import model from '#models/user/user.model.js';
+import validator from '#middlewares/validator.js';
+import jwtAuth from '#middlewares/jwtAuth.js';
 import userService from '#services/user.service.js';
 import authService from '#services/auth.service.js';
-import jwtAuth from '#middlewares/jwtAuth.js';
+import model from '#models/user/user.model.js';
 
 const router = express.Router();
 

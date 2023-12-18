@@ -64,7 +64,6 @@ export interface MsgItem {
 
 const URL = import.meta.env.VITE_WEBSOCKET_SERVER + import.meta.env.VITE_WEBSOCKET_SERVER_NAMESPACE;
 export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(URL, {
-  autoConnect: false,
-  withCredentials: true,
+  autoConnect: false
 });
 

@@ -39,3 +39,15 @@ export const jwt = {
     },
   }
 };
+
+export const cors = {
+  origin: [
+    /^https?:\/\/locahost/,
+    /^https?:\/\/127.0.0.1/,
+    /netlify.app$/,
+    /vercel.app$/,
+    new RegExp(process.env.APP_HOST)
+  ]
+};
+
+export default {db, jwt, cors};
