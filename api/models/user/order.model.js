@@ -136,8 +136,31 @@ const buying = {
     return result;
   },
 
-  // 주문 상태 수정
+  // 주문별 주문 상태 수정
   async updateState(_id, order, history){
+    logger.trace(arguments);
+
+    order.updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
+
+    const set = { state: order.state };
+    if(order.delivery){
+      set['delivery'] = order.delivery;
+    }
+
+    logger.log(set);
+
+    const result = await db.order.updateOne(
+      { _id }, 
+      { $set: set, $push: { history } }
+    );
+
+    logger.debug(result);
+    const item = { _id, ...order };
+    return item;
+  },
+
+  // 상품별 주문 상태 수정
+  async updateStateByProduct(_id, product_id, order, history){
     logger.trace(arguments);
 
     order.updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
@@ -152,7 +175,7 @@ const buying = {
     const result = await db.order.updateOne(
       { _id }, 
       { $set: set, $push: { 'products.$[elem].history': history } }, 
-      { arrayFilters: [{ 'elem._id': order.product_id }] }
+      { arrayFilters: [{ 'elem._id': product_id }] }
     );
 
     logger.debug(result);

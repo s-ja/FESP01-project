@@ -146,11 +146,31 @@ router.get('/:_id', async function(req, res, next) {
   }
 });
 
-// 주문 상태 수정
-router.patch('/:_id', [
-  body('state').trim().notEmpty().withMessage('state 값은 필수로 입력해야 합니다.'),
-  body('product_id').isNumeric().withMessage('product_id 값은 숫자만 가능합니다.'),
-], validator.checkResult, async function(req, res, next) {
+// 상품별 주문 상태 수정
+router.patch('/:_id/products/:product_id', async function(req, res, next) {
+  try{
+    logger.trace(req.query);
+    const _id = Number(req.params._id);
+    const product_id = Number(req.params.product_id);
+    const order = await model.findById(_id);
+    if(req.user.type === 'admin' || req.user._id === order.user_id){
+      const history = {
+        actor: req.user._id,
+        updated: { ...req.body },
+        createdAt: moment().format('YYYY.MM.DD HH:mm:ss')
+      };
+      const result = await model.updateStateByProduct(_id, product_id, req.body, history);
+      res.json({ok: 1, updated: result});
+    }else{
+      next();
+    }
+  }catch(err){
+    next(err);
+  }
+});
+
+// 주문별 주문 상태 수정
+router.patch('/:_id', async function(req, res, next) {
   try{
     logger.trace(req.query);
     const _id = Number(req.params._id);
