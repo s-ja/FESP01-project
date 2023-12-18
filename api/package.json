@@ -20,7 +20,7 @@
     "dbinit": "cross-env NODE_ENV=development node -r dotenv/config ./samples/dbinit.js",
     "dbinit-team": "cross-env NODE_ENV=local node -r dotenv/config ./samples/dbinit-team.js",
     "dbinit:local": "cross-env NODE_ENV=local node -r dotenv/config ./samples/dbinit.js ins",
-    "dbinit:prod": "cross-env NODE_ENV=production node -r dotenv/config ./samples/dbinit.js ins",
+    "dbinit:prod": "cross-env NODE_ENV=development node -r dotenv/config ./samples/dbinit.js ins",
     "dbinit:local:team": "cross-env NODE_ENV=local node -r dotenv/config ./samples/dbinit.js team",
     "dbinit:dev:team": "cross-env NODE_ENV=development node -r dotenv/config ./samples/dbinit.js team",
     "dbinit:prod:team": "cross-env NODE_ENV=production node -r dotenv/config ./samples/dbinit.js team"

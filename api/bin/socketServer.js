@@ -75,7 +75,7 @@ const server = (io) => {
     // 룸 생성
     socket.on(
       "createRoom",
-      ({ user_id, hostName, roomName, parents_option }) => {
+      ({ user_id, hostName, roomName, parents_option, callback }) => {
         const roomId = shortid.generate();
         io.roomList = io.roomList || new Map();
         io.roomList.set(roomId, {
@@ -90,8 +90,12 @@ const server = (io) => {
 
         socket.nsp.emit("setRooms", getRooms());
 
-        // 클라이언트에게 'createRoomResponse' 이벤트를 발생시키고, 채팅방 정보를 보냄
-        socket.emit("createRoomResponse", {
+        // // 클라이언트에게 'createRoomResponse' 이벤트를 발생시키고, 채팅방 정보를 보냄
+        // socket.emit("createRoomResponse", {
+        //   success: true,
+        //   roomList: getRooms(),
+        // });
+        callback({
           success: true,
           roomList: getRooms(),
         });
