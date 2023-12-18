@@ -2,7 +2,6 @@ import logger from "./logger.js";
 import { db as DBConfig } from "../config/index.js";
 import { MongoClient } from "mongodb";
 import _ from "lodash";
-import codeUtil from "#utils/codeutil.js";
 
 var db;
 
