@@ -69,13 +69,15 @@ const buying = {
   },
 
   // 주문 목록 검색
-  async findBy({ user_id, search, sortBy }){
+  async findBy({ user_id, search, sortBy, page=1, limit=0 }){
     logger.trace(arguments);
     const query = { user_id, ...search };
     logger.log(query);
 
+    const skip = (page-1) * limit;
 
-    const list = await db.order.find(query).sort(sortBy).toArray();
+    const totalCount = await db.product.countDocuments(query);
+    const list = await db.order.find(query).skip(skip).limit(limit).sort(sortBy).toArray();
 
     for(const order of list){
       for(const product of order.products){
@@ -90,14 +92,28 @@ const buying = {
       }
     }
 
-    logger.debug(list.length, list);
-    return list;
+    const result = { item: list };
+
+    result.pagination = {
+      page,
+      limit,
+      total: totalCount,
+      totalPages: (limit === 0) ? 1 : Math.ceil(totalCount / limit)
+    };
+
+    logger.debug(list.length);
+    return result;
   },
 
+
   // 주문 내역 상세 조회
-  async findById(_id){
+  async findById(_id, user_id){
     logger.trace(arguments);
-    const item = await db.order.findOne({ _id });
+    const query = { _id };
+    if(user_id){
+      query['user_id'] = user_id;
+    }
+    const item = await db.order.findOne(query);
     logger.debug(item);
     return item;
   },

@@ -14,13 +14,18 @@
   },
   "scripts": {
     "prestart": "node ./swagger.js",
-    "start": "cross-env NODE_ENV=local node -r dotenv/config ./bin/www-https.js",
+    "start": "cross-env NODE_ENV=production node -r dotenv/config ./bin/www-prod.js",
     "dev": "cross-env NODE_ENV=development node -r dotenv/config ./bin/www-https.js",
-    "local": "cross-env NODE_ENV=local nodemon -r dotenv/config ./bin/www-https.js",
+    "local": "cross-env NODE_ENV=local node -r dotenv/config ./bin/www-https.js",
     "dbinit": "cross-env NODE_ENV=development node -r dotenv/config ./samples/dbinit.js",
-    "dbinit-team": "cross-env NODE_ENV=local node -r dotenv/config ./samples/dbinit-team.js"
+    "dbinit-team": "cross-env NODE_ENV=local node -r dotenv/config ./samples/dbinit-team.js",
+    "dbinit:local": "cross-env NODE_ENV=local node -r dotenv/config ./samples/dbinit.js ins",
+    "dbinit:prod": "cross-env NODE_ENV=production node -r dotenv/config ./samples/dbinit.js ins",
+    "dbinit:local:team": "cross-env NODE_ENV=local node -r dotenv/config ./samples/dbinit.js team",
+    "dbinit:prod:team": "cross-env NODE_ENV=production node -r dotenv/config ./samples/dbinit.js team"
   },
   "dependencies": {
+    "@lenne.tech/multer-gridfs-storage": "^5.0.6",
     "bcrypt": "^5.1.1",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
