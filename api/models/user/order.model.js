@@ -74,7 +74,7 @@ const buying = {
 
     const skip = (page-1) * limit;
 
-    const totalCount = await db.product.countDocuments(query);
+    const totalCount = await db.order.countDocuments(query);
     const list = await db.order.find(query).skip(skip).limit(limit).sort(sortBy).toArray();
 
     for(const order of list){
