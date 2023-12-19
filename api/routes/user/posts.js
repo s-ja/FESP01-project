@@ -36,9 +36,10 @@ router.get('/', [
     const page = Number(req.query.page || 1);
     const limit = Number(req.query.limit || 0);
 
-    const item = await model.find({ type: req.query.type, search, sortBy, page, limit });
+    const result = await model.find({ type: req.query.type, search, sortBy, page, limit });
     
-    res.json({ ok: 1, item });
+
+    res.json({ ok: 1, ...result });
   }catch(err){
     next(err);
   }
