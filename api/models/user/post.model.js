@@ -3,7 +3,7 @@ import moment from 'moment';
 
 import logger from '#utils/logger.js';
 import db, { nextSeq } from '#utils/dbUtil.js';
-import productModel from '#models/user/product.model.js';
+import productModel from '#models/seller/product.model.js';
 
 const post = {
   // 게시물 목록 조회
