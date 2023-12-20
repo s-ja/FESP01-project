@@ -103,6 +103,30 @@ const buying = {
     return result;
   },
 
+  // 구매 목록의 상태값만 조회
+  async findState(user_id){
+    logger.trace(arguments);
+
+    // const list = await db.order.find({ user_id }).toArray();
+
+    const list = await db.order.aggregate([
+      { $match: { user_id } },
+      { $unwind: '$products' },
+      {
+        $project: {
+          _id: 0,
+          state: 1,
+          'products.state': 1,
+          // state: '$products.state',
+        }
+      }
+    ]).toArray();
+
+
+    logger.debug(list);
+    return list;
+  },
+
 
   // 주문 내역 상세 조회
   async findById(_id, user_id){
