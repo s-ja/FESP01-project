@@ -535,13 +535,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/products/15",
+									"raw": "{{url}}/products/1",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
 										"products",
-										"15"
+										"1"
 									]
 								}
 							},
@@ -579,7 +579,8 @@
 										},
 										{
 											"key": "keyword",
-											"value": "레고"
+											"value": "레고",
+											"description": "문자열 포함 검색"
 										},
 										{
 											"key": "seller_id",
@@ -912,6 +913,34 @@
 									],
 									"path": [
 										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "구매 목록의 상태값만 조회",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/orders/state",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"orders",
+										"state"
 									]
 								}
 							},
@@ -2014,6 +2043,47 @@
 							"response": []
 						},
 						{
+							"name": "게시물 목록 조회(검색, 상품 id)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/posts?type=qna&custom={\"product_id\":1}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "qna",
+											"description": "QnA 게시판"
+										},
+										{
+											"key": "type",
+											"value": "notice",
+											"description": "공지사항 게시판",
+											"disabled": true
+										},
+										{
+											"key": "type",
+											"value": "원하는값",
+											"description": "원하는 종류의 게시판은 type 속성으로 구분",
+											"disabled": true
+										},
+										{
+											"key": "custom",
+											"value": "{\"product_id\":1}",
+											"description": "1번 상품에 등록된 qna로 필터링"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "게시물 목록 조회(pagination)",
 							"request": {
 								"method": "GET",
@@ -2178,6 +2248,42 @@
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"type\": \"qna\",\r\n    \"product_id\": 1,\r\n    \"title\": \"배송은 얼마나 걸려요?\",\r\n    \"content\": \"주말에 여행가기 전까지 오면 좋겠네요.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/posts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "게시물 등록(다른 용도로 활용)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"coffeechat\",\r\n    \"product_id\": 1,\r\n    \"title\": \"커피쳇 들어오세요.\",\r\n    \"content\": \"http://localhost:5173/chat/a78DCoGyZ\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
