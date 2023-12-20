@@ -30,7 +30,11 @@ const product = {
     const list = await db.product.find(query).project({ content: 0 }).skip(skip).limit(limit).sort(sortBy).toArray();
     // const list = await db.product.find(query).project({ content: 0 }).skip(skip).limit(limit).sort(sortBy).toArray();
     for(const item of list){
-      item.replies = (await replyModel.findBy({ product_id: item._id })).length;
+      if(item.extra?.depth === 2){
+        item.replies = (await replyModel.findBy({ product_id: item._id }));
+      }else{
+        item.replies = (await replyModel.findBy({ product_id: item._id })).length;
+      }
       item.bookmarks = (await bookmarkModel.findByProduct(item._id)).length;
       if(item.extra?.depth === 1){ // 옵션이 있는 상품일 경우
         item.options = (await this.findBy({ search: { 'extra.parent': item._id }, depth: 2 })).length;
