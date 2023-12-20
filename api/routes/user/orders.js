@@ -132,6 +132,16 @@ try{
 }
 });
 
+// 구매 목록의 상태값만 조회
+router.get('/state', async function(req, res, next) {
+  try{
+    const item = await model.findState(req.user._id);
+    res.json({ ok: 1, item });
+  }catch(err){
+    next(err);
+  }
+});
+
 // 구매 상세 조회
 router.get('/:_id', async function(req, res, next) {
   try{
