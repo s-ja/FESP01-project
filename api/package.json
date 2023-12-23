@@ -18,6 +18,8 @@
     "dev": "cross-env NODE_ENV=development node -r dotenv/config ./bin/www-https.js",
     "local": "cross-env NODE_ENV=local nodemon -r dotenv/config ./bin/www-https.js",
     "aws": "cross-env NODE_ENV=aws node -r dotenv/config ./bin/www-aws.js",
+    "start:hanmogeum": "cross-env NODE_ENV=hanmogeum node -r dotenv/config ./bin/www-aws.js",
+    "start:edutube": "cross-env NODE_ENV=edutube node -r dotenv/config ./bin/www-aws.js",
     "dbinit:local": "cross-env NODE_ENV=local node -r dotenv/config ./samples/dbinit.js ins",
     "dbinit:prod": "cross-env NODE_ENV=production node -r dotenv/config ./samples/dbinit.js ins",
     "dbinit:local:team": "cross-env NODE_ENV=local node -r dotenv/config ./samples/dbinit.js team",
