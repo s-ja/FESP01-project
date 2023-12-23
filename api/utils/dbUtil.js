@@ -8,7 +8,7 @@ var db;
 
 // Connection URL
 var url;
-if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'aws'){
+if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development' || process.env.DB_HOST.endsWith('.aws2.store')){
   if(DBConfig.protocol === 'mongodb+srv'){  // mongodb atlas
     url = `${DBConfig.protocol}://${DBConfig.user}:${DBConfig.password}@${DBConfig.host}`;
   }else{
