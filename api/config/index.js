@@ -46,6 +46,7 @@ export const cors = {
     /^https?:\/\/127.0.0.1/,
     /netlify.app$/,
     /vercel.app$/,
+    /aws2.store$/,
     new RegExp(process.env.APP_HOST)
   ]
 };
