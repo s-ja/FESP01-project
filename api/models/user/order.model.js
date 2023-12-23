@@ -203,7 +203,7 @@ const buying = {
     );
 
     logger.debug(result);
-    const item = { _id, ...order };
+    const item = { _id, product_id, ...order };
     return item;
   }
 
