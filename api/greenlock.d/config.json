@@ -1,40 +1,40 @@
 {
   "sites": [
     {
-      "subject": "myparking-back.aws2.store",
-      "altnames": ["myparking-back.aws2.store"]
+      "subject": "api.myparking.aws2.store",
+      "altnames": ["api.myparking.aws2.store"]
     },
     {
-      "subject": "modi-back.aws2.store",
-      "altnames": ["modi-back.aws2.store"]
+      "subject": "api.modi.aws2.store",
+      "altnames": ["api.modi.aws2.store"]
     },
     {
-      "subject": "orummarket-back.aws2.store",
-      "altnames": ["orummarket-back.aws2.store"]
+      "subject": "api.orummarket.aws2.store",
+      "altnames": ["api.orummarket.aws2.store"]
     },
     {
       "subject": "essentia.aws2.store",
       "altnames": ["essentia.aws2.store"]
     },
     {
-      "subject": "essentia-back.aws2.store",
-      "altnames": ["essentia-back.aws2.store"]
+      "subject": "api.essentia.aws2.store",
+      "altnames": ["api.essentia.aws2.store"]
     },
     {
-      "subject": "hanmogeum-back.aws2.store",
-      "altnames": ["hanmogeum-back.aws2.store"]
+      "subject": "api.hanmogeum.aws2.store",
+      "altnames": ["api.hanmogeum.aws2.store"]
     },
     {
       "subject": "edutube.aws2.store",
       "altnames": ["edutube.aws2.store"]
     },
     {
-      "subject": "edutube-back.aws2.store",
-      "altnames": ["edutube-back.aws2.store"]
+      "subject": "api.edutube.aws2.store",
+      "altnames": ["api.edutube.aws2.store"]
     },
     {
-      "subject": "ssm-back.aws2.store",
-      "altnames": ["ssm-back.aws2.store"]
+      "subject": "api.ssm.aws2.store",
+      "altnames": ["api.ssm.aws2.store"]
     }
   ]
 }
