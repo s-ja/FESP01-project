@@ -34,7 +34,7 @@ const priceUtil = {
       // 회원 등급
       const membershipClass = await userModel.findAttrById(user_id, 'extra.membershipClass');
       // 회원 등급별 할인율
-      const discountRate = codeUtil.getCodeAttr(membershipClass?.extra.membershipClass, 'discountRate');
+      const discountRate = codeUtil.getCodeAttr(membershipClass?.extra?.membershipClass, 'discountRate');
 
       if(discountRate !== undefined){
         totalDiscount.products = clientDiscount.products + Math.ceil((cost.products - clientDiscount.products) * (discountRate/100) /10) * 10;
