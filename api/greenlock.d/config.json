@@ -13,20 +13,12 @@
       "altnames": ["api.orummarket.aws2.store"]
     },
     {
-      "subject": "essentia.aws2.store",
-      "altnames": ["essentia.aws2.store"]
-    },
-    {
       "subject": "api.essentia.aws2.store",
       "altnames": ["api.essentia.aws2.store"]
     },
     {
       "subject": "api.hanmogeum.aws2.store",
       "altnames": ["api.hanmogeum.aws2.store"]
-    },
-    {
-      "subject": "edutube.aws2.store",
-      "altnames": ["edutube.aws2.store"]
     },
     {
       "subject": "api.edutube.aws2.store",
