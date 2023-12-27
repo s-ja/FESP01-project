@@ -63,13 +63,37 @@ const server = io => {
     // socket.on('getMembers', (roomId, callback) => callback(getMembers(roomId)));
 
     // 룸 생성
-    socket.on('createRoom', ({ user_id, hostName, roomName }) => {
-      const roomId = shortid.generate();
-      io.roomList = io.roomList || new Map();
-      io.roomList.set(roomId, { user_id, hostName, roomName, memberList: new Map() });
+    socket.on(
+      "createRoom",
+      ({ user_id, hostName, roomName, parents_option }, callback) => {
+        const roomId = shortid.generate();
+        io.roomList = io.roomList || new Map();
+        io.roomList.set(roomId, {
+          user_id,
+          hostName,
+          roomName,
+          parents_option,
+          memberList: new Map(),
+        });
 
-      socket.nsp.emit('setRooms', getRooms());
-    });
+        // joinRoom(socket, { roomId, user_id, nickName: hostName });
+
+        socket.nsp.emit("setRooms", getRooms());
+
+        // // 클라이언트에게 'createRoomResponse' 이벤트를 발생시키고, 채팅방 정보를 보냄
+        // socket.emit("createRoomResponse", {
+        //   success: true,
+        //   roomList: getRooms(),
+        // });
+
+        callback({
+          success: true,
+          roomList: getRooms(),
+        });
+        // console.log(user_id, hostName, roomName, parents_option, callback);
+      }
+    );
+
 
     // 룸에 참여
     socket.on('joinRoom', (props, success) => {
