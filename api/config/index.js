@@ -25,8 +25,8 @@ export const jwt = {
       algorithm: 'HS256', // 대칭키 방식
     //   expiresIn: '2h',  // 2시간
     //   expiresIn: '10m', // 10분
-    //   expiresIn: '10s',  // 10초
-      expiresIn: '1s',  // 1초
+      expiresIn: '10s',  // 10초
+    //   expiresIn: '1s',  // 1초
       issuer: 'FESP01', // 발행자
     },
   },
