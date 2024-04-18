@@ -1,10 +1,10 @@
-import logger from '../utils/logger.js';
-import dotenv from 'dotenv';
+import logger from "../utils/logger.js";
+import dotenv from "dotenv";
 
 // 기본 .env 파일 로딩(package.json에서 로딩함)
-dotenv.config({ path: '.env' });
+dotenv.config({ path: ".env" });
 // 환경별 .env 파일 로딩
-logger.log('NODE_ENV', process.env.NODE_ENV);
+logger.log("NODE_ENV", process.env.NODE_ENV);
 if (process.env.NODE_ENV) {
   dotenv.config({ override: true, path: `.env.${process.env.NODE_ENV}` });
 }
@@ -20,25 +20,25 @@ export const db = {
 
 export const jwt = {
   access: {
-    secretKey: 'ShoppingAccessToken', // 암호키
+    secretKey: "ShoppingAccessToken", // 암호키
     options: {
-      algorithm: 'HS256', // 대칭키 방식
-      expiresIn: '2h',  // 2시간
-    //   expiresIn: '10m', // 10분
-    //   expiresIn: '10s',  // 10초
-    //   expiresIn: '1s',  // 1초
-      issuer: 'FESP01', // 발행자
+      algorithm: "HS256", // 대칭키 방식
+      expiresIn: "2h", // 2시간
+      //   expiresIn: '10m', // 10분
+      //   expiresIn: '10s',  // 10초
+      //   expiresIn: '1s',  // 1초
+      issuer: "FESP01", // 발행자
     },
   },
   refresh: {
-    secretKey: 'ShoppingRefreshToken',
+    secretKey: "ShoppingRefreshToken",
     options: {
-      algorithm: 'HS256',
-      expiresIn: '30d',
-    //   expiresIn: '30s',
-      issuer: 'FESP01',
+      algorithm: "HS256",
+      expiresIn: "30d",
+      //   expiresIn: '30s',
+      issuer: "FESP01",
     },
-  }
+  },
 };
 
 export const cors = {
@@ -48,8 +48,9 @@ export const cors = {
     /netlify.app$/,
     /vercel.app$/,
     /aws2.store$/,
-    new RegExp(process.env.APP_HOST)
-  ]
+    "https://ip3-modi.netlify.app",
+    new RegExp(process.env.APP_HOST),
+  ],
 };
 
-export default {db, jwt, cors};
+export default { db, jwt, cors };
