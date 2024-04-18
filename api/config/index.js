@@ -48,7 +48,6 @@ export const cors = {
     /netlify.app$/,
     /vercel.app$/,
     /aws2.store$/,
-    "https://ip3-modi.netlify.app",
     new RegExp(process.env.APP_HOST),
   ],
 };
