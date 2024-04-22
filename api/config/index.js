@@ -35,7 +35,6 @@ export const jwt = {
     options: {
       algorithm: "HS256",
       expiresIn: "30d",
-      //   expiresIn: '30s',
       issuer: "FESP01",
     },
   },
