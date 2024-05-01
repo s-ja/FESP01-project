@@ -1,24 +1,28 @@
-import tracer from 'tracer';
-if(process.env.NODE_ENV == 'production'){
+import tracer from "tracer";
+if (process.env.NODE_ENV == "production") {
   var logger = tracer.dailyfile({
-    root: 'logs',
+    root: "logs",
     maxLogFiles: 365,
-    allLogsFileName: 'log',
-    level: 2,  // log(0), trace(1), debug(2), info(3), warn(4), error(5), fatal(6)
-    format: ['{{timestamp}} <{{title}}> {{file}}:{{line}}({{method}}()) {{message}}'],
-    dateformat: 'yyyy-mm-dd HH:MM:ss',
+    allLogsFileName: "log",
+    level: 0, // log(0), trace(1), debug(2), info(3), warn(4), error(5), fatal(6)
+    format: [
+      "{{timestamp}} <{{title}}> {{file}}:{{line}}({{method}}()) {{message}}",
+    ],
+    dateformat: "yyyy-mm-dd HH:MM:ss",
     inspectOpt: {
-      depth: 5
-    }  
+      depth: 5,
+    },
   });
-}else{
+} else {
   var logger = tracer.colorConsole({
-    level: 0,  // log(0), trace(1), debug(2), info(3), warn(4), error(5), fatal(6)
-    format: ['{{timestamp}} <{{title}}> {{file}}:{{line}}({{method}}()) {{message}}'],
-    dateformat: 'yyyy-mm-dd HH:MM:ss',
+    level: 0, // log(0), trace(1), debug(2), info(3), warn(4), error(5), fatal(6)
+    format: [
+      "{{timestamp}} <{{title}}> {{file}}:{{line}}({{method}}()) {{message}}",
+    ],
+    dateformat: "yyyy-mm-dd HH:MM:ss",
     inspectOpt: {
-      depth: 10
-    }
+      depth: 10,
+    },
   });
 }
 
