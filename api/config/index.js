@@ -23,11 +23,10 @@ export const jwt = {
     secretKey: "ShoppingAccessToken", // 암호키
     options: {
       algorithm: "HS256", // 대칭키 방식
-      // expiresIn: "2h", // 2시간
+      expiresIn: "2h", // 2시간
       // expiresIn: '10m', // 10분
-      expiresIn: "3m", // 3분
+      // expiresIn: "3m", // 3분
       //   expiresIn: '10s',  // 10초
-      //   expiresIn: '1s',  // 1초
       issuer: "FESP01", // 발행자
     },
   },
