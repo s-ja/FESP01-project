@@ -22,6 +22,7 @@ const authService = {
     };
     // accessToken 디코딩
     const decoded = jwt.decode(result.accessToken);
+    // 만료 시간 로그
     logger.log(
       `AccessToken created, expires at: ${new Date(
         decoded.exp * 1000
