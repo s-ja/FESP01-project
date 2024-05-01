@@ -20,6 +20,14 @@ const authService = {
         JWTConfig.refresh.options
       ),
     };
+    // accessToken 디코딩
+    const decoded = jwt.decode(result.accessToken);
+    logger.log(
+      `AccessToken created, expires at: ${new Date(
+        decoded.exp * 1000
+      ).toISOString()}`
+    );
+
     return result;
   },
 
@@ -38,8 +46,11 @@ const authService = {
         JWTConfig[type].secretKey,
         JWTConfig[type].configs
       );
+      // 만료 시간 로그
       logger.log(
-        `Token expires at: ${new Date(payload.exp * 1000).toISOString()}`
+        `Token verified, expires at: ${new Date(
+          payload.exp * 1000
+        ).toISOString()}`
       );
 
       return payload;

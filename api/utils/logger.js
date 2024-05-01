@@ -5,13 +5,14 @@ if (process.env.NODE_ENV == "production") {
     maxLogFiles: 365,
     allLogsFileName: "log",
     level: 0, // log(0), trace(1), debug(2), info(3), warn(4), error(5), fatal(6)
-    format: [
-      "{{timestamp}} <{{title}}> {{file}}:{{line}}({{method}}()) {{message}}",
-    ],
+    // format: [
+    //   "{{timestamp}} <{{title}}> {{file}}:{{line}}({{method}}()) {{message}}",
+    // ],
+    format: ["{{timestamp}} <{{title}}> {{file}}:{{line}} {{message}}"],
     dateformat: "yyyy-mm-dd HH:MM:ss",
-    inspectOpt: {
-      depth: 5,
-    },
+    // inspectOpt: {
+    //   depth: 5,
+    // },
   });
 } else {
   var logger = tracer.colorConsole({
