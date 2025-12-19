@@ -30,7 +30,9 @@
     "dbinit:aws:team": "cross-env NODE_ENV=edutube node -r dotenv/config ./samples/dbinit.js team",
     "dbinit:local:team": "cross-env NODE_ENV=local node -r dotenv/config ./samples/dbinit.js team",
     "dbinit:dev:team": "cross-env NODE_ENV=development node -r dotenv/config ./samples/dbinit.js team",
-    "dbinit:prod:team": "cross-env NODE_ENV=production node -r dotenv/config ./samples/dbinit.js team"
+    "dbinit:prod:team": "cross-env NODE_ENV=production node -r dotenv/config ./samples/dbinit.js team",
+    "test:connection": "cross-env NODE_ENV=local node -r dotenv/config ./test-connection-management.js",
+    "test:shutdown": "cross-env NODE_ENV=local node -r dotenv/config ./test-shutdown-handler.js"
   },
   "dependencies": {
     "@lenne.tech/multer-gridfs-storage": "^5.0.6",
