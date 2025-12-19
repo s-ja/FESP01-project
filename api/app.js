@@ -3,11 +3,17 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
-import swaggerFile from './swagger-output.json' assert {type: 'json'};
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import logger from './utils/logger.js';
 import indexRouter from './routes/index.js';
 import timer from 'node:timers/promises';
 import config from './config/index.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const swaggerFile = JSON.parse(readFileSync(join(__dirname, 'swagger-output.json'), 'utf8'));
 
 var app = express();
 
