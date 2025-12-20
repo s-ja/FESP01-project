@@ -8,24 +8,40 @@ import { GridFSBucket  } from 'mongodb';
 import { GridFsStorage } from '@lenne.tech/multer-gridfs-storage';
 
 import logger from '#utils/logger.js';
-import db from '#utils/dbUtil.js';
+import { getDB } from '#utils/dbUtil.js';
 
 const router = express.Router();
-const storage = new GridFsStorage({
-  db,
-  file: (req, file) => {
-    const ext = path.extname(file.originalname);
-    const uniqueId = shortid.generate();
-    const filename = `${uniqueId}${ext}`;
-    return {
-      bucketName: 'upload',
-      filename,
-      org: file.originalname
-    };
-  }
-});
 
-const upload = multer({ storage });
+// GridFsStorage를 지연 초기화하기 위한 변수
+let storage = null;
+let upload = null;
+
+// GridFsStorage 초기화 함수
+const initStorage = () => {
+  if (storage) return storage;
+  
+  const db = getDB();
+  if (!db) {
+    throw new Error('MongoDB 연결이 아직 초기화되지 않았습니다.');
+  }
+  
+  storage = new GridFsStorage({
+    db,
+    file: (req, file) => {
+      const ext = path.extname(file.originalname);
+      const uniqueId = shortid.generate();
+      const filename = `${uniqueId}${ext}`;
+      return {
+        bucketName: 'upload',
+        filename,
+        org: file.originalname
+      };
+    }
+  });
+  
+  upload = multer({ storage });
+  return storage;
+};
 
 // multer 에러 처리
 const handleError = (err, req, res, next) => {
@@ -46,7 +62,21 @@ const handleError = (err, req, res, next) => {
 };
 
 // 파일 업로드
-router.post('/', upload.array('attach', 10), handleError, async function(req, res, next) {
+router.post('/', async function(req, res, next) {
+  try {
+    initStorage();
+    upload.array('attach', 10)(req, res, (err) => {
+      if (err) {
+        return handleError(err, req, res, next);
+      }
+      handleUpload(req, res, next);
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+const handleUpload = async function(req, res, next) {
   /*
     #swagger.tags = ['파일']
     #swagger.summary  = '파일 업로드 - 1차'
@@ -138,6 +168,11 @@ router.get('/download/:fileName', function(req, res, next){
 // 파일을 클라이언트에 전송
 const sendFile = (req, res, next, mode='view') => {
   try {
+    const db = getDB();
+    if (!db) {
+      return next(createError(500, 'MongoDB 연결이 아직 초기화되지 않았습니다.'));
+    }
+    
     const fileBucket = new GridFSBucket(db, {
       bucketName: 'upload',
     });

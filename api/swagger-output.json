@@ -920,70 +920,10 @@
     },
     "/files/": {
       "post": {
-        "tags": [
-          "파일"
-        ],
-        "summary": "파일 업로드 - 1차",
-        "description": "한번에 최대 10개 까지 파일을 업로드 합니다.<br>회원 가입시 프로필 이미지를 첨부하거나 상품의 이미지를 미리 업로드 한 후 응답 받은 파일 경로를 사용하면 업로드한 파일에 접근이 가능합니다.<br>파일 업로드 완료 후 파일명과 경로를 반환합니다.",
+        "description": "",
         "responses": {
-          "201": {
-            "description": "성공",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "단일 파일 업로드": {
-                    "$ref": "#/components/examples/singleFileUploadRes"
-                  },
-                  "여러 파일 업로드": {
-                    "$ref": "#/components/examples/multiFileUploadRes"
-                  }
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "입력값 검증 오류",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "필드명 오류": {
-                    "$ref": "#/components/examples/fileUploadFieldError"
-                  },
-                  "최대 허용치 초과 ": {
-                    "$ref": "#/components/examples/fileUploadLimitError"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "서버 에러",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error500"
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "attach": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "format": "binary"
-                    }
-                  }
-                }
-              }
-            }
+          "default": {
+            "description": ""
           }
         }
       }

@@ -14,7 +14,7 @@
   },
   "scripts": {
     "prestart": "node ./swagger.js",
-    "start": "cross-env NODE_ENV=production node -r dotenv/config ./bin/www-prod.js",
+    "start": "cross-env NODE_ENV=modi node -r dotenv/config ./bin/www-prod.js",
     "dev": "cross-env NODE_ENV=development node -r dotenv/config ./bin/www-https.js",
     "local": "cross-env NODE_ENV=local nodemon -r dotenv/config ./bin/www-https.js",
     "aws": "cross-env NODE_ENV=aws node -r dotenv/config ./bin/www-aws.js",
@@ -32,7 +32,9 @@
     "dbinit:dev:team": "cross-env NODE_ENV=development node -r dotenv/config ./samples/dbinit.js team",
     "dbinit:prod:team": "cross-env NODE_ENV=production node -r dotenv/config ./samples/dbinit.js team",
     "test:connection": "cross-env NODE_ENV=local node -r dotenv/config ./test-connection-management.js",
-    "test:shutdown": "cross-env NODE_ENV=local node -r dotenv/config ./test-shutdown-handler.js"
+    "test:shutdown": "cross-env NODE_ENV=local node -r dotenv/config ./test-shutdown-handler.js",
+    "test:prod": "cross-env NODE_ENV=modi node -r dotenv/config ./test-production.js",
+    "test:modi": "cross-env NODE_ENV=modi node -r dotenv/config ./test-production.js"
   },
   "dependencies": {
     "@lenne.tech/multer-gridfs-storage": "^5.0.6",
@@ -42,14 +44,14 @@
     "cross-env": "^7.0.3",
     "debug": "~2.6.9",
     "dotenv": "^16.3.1",
-    "express": "~4.16.1",
+    "express": "^4.22.1",
     "express-validator": "^7.0.1",
     "greenlock-express": "^4.0.3",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "mongodb": "^6.2.0",
-    "morgan": "~1.9.1",
+    "morgan": "^1.10.1",
     "multer": "^1.4.5-lts.1",
     "shortid": "^2.2.16",
     "socket.io": "^4.7.2",

@@ -25,8 +25,6 @@ if (
 
 logger.log(`DB 접속: ${url}`);
 const client = new MongoClient(url, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
   connectTimeoutMS: 10000, // 10 seconds
   socketTimeoutMS: 45000, // 45 seconds
   serverSelectionTimeoutMS: 10000, // 서버 선택 타임아웃
