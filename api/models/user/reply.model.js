@@ -2,13 +2,18 @@ import _ from 'lodash';
 import moment from 'moment';
 
 import logger from '#utils/logger.js';
-import db, { nextSeq } from '#utils/dbUtil.js';
+import { getDB, nextSeq } from '#utils/dbUtil.js';
 import orderModel from '#models/user/order.model.js';
 
 const reply = {
   // 후기 등록
   async create(replyInfo){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.reply) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     replyInfo._id = await nextSeq('reply');
     replyInfo.createdAt = moment().format('YYYY.MM.DD HH:mm:ss');
     
@@ -21,6 +26,11 @@ const reply = {
 
   // 조건에 맞는 후기 목록 조회
   async findBy( query={} ){
+    const db = getDB();
+    if (!db || !db.reply) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const list = await db.reply.aggregate([
       { $match: query },
       {
@@ -77,6 +87,10 @@ const reply = {
   // 후기만 조회
   async findById(_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.reply) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
 
     const item = await db.reply.findOne({ _id });
     logger.debug(item);
@@ -86,6 +100,10 @@ const reply = {
   // 판매자 후기 목록 조회
   async findBySeller(seller_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.product) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
 
     const list = await db.product.aggregate([
       { $match: { seller_id } },

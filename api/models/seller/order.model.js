@@ -1,12 +1,17 @@
 import _ from 'lodash';
 
 import logger from '#utils/logger.js';
-import db from '#utils/dbUtil.js';
+import { getDB } from '#utils/dbUtil.js';
 
 const buying = {
   // 판매자에게 주문한 모든 주문 목록 조회
   async findBy({ seller_id, search, sortBy, page=1, limit=0 }){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.order) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const query = { ...search, products: { $elemMatch: { seller_id } } };
     logger.log(query);
 
@@ -67,6 +72,11 @@ const buying = {
   // 지정한 상품의 모든 주문 목록 조회
   async findByProductId(product_id, seller_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.order) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const sortBy = { _id: -1 };
     const list = await db.order.aggregate([
       { $match: { products: { $elemMatch: { _id: product_id, seller_id } } } },
@@ -102,6 +112,10 @@ const buying = {
   // 주문 내역 상세 조회(판매자의 제품이 포함된 경우에만 조회 가능)
   async findById(_id, seller_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.order) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
 
     const item = await db.order.aggregate([
       { $match: { 

@@ -2,13 +2,18 @@ import _ from 'lodash';
 import moment from 'moment';
 
 import logger from '#utils/logger.js';
-import db, { nextSeq } from '#utils/dbUtil.js';
+import { getDB, nextSeq } from '#utils/dbUtil.js';
 import productModel from '#models/seller/product.model.js';
 
 const post = {
   // 게시물 목록 조회
   async find({ type='post', search={}, sortBy={}, page=1, limit=0 }){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.post) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const query = { type, ...search };
     logger.trace(query);
 
@@ -72,6 +77,11 @@ const post = {
   // 게시물 상세 조회
   async findById(_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.post) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const item = await db.post.findOne({ _id });
     logger.debug(item);
     return item;
@@ -80,6 +90,11 @@ const post = {
   // 게시물 등록
   async create(post){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.post) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     post._id = await nextSeq('post');
     post.updatedAt = post.createdAt = moment().format('YYYY.MM.DD HH:mm:ss');
     post.seller_id = (await productModel.findAttrById({ _id: post.product_id, attr: 'seller_id' }))?.seller_id
@@ -92,6 +107,11 @@ const post = {
   // 게시물 수정
   async update(_id, post){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.post) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     post.updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
     if(!post.dryRun){
       await db.post.updateOne(
@@ -112,6 +132,10 @@ const post = {
   // 게시물 삭제
   async delete(_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.post) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
 
     const result = await db.post.deleteOne({ _id });
     logger.debug(result);
@@ -121,6 +145,11 @@ const post = {
   // 댓글 등록
   async createReply(_id, reply){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.post) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     reply.updatedAt = reply.createdAt = moment().format('YYYY.MM.DD HH:mm:ss');
     if(!reply.dryRun){
       await db.post.updateOne({ _id }, { $push: { replies: reply } });
@@ -131,6 +160,11 @@ const post = {
   // 댓글 수정
   async updateReply(_id, reply_id, reply){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.post) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     reply.updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
     const result = await db.post.updateOne(
       { _id },
@@ -149,6 +183,10 @@ const post = {
   // 댓글 삭제
   async deleteReply(_id, reply_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.post) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
 
     const result = await db.post.updateOne(
       { _id },

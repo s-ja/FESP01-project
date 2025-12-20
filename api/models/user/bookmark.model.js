@@ -2,12 +2,17 @@ import _ from 'lodash';
 import moment from 'moment';
 
 import logger from '#utils/logger.js';
-import db, { nextSeq } from '#utils/dbUtil.js';
+import { getDB, nextSeq } from '#utils/dbUtil.js';
 
 const bookmark = {
   // 북마크 등록
   async create(bookmark){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.bookmark) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     bookmark._id = await nextSeq('bookmark');
     bookmark.createdAt = moment().format('YYYY.MM.DD HH:mm:ss');
     
@@ -20,6 +25,11 @@ const bookmark = {
   // 북마크 목록 조회
   async findBy(query){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.bookmark) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const list = await db.bookmark.aggregate([
       { $match: query },
       {
@@ -54,6 +64,11 @@ const bookmark = {
   // 상품의 북마크 목록 조회
   async findByProduct(product_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.bookmark) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const list = await db.bookmark.find({ product_id }).toArray();
 
     logger.debug(list);    
@@ -71,6 +86,11 @@ const bookmark = {
   // 북마크 삭제
   async delete(_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.bookmark) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const result = await db.bookmark.deleteOne({ _id });
     logger.debug(result);
     return result;

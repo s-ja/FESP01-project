@@ -1,12 +1,17 @@
 import _ from 'lodash';
 
 import logger from '#utils/logger.js';
-import db from '#utils/dbUtil.js';
+import { getDB } from '#utils/dbUtil.js';
 
 const user = {
   // 회원 목록 조회
   async find({ search={}, sortBy={}, page=1, limit=0 }){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.user) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const query = { ...search };
 
     const skip = (page-1) * limit;

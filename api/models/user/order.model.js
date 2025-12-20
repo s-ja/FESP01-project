@@ -3,7 +3,7 @@ import moment from 'moment';
 import createError from 'http-errors';
 
 import logger from '#utils/logger.js';
-import db, { nextSeq } from '#utils/dbUtil.js';
+import { getDB, nextSeq } from '#utils/dbUtil.js';
 import priceUtil from '#utils/priceUtil.js';
 import productModel from '#models/user/product.model.js';
 import replyModel from '#models/user/reply.model.js';
@@ -13,6 +13,11 @@ const buying = {
   // 주문 등록
   async create(orderInfo){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.order || !db.product) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     orderInfo._id = await nextSeq('order');
     orderInfo.updatedAt = orderInfo.createdAt = moment().format('YYYY.MM.DD HH:mm:ss');
 
@@ -24,7 +29,7 @@ const buying = {
         if(product.quantity-product.buyQuantity >= quantity){
           // 상품의 구매된 수량 수정
           if(!orderInfo.dryRun){
-            db.product.updateOne({ _id }, { $set: { buyQuantity: product.buyQuantity+quantity } });
+            await db.product.updateOne({ _id }, { $set: { buyQuantity: product.buyQuantity+quantity } });
           }
           products.push({
             _id,
@@ -69,6 +74,11 @@ const buying = {
   // 주문 목록 검색
   async findBy({ user_id, search, sortBy, page=1, limit=0 }){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.order) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const query = { user_id, ...search };
     logger.log(query);
 
@@ -106,6 +116,10 @@ const buying = {
   // 구매 목록의 상태값만 조회
   async findState(user_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.order) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
 
     // const list = await db.order.find({ user_id }).toArray();
 
@@ -131,6 +145,11 @@ const buying = {
   // 주문 내역 상세 조회
   async findById(_id, user_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.order) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const query = { _id };
     if(user_id){
       query['user_id'] = user_id;
@@ -143,6 +162,11 @@ const buying = {
   // 주문 내역에 후기 추가
   async updateReplyId(_id, product_id, reply_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.order) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const result = await db.order.updateOne(
       {
         _id,
@@ -163,6 +187,10 @@ const buying = {
   // 주문별 주문 상태 수정
   async updateState(_id, order, history){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.order) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
 
     order.updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
 
@@ -186,6 +214,10 @@ const buying = {
   // 상품별 주문 상태 수정
   async updateStateByProduct(_id, product_id, order, history){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.order) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
 
     order.updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
 

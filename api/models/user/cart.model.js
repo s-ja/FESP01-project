@@ -3,7 +3,7 @@ import moment from 'moment';
 import createError from 'http-errors';
 
 import logger from '#utils/logger.js';
-import db, { nextSeq } from '#utils/dbUtil.js';
+import { getDB, nextSeq } from '#utils/dbUtil.js';
 import priceUtil from '#utils/priceUtil.js';
 import productModel from '#models/user/product.model.js';
 
@@ -11,6 +11,11 @@ const cart = {
   // 장바구니 등록
   async create(cartInfo){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.cart || !db.product) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
 
     const beforeCart = await this.findByUser(cartInfo.user_id);
@@ -70,6 +75,11 @@ const cart = {
   // 장바구니 목록 조회(로그인 상태)
   async findByUser(user_id, discount){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.cart) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     // const list = await db.cart.find({ user_id }).sort({ createdAt: -1 }).toArray();
 
     const list = await db.cart.aggregate([
@@ -115,6 +125,11 @@ const cart = {
 
   async findById(_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.cart) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const item = await db.cart.findOne({ _id });
     logger.debug(item);
     return item;
@@ -123,6 +138,10 @@ const cart = {
   // 장바구니 상품 수량 수정
   async update(_id, quantity){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.cart) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
 
     const updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
 
@@ -135,6 +154,10 @@ const cart = {
   // 장바구니 상품 한건 삭제
   async delete(_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.cart) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
 
     const result = await db.cart.deleteOne({ _id });
     logger.debug(result);
@@ -144,6 +167,10 @@ const cart = {
   // 장바구니 상품 여러건 삭제
   async deleteMany(cartIdList){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.cart) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
 
     const result = await db.cart.deleteMany({ _id: { $in: cartIdList } });
     logger.debug(result);
@@ -153,6 +180,10 @@ const cart = {
   // 장바구니 비우기
   async cleanup(user_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.cart) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
 
     const result = await db.cart.deleteMany({ user_id });
     logger.debug(result);
@@ -162,6 +193,10 @@ const cart = {
   // 장바구니 상품 합치기
   async add(user_id, products){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.cart || !db.product) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
 
     const updatedAt = moment().format('YYYY.MM.DD HH:mm:ss');
     const beforeCart = await this.findByUser(user_id);

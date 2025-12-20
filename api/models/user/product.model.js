@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 import logger from '#utils/logger.js';
-import db, { nextSeq } from '#utils/dbUtil.js';
+import { getDB, nextSeq } from '#utils/dbUtil.js';
 import replyModel from '#models/user/reply.model.js';
 import bookmarkModel from '#models/user/bookmark.model.js';
 
@@ -9,6 +9,11 @@ const product = {
   // 상품 검색
   async findBy({ sellerId, search={}, sortBy={}, page=1, limit=0, depth }){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.product) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const query = { active: true, ...search };
     if(sellerId){
       // 판매자가 조회할 경우 자신의 상품만 조회
@@ -57,6 +62,11 @@ const product = {
   // 상품 상세 조회
   async findById({ _id, seller_id }){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.product) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const query = { _id, active: true };
     if(!seller_id){
       query.show = true;

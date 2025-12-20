@@ -2,12 +2,16 @@ import _ from 'lodash';
 import createError from 'http-errors';
 
 import logger from '#utils/logger.js';
-import db from '#utils/dbUtil.js';
+import { getDB } from '#utils/dbUtil.js';
 
 const code = {
   // 코드 등록
   async create(codeInfo){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.code) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
 
     try{
       if(!codeInfo.dryRun){
@@ -27,6 +31,11 @@ const code = {
   // 코드 목록 조회
   async find(){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.code) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const sortBy = {
       sort: 1
     };
@@ -38,6 +47,11 @@ const code = {
   // 코드 상세 조회
   async findById(_id, search){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.code) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     let item = await db.code.findOne({ _id });
     if(item){
       // 검색 속성이 문자열일 경우 숫자로 변환
@@ -53,6 +67,11 @@ const code = {
   // 코드 수정
   async update(_id, code){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.code) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const result = await db.code.updateOne({ _id }, { $set: code });
     logger.debug(result);
     const item = { _id, ...code };
@@ -62,6 +81,11 @@ const code = {
   // 코드 삭제
   async delete(_id){
     logger.trace(arguments);
+    const db = getDB();
+    if (!db || !db.code) {
+      throw new Error('MongoDB 연결이 초기화되지 않았습니다.');
+    }
+    
     const result = await db.code.deleteOne({ _id });
     logger.debug(result);
     return result;
