@@ -72,16 +72,153 @@ const connectWithRetry = async (maxRetries = 3, retryDelay = 5000) => {
   }
 };
 
+// 연결 초기화 플래그
+let isConnecting = false;
+let connectionPromise = null;
+let connectionError = null;
+
+// 연결 초기화 실행
+const initConnection = async () => {
+  // 이미 연결되어 있으면 성공 반환
+  if (db && isConnected()) {
+    return true;
+  }
+  
+  // 이미 연결 중이면 완료될 때까지 대기
+  if (isConnecting && connectionPromise) {
+    return connectionPromise;
+  }
+  
+  // 새로운 연결 시작
+  isConnecting = true;
+  connectionPromise = (async () => {
+    try {
+      await connectWithRetry();
+      connectionError = null;
+      logger.info('MongoDB 연결 초기화 완료');
+      return true;
+    } catch (err) {
+      connectionError = err;
+      logger.error('MongoDB 연결 초기화 실패:', err);
+      throw err;
+    } finally {
+      isConnecting = false;
+    }
+  })();
+  
+  return connectionPromise;
+};
+
+// 최상위 레벨에서 연결 시도
 try {
-  await connectWithRetry();
+  await initConnection();
 } catch (err) {
-  logger.error('MongoDB 연결 초기화 실패:', err);
-  // 연결 실패 시에도 프로세스는 계속 실행되도록 함 (선택적)
+  // 연결 실패는 로그만 남기고 계속 진행 (서버 시작 로직에서 처리)
+  logger.error('MongoDB 초기 연결 실패:', err);
 }
 
-export const getDB = () => db;
+// 연결 대기 함수 (서버 시작 전에 사용)
+export const waitForConnection = async (timeout = 30000) => {
+  // 이미 연결되어 있으면 바로 반환
+  if (db && isConnected()) {
+    return true;
+  }
+  
+  // 연결 중이면 완료될 때까지 대기
+  if (isConnecting && connectionPromise) {
+    try {
+      await connectionPromise;
+      if (db && isConnected()) {
+        return true;
+      }
+    } catch (err) {
+      // 연결 실패는 아래에서 처리
+      connectionError = err;
+    }
+  }
+  
+  // 연결이 없고 에러가 있으면 재시도
+  if (connectionError && !isConnecting) {
+    logger.info('MongoDB 연결 재시도 중...');
+    try {
+      // 연결 재시도
+      connectionPromise = null;
+      connectionError = null;
+      await initConnection();
+      if (db && isConnected()) {
+        return true;
+      }
+    } catch (err) {
+      connectionError = err;
+      throw new Error(`MongoDB 연결 실패: ${err.message}`);
+    }
+  }
+  
+  // 연결 시도가 아직 진행 중이 아니면 시작
+  if (!isConnecting && !connectionPromise) {
+    try {
+      await initConnection();
+      if (db && isConnected()) {
+        return true;
+      }
+    } catch (err) {
+      connectionError = err;
+      throw new Error(`MongoDB 연결 실패: ${err.message}`);
+    }
+  }
+  
+  // 타임아웃 체크하며 연결 완료 대기
+  const startTime = Date.now();
+  while (Date.now() - startTime < timeout) {
+    if (db && isConnected()) {
+      return true;
+    }
+    
+    // 연결 실패 확인
+    if (connectionError && !isConnecting) {
+      throw new Error(`MongoDB 연결 실패: ${connectionError.message}`);
+    }
+    
+    // 연결 중이면 약간 대기 후 재확인
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+  
+  // 타임아웃
+  throw new Error(`MongoDB 연결 대기 시간 초과 (${timeout}ms). 연결 상태: db=${!!db}, connected=${isConnected()}`);
+};
+
+export const getDB = () => {
+  if (!db) {
+    const errorMsg = 'MongoDB 연결이 초기화되지 않았습니다. 서버가 시작되기 전에 연결이 완료되지 않았습니다.';
+    logger.error(errorMsg);
+    throw new Error(errorMsg);
+  }
+  
+  if (!isConnected()) {
+    const errorMsg = 'MongoDB 연결이 끊어졌습니다.';
+    logger.error(errorMsg);
+    throw new Error(errorMsg);
+  }
+  
+  return db;
+};
 
 export const getClient = () => client;
+
+// 연결 초기화 함수 export (외부에서 재시도용)
+export const ensureConnection = async () => {
+  if (db && isConnected()) {
+    return true;
+  }
+  
+  try {
+    await initConnection();
+    return true;
+  } catch (err) {
+    logger.error('MongoDB 연결 재시도 실패:', err);
+    throw err;
+  }
+};
 
 // 연결 상태 확인 함수
 export const isConnected = () => {
