@@ -153,7 +153,7 @@ const handleUpload = async function(req, res, next) {
   }catch(err){
     next(err);
   }
-});
+};
 
 // 파일 링크
 router.get('/:fileName', function(req, res, next){
