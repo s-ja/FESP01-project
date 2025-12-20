@@ -11,7 +11,7 @@ var url;
 if (
   process.env.NODE_ENV === "production" ||
   process.env.NODE_ENV === "development" ||
-  process.env.DB_HOST.endsWith(".aws2.store")
+  (process.env.DB_HOST && process.env.DB_HOST.endsWith(".aws2.store"))
 ) {
   if (DBConfig.protocol === "mongodb+srv") {
     // mongodb atlas
