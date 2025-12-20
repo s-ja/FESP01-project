@@ -14,7 +14,7 @@
   },
   "scripts": {
     "prestart": "node ./swagger.js",
-    "start": "cross-env NODE_ENV=modi node -r dotenv/config ./bin/www-prod.js",
+    "start": "cross-env NODE_ENV=production node ./bin/www-prod.js",
     "dev": "cross-env NODE_ENV=development node -r dotenv/config ./bin/www-https.js",
     "local": "cross-env NODE_ENV=local nodemon -r dotenv/config ./bin/www-https.js",
     "aws": "cross-env NODE_ENV=aws node -r dotenv/config ./bin/www-aws.js",
